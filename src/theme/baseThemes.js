@@ -1,6 +1,7 @@
 import { extendTheme } from '@chakra-ui/react';
 import { mode } from '@chakra-ui/theme-tools';
 
+
 //Global Background Options
 
 // const styles = {
@@ -48,6 +49,7 @@ export default extendTheme({
       900: '#190b00',
     },
   },
+ 
   // styles,
   // components
 });

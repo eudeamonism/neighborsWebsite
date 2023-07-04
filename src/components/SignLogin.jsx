@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate, Link as ReactLink, useLocation } from 'react-router-dom';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -16,12 +17,16 @@ import {
   Text,
   Heading,
   useColorModeValue,
+  Divider,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 
 const SignLogin = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   return (
-    <Card height="425px" width="300px" align="center" variant="elevated">
+    <Card height="auto" width="300px" align="center" variant="elevated">
       <CardHeader>
         <Heading color={useColorModeValue('light.600', 'dark.400')}>
           Neighbors
@@ -44,7 +49,7 @@ const SignLogin = () => {
               .required('Please enter a password')
               .matches(
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-                "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+                'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
               ),
           })}
         >
@@ -94,8 +99,15 @@ const SignLogin = () => {
       </CardBody>
       <CardFooter>
         <Flex alignItems={'center'}>
-          <Text>Sign Up?</Text>
-          <ColorModeSwitcher />
+          <Text
+            as={ReactLink}
+            to="/signup"
+            _hover={{ transform: 'scale(1.2)' }}
+          >
+            Sign Up?
+          </Text>
+          <Divider orientation="vertical" mr={'4'} ml={'4'} />
+          <ColorModeSwitcher _hover={{ transform: 'scale(1.2)' }} />
         </Flex>
       </CardFooter>
     </Card>

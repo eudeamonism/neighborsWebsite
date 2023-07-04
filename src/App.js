@@ -9,6 +9,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<LoginRegister />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </Router>
   );
