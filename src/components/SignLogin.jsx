@@ -1,5 +1,6 @@
 import React from 'react';
 import { Formik, Field } from 'formik';
+import * as Yup from 'yup';
 import {
   Button,
   Flex,
@@ -35,6 +36,17 @@ const SignLogin = () => {
           onSubmit={values => {
             alert(JSON.stringify(values, null, 2));
           }}
+          validationSchema={Yup.object({
+            email: Yup.string()
+              .email('Invalid email')
+              .required('An email address is required Son!'),
+            password: Yup.string()
+              .required('Please enter a password')
+              .matches(
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+                "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"
+              ),
+          })}
         >
           {({ handleSubmit, errors, touched }) => (
             <form onSubmit={handleSubmit}>
@@ -47,19 +59,7 @@ const SignLogin = () => {
                   >
                     Email Address
                   </FormLabel>
-                  <Field
-                    as={Input}
-                    id="email"
-                    name="email"
-                    type="email"
-                    validate={value => {
-                      let error;
-                      if (value.length === 0) {
-                        error = 'Please enter a valid email';
-                      }
-                      return error;
-                    }}
-                  />
+                  <Field as={Input} id="email" name="email" type="email" />
                   <FormErrorMessage>{errors.email}</FormErrorMessage>
                 </FormControl>
                 <FormControl isInvalid={!!errors.password && touched.password}>
@@ -75,15 +75,6 @@ const SignLogin = () => {
                     id="password"
                     name="password"
                     type="password"
-                    validate={value => {
-                      let error;
-
-                      if (value.length < 8) {
-                        error = 'Password must contain at least 8 characters';
-                      }
-
-                      return error;
-                    }}
                   />
                   <FormErrorMessage>{errors.password}</FormErrorMessage>
                 </FormControl>
@@ -95,7 +86,7 @@ const SignLogin = () => {
           mt="8"
           type="submit"
           variant="solid"
-          colorScheme={useColorModeValue("yellow", "blue")}
+          colorScheme={useColorModeValue('yellow', 'blue')}
           width="full"
         >
           Login
