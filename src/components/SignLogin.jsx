@@ -1,9 +1,7 @@
 import React from 'react';
 import { Formik, Field } from 'formik';
 import {
-  Box,
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormLabel,
@@ -15,9 +13,8 @@ import {
   CardBody,
   CardFooter,
   Text,
-  Center,
   Heading,
-  Divider,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 
@@ -25,7 +22,9 @@ const SignLogin = () => {
   return (
     <Card height="425px" width="300px" align="center" variant="elevated">
       <CardHeader>
-        <Heading>Login</Heading>
+        <Heading color={useColorModeValue('light.600', 'dark.400')}>
+          Neighbors
+        </Heading>
       </CardHeader>
       <CardBody>
         <Formik
@@ -40,28 +39,46 @@ const SignLogin = () => {
           {({ handleSubmit, errors, touched }) => (
             <form onSubmit={handleSubmit}>
               <VStack>
-                <FormControl>
-                  <FormLabel htmlFor="email">Email Address</FormLabel>
+                <FormControl isInvalid={!!errors.email}>
+                  <FormLabel
+                    color="light.600"
+                    _dark={{ color: 'dark.400' }}
+                    htmlFor="email"
+                  >
+                    Email Address
+                  </FormLabel>
                   <Field
                     as={Input}
                     id="email"
                     name="email"
                     type="email"
-                    variant="outline"
+                    validate={value => {
+                      let error;
+                      if (value.length === 0) {
+                        error = 'Please enter a valid email';
+                      }
+                      return error;
+                    }}
                   />
+                  <FormErrorMessage>{errors.email}</FormErrorMessage>
                 </FormControl>
                 <FormControl isInvalid={!!errors.password && touched.password}>
-                  <FormLabel htmlFor="password">Password</FormLabel>
+                  <FormLabel
+                    color="light.600"
+                    _dark={{ color: 'dark.400' }}
+                    htmlFor="password"
+                  >
+                    Password
+                  </FormLabel>
                   <Field
                     as={Input}
                     id="password"
                     name="password"
                     type="password"
-                    variant="outline"
                     validate={value => {
                       let error;
 
-                      if (value.length < 6) {
+                      if (value.length < 8) {
                         error = 'Password must contain at least 8 characters';
                       }
 
@@ -74,7 +91,13 @@ const SignLogin = () => {
             </form>
           )}
         </Formik>
-        <Button mt="8" type="submit" colorScheme="purple" width="full">
+        <Button
+          mt="8"
+          type="submit"
+          variant="solid"
+          colorScheme={useColorModeValue("yellow", "blue")}
+          width="full"
+        >
           Login
         </Button>
       </CardBody>

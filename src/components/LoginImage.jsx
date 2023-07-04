@@ -10,7 +10,9 @@ const LoginImage = () => {
         height="425px"
         width="300px"
         src="./assets/images/window.jpg"
-        alt="Dan Abramov"
+        alt="Window"
+        lazy
+        filter="grayscale(30%)"
       />
     </Flex>
   );
