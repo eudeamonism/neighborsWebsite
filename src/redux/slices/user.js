@@ -11,8 +11,11 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setLoading: state => {
+    setLoading: (state) => {
       state.loading = true;
+    },
+    closeLoading: (state) => {
+      state.loading = false;
     },
     userLogin: (state, { payload }) => {
       state.userInfo = payload;
@@ -26,7 +29,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setLoading, userLogin, setError } = userSlice.actions;
+export const { setLoading, userLogin, setError, closeLoading } = userSlice.actions;
 
 export default userSlice.reducer;
 

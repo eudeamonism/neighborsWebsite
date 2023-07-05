@@ -169,7 +169,8 @@ const SignUp = () => {
                   mt="8"
                   type="submit"
                   variant="solid"
-                  colorScheme={useColorModeValue('yellow', 'blue')}
+                  colorScheme='yellow'
+                  _dark={{colorScheme: 'blue'}}
                   width="full"
                   isLoading={loading}
                   loadingText="Loading"
