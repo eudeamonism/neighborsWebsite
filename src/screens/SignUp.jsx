@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, Link as ReactLink, useLocation } from 'react-router-dom';
-import { Formik, Field } from 'formik';
+import { Formik, Field, Form, useFormik } from 'formik';
 import * as Yup from 'yup';
 import {
   Button,
@@ -21,10 +21,15 @@ import {
   Center,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../components/ColorModeSwitcher';
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../redux/actions/userActions';
 
 const SignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
+  const { loading, error, userInfo, complaints } = user;
 
   return (
     <Center minH={'100vh'}>
@@ -47,13 +52,12 @@ const SignUp = () => {
               email: 'user@gmail.com',
               password: '',
             }}
-            onSubmit={values => {
-              alert(JSON.stringify(values, null, 2));
-            }}
             validationSchema={Yup.object({
               firstName: Yup.string().required('Please enter your first name'),
               lastName: Yup.string().required('Please enter your last name'),
-              displayName: Yup.string().required('Please enter your display name'),
+              displayName: Yup.string().required(
+                'Please enter your display name'
+              ),
               email: Yup.string()
                 .email('Invalid email')
                 .required('An email address is required Son!'),
@@ -64,9 +68,21 @@ const SignUp = () => {
                   'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
                 ),
             })}
+            onSubmit={values => {
+              dispatch(
+                register(
+                  values.firstName,
+                  values.lastName,
+                  values.displayName,
+                  values.email,
+                  values.password
+                )
+              );
+              
+            }}
           >
-            {({ handleSubmit, errors, touched }) => (
-              <form onSubmit={handleSubmit}>
+            {({ errors, touched }) => (
+              <Form as="form">
                 <VStack>
                   <FormControl isInvalid={!!errors.firstName}>
                     <FormLabel
@@ -149,18 +165,20 @@ const SignUp = () => {
                     <FormErrorMessage>{errors.password}</FormErrorMessage>
                   </FormControl>
                 </VStack>
-              </form>
+                <Button
+                  mt="8"
+                  type="submit"
+                  variant="solid"
+                  colorScheme={useColorModeValue('yellow', 'blue')}
+                  width="full"
+                  isLoading={loading}
+                  loadingText="Loading"
+                >
+                  Sign Up
+                </Button>
+              </Form>
             )}
           </Formik>
-          <Button
-            mt="8"
-            type="submit"
-            variant="solid"
-            colorScheme={useColorModeValue('yellow', 'blue')}
-            width="full"
-          >
-            Sign Up
-          </Button>
         </CardBody>
         <CardFooter>
           <Flex alignItems={'center'}>

@@ -11,7 +11,7 @@ const LoginImage = () => {
         width="300px"
         src="./assets/images/window.jpg"
         alt="Window"
-        lazy
+        lazy="true"
         filter="grayscale(30%)"
       />
     </Flex>
