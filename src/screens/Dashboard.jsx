@@ -1,9 +1,32 @@
-import React from 'react'
+import {
+  HStack,
+  VStack,
+  Flex,
+  Text,
+  Box,
+  Stack,
+  Spacer,
+} from '@chakra-ui/react';
+
+import DashComplaintViewer from '../components/Complaint/DashComplaintViewer';
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
-  )
-}
+    <Flex
+      flexDirection="row"
+      justifyContent="space-evenly"
+      
+    >
+      <VStack spacing="6" mt="6">
+        <DashComplaintViewer />
+      </VStack>
 
-export default Dashboard
+      <VStack spacing="6" mt="6">
+        <Box bg="green" width="500px" height="300px"></Box>
+        <Box bg="green" width="500px" height="300px"></Box>
+      </VStack>
+    </Flex>
+  );
+};
+
+export default Dashboard;
