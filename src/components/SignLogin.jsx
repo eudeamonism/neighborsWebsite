@@ -26,7 +26,7 @@ const SignLogin = () => {
   const location = useLocation();
 
   return (
-    <Card height="auto" width="300px" align="center" variant="elevated">
+    <Card height="auto" minW="300px" align="center" variant="elevated">
       <CardHeader>
         <Heading color={useColorModeValue('light.600', 'dark.400')}>
           Neighbors

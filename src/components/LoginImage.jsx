@@ -8,7 +8,7 @@ const LoginImage = () => {
         borderRadius={"3"}
         boxShadow={"md"}
         height="425px"
-        width="300px"
+        minW="300px"
         src="./assets/images/window.jpg"
         alt="Window"
         lazy="true"
