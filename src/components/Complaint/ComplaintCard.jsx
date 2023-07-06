@@ -1,5 +1,6 @@
 import { GiPoliceBadge } from 'react-icons/gi';
 import { MaskSad, Crown, User } from '@phosphor-icons/react';
+import { RiFootprintLine } from 'react-icons/ri';
 import {
   Box,
   Text,
@@ -21,14 +22,16 @@ const ComplaintCard = ({ complaint: data }) => {
     <Stack
       minWidth="600px"
       maxW="600px"
-      height="300px"
+      height="320px"
       borderWidth="1px"
       borderRadius="6"
+      mt="12px"
     >
       <Box mt="3" ml="6">
         <Text
           fontSize="22px"
           color={useColorModeValue('light.500', 'dark.500')}
+          fontWeight="bold"
         >
           {data.title}
         </Text>
@@ -48,7 +51,7 @@ const ComplaintCard = ({ complaint: data }) => {
         <Flex
           ml="3px"
           alignItems="center"
-          color="gray.500"
+          color={useColorModeValue('light.300', 'dark.600')}
           fontWeight="semibold"
           letterSpacing="wide"
           fontSize="xs"
@@ -62,7 +65,7 @@ const ComplaintCard = ({ complaint: data }) => {
         <Flex
           mr="24px"
           alignItems="center"
-          color="gray.500"
+          color={useColorModeValue('light.300', 'dark.600')}
           fontWeight="semibold"
           letterSpacing="wide"
           fontSize="xs"
@@ -80,6 +83,18 @@ const ComplaintCard = ({ complaint: data }) => {
           </Text>
         </Flex>
       </Flex>
+      <Flex
+        ml="24px"
+        alignItems="center"
+        color={useColorModeValue('light.300', 'dark.600')}
+        fontWeight="semibold"
+        letterSpacing="wide"
+        fontSize="xs"
+        textTransform="uppercase"
+      >
+        <Icon ml="3px" width="14px" height="14px" as={RiFootprintLine} mr="6px"/>
+        {data.location.crossStreet1} at {data.location.crossStreet2}
+      </Flex>
       <Flex mt="15px" ml="24px" mr="24px">
         <Image
           fit="fill"
@@ -88,11 +103,11 @@ const ComplaintCard = ({ complaint: data }) => {
           src={data.details.imageUrl}
           alt="Theft"
         />
-        <Text ml="6px">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt illo
-          animi non laborum aspernatur doloribus, magnam autem et fuga explicabo
-          dolor, exercitationem porro, ea ipsum voluptatibus impedit? Ab, nisi
-          qui.
+        <Text ml="6px"
+        color={useColorModeValue('light.500', 'dark.500')}
+        fontWeight="medium"
+        >
+         {data.details.description}
         </Text>
       </Flex>
       <Flex mt="15px" ml="24px" alignItems="center">
@@ -118,25 +133,3 @@ const ComplaintCard = ({ complaint: data }) => {
 };
 
 export default ComplaintCard;
-
-/* <Flex
-          mr="24px"
-          alignItems="center"
-          color="gray.500"
-          fontWeight="semibold"
-          letterSpacing="wide"
-          fontSize="xs"
-          textTransform="uppercase"
-        >
-          <Icon
-            ml="3px"
-            width="20px"
-            height="20px"
-            as={MaskSad}
-            weight="regular"
-          />
-          <Text fontSize="14px" ml="3px">
-            {data.complaintType}
-          </Text>
-        </Flex>
-      </Flex> */
