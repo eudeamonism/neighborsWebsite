@@ -30,7 +30,7 @@ const ComplaintCard = ({ complaint: data }) => {
       <Box mt="3" ml="6">
         <Text
           fontSize="22px"
-          color={useColorModeValue('light.500', 'dark.500')}
+          color={useColorModeValue('light.600', 'dark.500')}
           fontWeight="bold"
         >
           {data.title}
@@ -51,7 +51,7 @@ const ComplaintCard = ({ complaint: data }) => {
         <Flex
           ml="3px"
           alignItems="center"
-          color={useColorModeValue('light.300', 'dark.600')}
+          color={useColorModeValue('light.400', 'dark.600')}
           fontWeight="semibold"
           letterSpacing="wide"
           fontSize="xs"
@@ -65,7 +65,7 @@ const ComplaintCard = ({ complaint: data }) => {
         <Flex
           mr="24px"
           alignItems="center"
-          color={useColorModeValue('light.300', 'dark.600')}
+          color={useColorModeValue('light.400', 'dark.600')}
           fontWeight="semibold"
           letterSpacing="wide"
           fontSize="xs"
@@ -86,7 +86,7 @@ const ComplaintCard = ({ complaint: data }) => {
       <Flex
         ml="24px"
         alignItems="center"
-        color={useColorModeValue('light.300', 'dark.600')}
+        color={useColorModeValue('light.400', 'dark.600')}
         fontWeight="semibold"
         letterSpacing="wide"
         fontSize="xs"
@@ -104,7 +104,7 @@ const ComplaintCard = ({ complaint: data }) => {
           alt="Theft"
         />
         <Text ml="6px"
-        color={useColorModeValue('light.500', 'dark.500')}
+        color={useColorModeValue('light.600', 'dark.500')}
         fontWeight="medium"
         >
          {data.details.description}
@@ -118,12 +118,12 @@ const ComplaintCard = ({ complaint: data }) => {
           height="20px"
           as={User}
           weight="regular"
-          color={useColorModeValue('light.500', 'dark.500')}
+          color={useColorModeValue('light.600', 'dark.500')}
         />
         <Text
           fontWeight="medium"
           mr="24px"
-          color={useColorModeValue('light.500', 'dark.500')}
+          color={useColorModeValue('light.600', 'dark.500')}
         >
           {data.details.displayName}
         </Text>

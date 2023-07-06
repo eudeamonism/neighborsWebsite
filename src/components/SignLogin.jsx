@@ -28,7 +28,7 @@ const SignLogin = () => {
   return (
     <Card height="auto" minW="300px" align="center" variant="elevated">
       <CardHeader>
-        <Heading color={useColorModeValue('light.600', 'dark.400')}>
+        <Heading color={useColorModeValue('light.600', 'dark.400')} fontFamily={'Caprasimo, Cursive'} fontWeight={'normal'}>
           Neighbors
         </Heading>
       </CardHeader>
