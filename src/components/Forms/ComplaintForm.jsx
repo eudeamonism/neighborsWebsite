@@ -11,9 +11,11 @@ import {
   useColorModeValue,
   SimpleGrid,
   Box,
+  Select,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../../redux/actions/userActions';
+
+import { createComplaint } from '../../redux/actions/complaintActions';
 
 const ComplaintForm = () => {
   const navigate = useNavigate();
@@ -41,10 +43,6 @@ const ComplaintForm = () => {
           imageUrl: 'link',
           authoritiesNotified: 'Boolean',
           resolved: 'Boolean',
-          lastName: 'Last Name',
-          displayName: 'Display Name',
-          email: 'user@gmail.com',
-          password: '',
         }}
         validationSchema={Yup.object({
           title: Yup.string().required('Please give complaint a title'),
@@ -57,26 +55,20 @@ const ComplaintForm = () => {
           description: Yup.string().required(
             'Description is either too long or too short (20 characters).'
           ),
-          lastName: Yup.string().required('Please enter your last name'),
-          displayName: Yup.string().required('Please enter your display name'),
-          email: Yup.string()
-            .email('Invalid email')
-            .required('An email address is required Son!'),
-          password: Yup.string()
-            .required('Please enter a password')
-            .matches(
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-              'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
-            ),
         })}
         onSubmit={values => {
           dispatch(
-            register(
-              values.firstName,
-              values.lastName,
-              values.displayName,
-              values.email,
-              values.password
+            createComplaint(
+              userInfo.token,
+              values.title,
+              values.occurence,
+              values.crossStreet1,
+              values.crossStreet2,
+              values.complaintType,
+              values.description,
+              values.imageUrl,
+              values.authoritiesNotified,
+              values.resolved
             )
           );
         }}
@@ -111,7 +103,6 @@ const ComplaintForm = () => {
                     id="occurence"
                     name="occurence"
                     type="date"
-                    
                   />
                   <FormErrorMessage>{errors.occurence}</FormErrorMessage>
                 </FormControl>
@@ -151,37 +142,117 @@ const ComplaintForm = () => {
                   />
                   <FormErrorMessage>{errors.crossStreet2}</FormErrorMessage>
                 </FormControl>
-              
               </Box>
 
               <Box>
-                <FormControl isInvalid={!!errors.email}>
+                <FormControl isInvalid={!!errors.complaintType}>
                   <FormLabel
                     color="light.600"
                     _dark={{ color: 'dark.400' }}
                     htmlFor="email"
                   >
-                    Email Address
+                    Complaint Type
                   </FormLabel>
-                  <Field as={Input} id="email" name="email" type="email" />
-                  <FormErrorMessage>{errors.email}</FormErrorMessage>
+                  <Field
+                    as={Select}
+                    id="complaintType"
+                    name="complaintType"
+                    type="complaintType"
+                  >
+                    <option value=""></option>
+                    <option value="Excessive Noise">Excessive Noise</option>
+                    <option value="Lewdness">Lewdness</option>
+                    <option value="Public Intoxication">
+                      Public Intoxication
+                    </option>
+                    <option value="Creeping">Creeping</option>
+                    <option value="Stalking">Stalking</option>
+                    <option value="Violence">Violence</option>
+                    <option value="Theft">Theft</option>
+                    <option value="Speeding">Speeding</option>
+                    <option value="Drugs">Drugs</option>
+                    <option value="Tenant Issues">Tenant Issues</option>
+                    <option value="Abandoned Vehicles">
+                      Abandoned Vehicles
+                    </option>
+                    <option value="Fireworks">Fireworks</option>
+                    <option value="Discrimination">Discrimination</option>
+                    <option value="Unsanitary Conditions">
+                      Unsanitary Conditions
+                    </option>
+                    <option value="Public Nuisance">Public Nuisance</option>
+                    <option value="Code Violations">Code Violations</option>
+                    <option value="Salty">Salty</option>
+                  </Field>
+                  <FormErrorMessage>{errors.complaintType}</FormErrorMessage>
                 </FormControl>
-                <FormControl isInvalid={!!errors.password && touched.password}>
+                <FormControl
+                  isInvalid={!!errors.description && touched.description}
+                >
                   <FormLabel
                     color="light.600"
                     _dark={{ color: 'dark.400' }}
-                    htmlFor="password"
+                    htmlFor="description"
                     mt="2"
                   >
-                    Password
+                    Description
                   </FormLabel>
                   <Field
                     as={Input}
-                    id="password"
-                    name="password"
-                    type="password"
+                    id="description"
+                    name="description"
+                    type="text"
                   />
-                  <FormErrorMessage>{errors.password}</FormErrorMessage>
+                  <FormErrorMessage>{errors.description}</FormErrorMessage>
+                </FormControl>
+                <FormControl>
+                  <FormLabel
+                    color="light.600"
+                    _dark={{ color: 'dark.400' }}
+                    htmlFor="imageUrl"
+                    mt="2"
+                  >
+                    Image URL
+                  </FormLabel>
+                  <Field as={Input} id="imageUrl" name="imageUrl" type="text" />
+                </FormControl>
+                <FormControl>
+                  <FormLabel
+                    color="light.600"
+                    _dark={{ color: 'dark.400' }}
+                    htmlFor="authoritiesNotified"
+                    mt="2"
+                  >
+                    Notified Authorities?
+                  </FormLabel>
+                  <Field
+                    as={Select}
+                    id="authoritiesNotified"
+                    name="authoritiesNotified"
+                    type="authoritiesNotified"
+                  >
+                    <option value="false">false</option>
+                    <option value="true">true</option>
+                  </Field>
+                </FormControl>
+                <FormControl>
+                  <FormLabel
+                    color="light.600"
+                    _dark={{ color: 'dark.400' }}
+                    htmlFor="resolved"
+                    mt="2"
+                  >
+                    Resolved?
+                  </FormLabel>
+                  <Field
+                    as={Select}
+                    id="resolved"
+                    name="resolved"
+                    type="resolved"
+                  >
+                    <option value="false">false</option>
+                    <option value="true">true</option>
+                  </Field>
                 </FormControl>
               </Box>
             </SimpleGrid>

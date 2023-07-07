@@ -34,7 +34,7 @@ const SignLogin = () => {
   //WILL NEED TO WIRE ID PATH LOGIC
   useEffect(() => {
     if (userInfo){
-      navigate('/dashboard/1')
+      navigate('/dashboard')
     }
   }, []);
 

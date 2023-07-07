@@ -1,15 +1,20 @@
 import React from 'react';
 import { Box, Flex, Text, Spacer } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
+import {useSelector} from 'react-redux'
+
 
 const NavBar = () => {
-  //You may need to delete Flex props other than alignItems
+  const user = useSelector((state) => state.user)
+  const {userInfo} = user;
+  
+
   return (
     <Box>
       <Flex justifyContent="end" alignItems="center">
         <Text ml="6" fontWeight="bold">Mobile Hamburger Icon</Text>
         <Spacer />
-        <Text fontWeight="bold">Hi, First Name</Text>
+        <Text fontWeight="bold">Hi, {userInfo.firstName} </Text>
         <Spacer />
         <Text fontWeight="bold" ml="6">+ Complaint</Text>
         <Text fontWeight="bold" ml="6">Logout Button</Text>

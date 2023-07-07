@@ -20,7 +20,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<DefaultPage />} />
-          <Route path="/dashboard/:id" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
         <Routes>
           <Route path="/login" element={<LoginRegister />} />
