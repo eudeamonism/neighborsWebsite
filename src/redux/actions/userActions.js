@@ -34,3 +34,29 @@ export const register =
       dispatch(closeLoading(false)); // Stop the loading state in case of error
     }
   };
+
+  export const login = (email, password) => async (dispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+  
+      //API REQUEST --- with email and password arguments only
+      const { data } = await axios.post('http://localhost:5000/api/users/login', { email, password }, config);
+      dispatch(userLogin(data));
+      localStorage.setItem('userInfo', JSON.stringify(data));
+    } catch (error) {
+      dispatch(
+        setError(
+          error.response && error.response.data
+            ? error.response.data
+            : error.message
+            ? error.message
+            : 'An unexpected error has occured. Please try again later.'
+        )
+      );
+    }
+  };

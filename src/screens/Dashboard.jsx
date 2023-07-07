@@ -1,31 +1,23 @@
-import {
-  HStack,
-  VStack,
-  Flex,
-  Text,
-  Box,
-  Stack,
-  Spacer,
-  Wrap,
-  Center,
-} from '@chakra-ui/react';
+import { HStack, VStack, Box, Spacer, Flex } from '@chakra-ui/react';
 
 import DashComplaintViewer from '../components/Complaint/DashComplaintViewer';
+import ComplaintForm from '../components/Forms/ComplaintForm';
+import NavBar from '../components/NavBar';
 
 const Dashboard = () => {
   return (
-    <HStack spacing="24px">
-      <Spacer />
-      <VStack spacing="6" mt="6">
-        <DashComplaintViewer />
-      </VStack>
+    <>
+      <NavBar />
+      <Flex>
+        <VStack ml="2" mr="2">
+          <DashComplaintViewer />
+        </VStack>
 
-      <VStack spacing="6" mt="6">
-        <Box bg="green" width="600px" height="300px"></Box>
-        <Box bg="green" width="600px" height="300px"></Box>
-      </VStack>
-      <Spacer />
-    </HStack>
+        <VStack>
+          <ComplaintForm />
+        </VStack>
+      </Flex>
+    </>
   );
 };
 

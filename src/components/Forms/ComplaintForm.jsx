@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate, Link as ReactLink, useLocation } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
@@ -20,26 +20,19 @@ import {
   Divider,
   Center,
 } from '@chakra-ui/react';
-import { ColorModeSwitcher } from '../components/ColorModeSwitcher';
+import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../redux/actions/userActions';
+import { register } from '../../redux/actions/userActions';
 
-const SignLogin = () => {
+const ComplaintForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const { loading, error, userInfo, complaints } = user;
 
-  //WILL NEED TO WIRE ID PATH LOGIC
-  useEffect(() => {
-    if (userInfo){
-      navigate('/dashboard/1')
-    }
-  }, []);
-
   return (
-    <Center minH={'100vh'}>
+    <Center>
       <Card height="auto" width="300px" align="center" variant="elevated">
         <CardHeader>
           <Heading
@@ -60,6 +53,11 @@ const SignLogin = () => {
               password: '',
             }}
             validationSchema={Yup.object({
+              firstName: Yup.string().required('Please enter your first name'),
+              lastName: Yup.string().required('Please enter your last name'),
+              displayName: Yup.string().required(
+                'Please enter your display name'
+              ),
               email: Yup.string()
                 .email('Invalid email')
                 .required('An email address is required Son!'),
@@ -71,12 +69,72 @@ const SignLogin = () => {
                 ),
             })}
             onSubmit={values => {
-              dispatch(login(values.email, values.password));
+              dispatch(
+                register(
+                  values.firstName,
+                  values.lastName,
+                  values.displayName,
+                  values.email,
+                  values.password
+                )
+              );
+              
             }}
           >
             {({ errors, touched }) => (
               <Form as="form">
                 <VStack>
+                  <FormControl isInvalid={!!errors.firstName}>
+                    <FormLabel
+                      color="light.600"
+                      _dark={{ color: 'dark.400' }}
+                      htmlFor="email"
+                    >
+                      First Name
+                    </FormLabel>
+                    <Field
+                      as={Input}
+                      id="firstName"
+                      name="firstName"
+                      type="text"
+                    />
+                    <FormErrorMessage>{errors.firstName}</FormErrorMessage>
+                  </FormControl>
+
+                  <FormControl isInvalid={!!errors.lastName}>
+                    <FormLabel
+                      color="light.600"
+                      _dark={{ color: 'dark.400' }}
+                      htmlFor="email"
+                    >
+                      Last Name
+                    </FormLabel>
+                    <Field
+                      as={Input}
+                      id="lastName"
+                      name="lastName"
+                      type="text"
+                    />
+                    <FormErrorMessage>{errors.lastName}</FormErrorMessage>
+                  </FormControl>
+
+                  <FormControl isInvalid={!!errors.displayName}>
+                    <FormLabel
+                      color="light.600"
+                      _dark={{ color: 'dark.400' }}
+                      htmlFor="email"
+                    >
+                      Display Name
+                    </FormLabel>
+                    <Field
+                      as={Input}
+                      id="displayName"
+                      name="displayName"
+                      type="text"
+                    />
+                    <FormErrorMessage>{errors.displayName}</FormErrorMessage>
+                  </FormControl>
+
                   <FormControl isInvalid={!!errors.email}>
                     <FormLabel
                       color="light.600"
@@ -111,13 +169,13 @@ const SignLogin = () => {
                   mt="8"
                   type="submit"
                   variant="solid"
-                  colorScheme="yellow"
-                  _dark={{ colorScheme: 'blue' }}
+                  colorScheme='yellow'
+                  _dark={{colorScheme: 'blue'}}
                   width="full"
                   isLoading={loading}
                   loadingText="Loading"
                 >
-                  Login
+                  Sign Up
                 </Button>
               </Form>
             )}
@@ -130,7 +188,7 @@ const SignLogin = () => {
               to="/login"
               _hover={{ transform: 'scale(1.2)' }}
             >
-              Sign Up?
+              Login?
             </Text>
             <Divider orientation="vertical" mr={'4'} ml={'4'} />
             <ColorModeSwitcher _hover={{ transform: 'scale(1.2)' }} />
@@ -141,4 +199,4 @@ const SignLogin = () => {
   );
 };
 
-export default SignLogin;
+export default ComplaintForm;
