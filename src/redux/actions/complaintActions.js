@@ -1,8 +1,14 @@
 import axios from 'axios';
 
-import { setLoading, setError, closeLoading, setComplaint } from '../slices/complaint';
+import {
+  setLoading,
+  setError,
+  closeLoading,
+  setComplaint,
+  setComplaints,
+} from '../slices/complaint';
 
-export const createComplaint =
+export const AddComplaint =
   (
     title,
     occurence,
@@ -13,21 +19,19 @@ export const createComplaint =
     imageUrl,
     authoritiesNotified,
     resolved,
-    token
+    userInfo
   ) =>
-  async (dispatch) => {
-    dispatch(setLoading(true));
-   
+  async dispatch => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
+          Authorization: userInfo.token,
         },
       };
 
       const { data } = await axios.post(
-        `http://localhost:5000/api/complaint/createComplaint`,
+        'http://localhost:5000/api/complaint/create',
         {
           title,
           occurence,
@@ -38,6 +42,7 @@ export const createComplaint =
           imageUrl,
           authoritiesNotified,
           resolved,
+          userId: userInfo._id,
         },
         config
       );

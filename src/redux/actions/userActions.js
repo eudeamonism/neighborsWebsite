@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { setLoading, userLogin, setError, closeLoading } from '../slices/user';
+import { setLoading, userLogin, setError, closeLoading} from '../slices/user';
 
 
 export const register =

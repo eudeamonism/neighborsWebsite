@@ -1,18 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
 export const initialState = {
-  complaint: {
-    title: '',
-    occurence: '',
-    crossStreet1: '',
-    crossStreet2: '',
-    complaintType: '',
-    description: '',
-    imageUrl: '',
-    authoritiesNotified: false,
-    resolved: false,
-  },
   loading: false,
   error: null,
   userInfo: JSON.parse(localStorage.getItem('userInfo')) ?? null,

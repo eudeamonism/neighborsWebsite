@@ -15,14 +15,16 @@ import {
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { createComplaint } from '../../redux/actions/complaintActions';
+import { AddComplaint } from '../../redux/actions/complaintActions';
 
 const ComplaintForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
-  const { loading, error, userInfo, complaints } = user;
+  const complaint = useSelector(state => state.complaint);
+  const { loading } = complaint;
+  const { userInfo } = user;
 
   return (
     <Box
@@ -58,8 +60,7 @@ const ComplaintForm = () => {
         })}
         onSubmit={values => {
           dispatch(
-            createComplaint(
-              userInfo.token,
+            AddComplaint(
               values.title,
               values.occurence,
               values.crossStreet1,
@@ -68,7 +69,8 @@ const ComplaintForm = () => {
               values.description,
               values.imageUrl,
               values.authoritiesNotified,
-              values.resolved
+              values.resolved,
+              userInfo,
             )
           );
         }}
