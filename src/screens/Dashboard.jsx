@@ -27,7 +27,7 @@ console.log(user.complaints)
       <Flex>
         <VStack>
           <ComplaintForm />
-          <Text>hola {}</Text>
+          <Text>hola {user.complaints.title}</Text>
         </VStack>
       </Flex>
     </>
