@@ -1,20 +1,33 @@
-import { HStack, VStack, Box, Spacer, Flex } from '@chakra-ui/react';
+import { VStack, Flex, Text} from '@chakra-ui/react';
+import { useEffect } from 'react';
 
-import DashComplaintViewer from '../components/Complaint/DashComplaintViewer';
 import ComplaintForm from '../components/Forms/ComplaintForm';
 import NavBar from '../components/NavBar';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { getUserComplaints } from '../redux/actions/userActions';
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
+
+  const { userInfo } = user;
+
+  const id = userInfo._id;
+
+  useEffect(() => {
+dispatch(getUserComplaints(id))
+  }, [dispatch])
+console.log(user.complaints)
+  
+
   return (
     <>
       <NavBar />
       <Flex>
-        <VStack ml="2" mr="2">
-          <DashComplaintViewer />
-        </VStack>
-
         <VStack>
           <ComplaintForm />
+          <Text>hola {}</Text>
         </VStack>
       </Flex>
     </>

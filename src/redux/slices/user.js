@@ -11,10 +11,10 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setLoading: (state) => {
+    setLoading: state => {
       state.loading = true;
     },
-    closeLoading: (state) => {
+    closeLoading: state => {
       state.loading = false;
     },
     userLogin: (state, { payload }) => {
@@ -22,14 +22,25 @@ export const userSlice = createSlice({
       state.error = null;
       state.loading = false;
     },
+    setUserComplaints: (state, { payload }) => {
+      state.complaints = payload;
+      state.error = null;
+      state.loading = false;
+    },
     setError: (state, { payload }) => {
-        state.error = payload;
-        state.loading = false;
+      state.error = payload;
+      state.loading = false;
     },
   },
 });
 
-export const { setLoading, userLogin, setError, closeLoading } = userSlice.actions;
+export const {
+  setLoading,
+  userLogin,
+  setError,
+  closeLoading,
+  setUserComplaints,
+} = userSlice.actions;
 
 export default userSlice.reducer;
 

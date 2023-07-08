@@ -18,9 +18,8 @@ import {
   Card,
   Divider,
 } from '@chakra-ui/react';
-import { complaints } from '../../data/compliants';
 
-const DashComplaintViewer = () => {
+const DashComplaintViewer = ({ complaint }) => {
   return (
     <Box
       bg={useColorModeValue('gray.200', 'gray.600')}
@@ -36,7 +35,7 @@ const DashComplaintViewer = () => {
             fontWeight="700"
             fontStyle="regular"
           >
-            Loud and inconsiderate neighbors.
+            {complaint.title}
           </Heading>
         </Flex>
       </Flex>
@@ -92,7 +91,7 @@ const DashComplaintViewer = () => {
         </Flex>
       </Flex>
       <Divider />
-      <Flex ml="2" mt="2" mr="2" mb="2" >
+      <Flex ml="2" mt="2" mr="2" mb="2">
         <Image
           grayscale="20%"
           border="1px solid gray"
@@ -104,7 +103,8 @@ const DashComplaintViewer = () => {
           src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP._Kc00wIUY3OfnPOaicufBgHaEh%26pid%3DApi%26h%3D160&f=1&ipt=c9e07fd7f55a025d73ecddb3347d18563499f74d13374ec55f32f69277c10cfc&ipo=images"
         />
         <Text ml="2" noOfLines="10">
-          Every weekend neighbors play loud music after hours. No one is doing anything about this.
+          Every weekend neighbors play loud music after hours. No one is doing
+          anything about this.
         </Text>
       </Flex>
       <Divider />

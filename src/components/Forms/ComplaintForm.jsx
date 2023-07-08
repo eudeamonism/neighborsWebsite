@@ -22,9 +22,8 @@ const ComplaintForm = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
-  const complaint = useSelector(state => state.complaint);
-  const { loading } = complaint;
-  const { userInfo } = user;
+
+  const { userInfo, loading } = user;
 
   return (
     <Box
@@ -43,8 +42,8 @@ const ComplaintForm = () => {
           complaintType: 'Selector',
           description: 'Describe...',
           imageUrl: 'link',
-          authoritiesNotified: 'Boolean',
-          resolved: 'Boolean',
+          authoritiesNotified: false,
+          resolved: false,
         }}
         validationSchema={Yup.object({
           title: Yup.string().required('Please give complaint a title'),
@@ -233,8 +232,8 @@ const ComplaintForm = () => {
                     name="authoritiesNotified"
                     type="authoritiesNotified"
                   >
-                    <option value="false">false</option>
-                    <option value="true">true</option>
+                    <option value={false}>false</option>
+                    <option value={true}>true</option>
                   </Field>
                 </FormControl>
                 <FormControl>
@@ -252,8 +251,8 @@ const ComplaintForm = () => {
                     name="resolved"
                     type="resolved"
                   >
-                    <option value="false">false</option>
-                    <option value="true">true</option>
+                    <option value={false}>false</option>
+                    <option value={true}>true</option>
                   </Field>
                 </FormControl>
               </Box>
