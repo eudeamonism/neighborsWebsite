@@ -59,6 +59,7 @@ const ComplaintForm = () => {
           ),
           description: Yup.string()
             .required('Please include a description.')
+            .min(20, "A minimum of 20 characters")
             .max(200, 'No more than 200 characters!'),
         })}
         onSubmit={values => {

@@ -12,7 +12,7 @@ export const AddComplaint =
     imageUrl,
     authoritiesNotified,
     resolved,
-    userInfo
+    userInfo,
   ) =>
   async dispatch => {
     try {
@@ -39,8 +39,11 @@ export const AddComplaint =
         },
         config
       );
+
+      //return data
       localStorage.setItem('userInfo', JSON.stringify(data));
       dispatch(setUserComplaints(data));
+      
     } catch (error) {
       dispatch(
         setError(

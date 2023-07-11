@@ -14,11 +14,11 @@ const Dashboard = () => {
 
   const id = userInfo._id;
 
-  useEffect(() => {
+ /*  useEffect(() => {
     dispatch(getUserComplaints(id));
-  }, [userInfo]);
+  }, [userInfo]); */
 
-  console.log(complaints);
+  console.log(id);
 
   return (
     <>
@@ -27,9 +27,9 @@ const Dashboard = () => {
         <HStack>
           <ComplaintForm />
           <VStack>
-            {complaints.map(complaint => (
-              <Text>{complaint.title}</Text>
-            ))}
+            {/* {complaints?.map(complaint => (
+              <Text key={complaint.title}>{complaint.title}</Text>
+            ))} */}
           </VStack>
         </HStack>
       </Flex>

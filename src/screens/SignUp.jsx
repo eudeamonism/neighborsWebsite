@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate, Link as ReactLink, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, Link as ReactLink } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -19,6 +19,7 @@ import {
   useColorModeValue,
   Divider,
   Center,
+  useToast,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../components/ColorModeSwitcher';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,10 +27,17 @@ import { register } from '../redux/actions/userActions';
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const { loading, error, userInfo, complaints } = user;
+  const toast = useToast();
+
+  useEffect(() => {
+    if (userInfo) {
+        navigate("/dashboard");
+        toast({description: 'Account created. Welcome aboard.', status: 'success', isClosable: true});
+    }
+}, [userInfo, error, navigate, toast])
 
   return (
     <Center minH={'100vh'}>
@@ -53,15 +61,19 @@ const SignUp = () => {
               password: '',
             }}
             validationSchema={Yup.object({
-              firstName: Yup.string().required('Please enter your first name').max(60, "No more than 60 characters"),
-              lastName: Yup.string().required('Please enter your last name').max(60, "No more than 60 characters"),
-              displayName: Yup.string().required(
-                'Please enter your display name'
-              ).max(60, "No more than 60 characters"),
+              firstName: Yup.string()
+                .required('Please enter your first name')
+                .max(60, 'No more than 60 characters'),
+              lastName: Yup.string()
+                .required('Please enter your last name')
+                .max(60, 'No more than 60 characters'),
+              displayName: Yup.string()
+                .required('Please enter your display name')
+                .max(60, 'No more than 60 characters'),
               email: Yup.string()
                 .email('Invalid email')
                 .required('An email address is required!')
-                .max(60, "No more than 60 characters"),
+                .max(60, 'No more than 60 characters'),
               password: Yup.string()
                 .required('Please enter a password')
                 .matches(
@@ -79,7 +91,6 @@ const SignUp = () => {
                   values.password
                 )
               );
-              
             }}
           >
             {({ errors, touched }) => (
@@ -170,8 +181,8 @@ const SignUp = () => {
                   mt="8"
                   type="submit"
                   variant="solid"
-                  colorScheme='yellow'
-                  _dark={{colorScheme: 'blue'}}
+                  colorScheme="yellow"
+                  _dark={{ colorScheme: 'blue' }}
                   width="full"
                   isLoading={loading}
                   loadingText="Loading"
