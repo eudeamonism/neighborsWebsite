@@ -46,16 +46,20 @@ const ComplaintForm = () => {
           resolved: false,
         }}
         validationSchema={Yup.object({
-          title: Yup.string().required('Please give complaint a title'),
+          resolved: Yup.boolean().required(),
+          authoritiesNotified: Yup.boolean().required(),
+          imageUrl: Yup.string().max(300, 'No more than 300 characters!'),
+          title: Yup.string()
+            .required('Please give complaint a title')
+            .max(40, 'No more than 40 characters'),
           occurence: Yup.date().required('Please pick a date'),
           crossStreet1: Yup.string().required('Enter first street name only!'),
-          crossStreet2: Yup.string().required('Enter second street name only!'),
           complaintType: Yup.string().required(
             'Must select type of complaint.'
           ),
-          description: Yup.string().required(
-            'Description is either too long or too short (20 characters).'
-          ),
+          description: Yup.string()
+            .required('Please include a description.')
+            .max(200, 'No more than 200 characters!'),
         })}
         onSubmit={values => {
           dispatch(
@@ -69,7 +73,7 @@ const ComplaintForm = () => {
               values.imageUrl,
               values.authoritiesNotified,
               values.resolved,
-              userInfo,
+              userInfo
             )
           );
         }}
@@ -126,14 +130,14 @@ const ComplaintForm = () => {
                   <FormErrorMessage>{errors.crossStreet2}</FormErrorMessage>
                 </FormControl>
 
-                <FormControl isInvalid={!!errors.crossStreet2}>
+                <FormControl>
                   <FormLabel
                     color="light.600"
                     _dark={{ color: 'dark.400' }}
                     htmlFor="email"
                     mt="2"
                   >
-                    Intersecting Street
+                    Intersection (not required)
                   </FormLabel>
                   <Field
                     as={Input}
@@ -141,7 +145,6 @@ const ComplaintForm = () => {
                     name="crossStreet2"
                     type="text"
                   />
-                  <FormErrorMessage>{errors.crossStreet2}</FormErrorMessage>
                 </FormControl>
               </Box>
 
@@ -206,16 +209,17 @@ const ComplaintForm = () => {
                   />
                   <FormErrorMessage>{errors.description}</FormErrorMessage>
                 </FormControl>
-                <FormControl>
+                <FormControl isInvalid={!!errors.imageUrl && touched.imageUrl}>
                   <FormLabel
                     color="light.600"
                     _dark={{ color: 'dark.400' }}
                     htmlFor="imageUrl"
                     mt="2"
                   >
-                    Image URL
+                    Image URL (not required)
                   </FormLabel>
                   <Field as={Input} id="imageUrl" name="imageUrl" type="text" />
+                  <FormErrorMessage>{errors.imageUrl}</FormErrorMessage>
                 </FormControl>
                 <FormControl>
                   <FormLabel

@@ -25,7 +25,7 @@ export const register =
 
       dispatch(userLogin(data));
       localStorage.setItem('userInfo', JSON.stringify(data));
-      dispatch(closeLoading(false)); // Stop the loading state here
+      
     } catch (error) {
       dispatch(
         setError(
@@ -36,7 +36,8 @@ export const register =
             : 'An unexpected error occurred. Please try again later.'
         )
       );
-      dispatch(closeLoading(false)); // Stop the loading state in case of error
+    }finally{
+      dispatch(closeLoading(false))
     }
   };
 
@@ -49,13 +50,13 @@ export const login = (email, password) => async dispatch => {
       },
     };
 
-    //API REQUEST --- with email and password arguments only
     const { data } = await axios.post(
       'http://localhost:5000/api/users/login',
       { email, password },
       config
     );
     dispatch(userLogin(data));
+    dispatch(setUserComplaints(data.complaints));
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
     dispatch(
@@ -79,13 +80,12 @@ export const getUserComplaints = id => async dispatch => {
     };
 
     const { data } = await axios.get(
-      'http://localhost:5000/api/users/getComplaintsForUser',
+      `http://localhost:5000/api/users/getComplaintsForUser/${id}`,
       id,
       config
     );
 
     dispatch(setUserComplaints(data));
-    console.log(data);
   } catch (error) {
     dispatch(
       setError(

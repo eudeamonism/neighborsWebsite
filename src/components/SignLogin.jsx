@@ -19,6 +19,7 @@ import {
   useColorModeValue,
   Divider,
   Center,
+  useToast
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../components/ColorModeSwitcher';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,15 +29,27 @@ const SignLogin = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const toast = useToast();
   const user = useSelector(state => state.user);
   const { loading, error, userInfo, complaints } = user;
 
   //WILL NEED TO WIRE ID PATH LOGIC
-  useEffect(() => {
-    if (userInfo){
-      navigate('/dashboard')
-    }
-  }, []);
+ useEffect(() => {
+		if (userInfo) {
+			if (location.state?.from) {
+				navigate(location.state.from);
+			} else {
+				navigate("/dashboard");
+				toast({ description: 'Login successful.', status: 'success', isClosable: true });
+			}
+		} else if (error) {
+			toast({
+				description: 'There was an error during the login process. Please try again later.',
+				status: 'error',
+				isClosable: true,
+			});
+		}
+	}, [userInfo, error, navigate, location.state, toast]);
 
   return (
     <Center minH={'100vh'}>

@@ -1,4 +1,4 @@
-import { VStack, Flex, Text} from '@chakra-ui/react';
+import { VStack, Flex, Text, HStack } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
 import ComplaintForm from '../components/Forms/ComplaintForm';
@@ -10,25 +10,28 @@ import { getUserComplaints } from '../redux/actions/userActions';
 const Dashboard = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
-
-  const { userInfo } = user;
+  const { userInfo, complaints } = user;
 
   const id = userInfo._id;
 
   useEffect(() => {
-dispatch(getUserComplaints(id))
-  }, [dispatch])
-console.log(user.complaints)
-  
+    dispatch(getUserComplaints(id));
+  }, [userInfo]);
+
+  console.log(complaints);
 
   return (
     <>
       <NavBar />
       <Flex>
-        <VStack>
+        <HStack>
           <ComplaintForm />
-          <Text>hola {user.complaints.title}</Text>
-        </VStack>
+          <VStack>
+            {complaints.map(complaint => (
+              <Text>{complaint.title}</Text>
+            ))}
+          </VStack>
+        </HStack>
       </Flex>
     </>
   );

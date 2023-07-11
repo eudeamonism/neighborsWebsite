@@ -53,14 +53,15 @@ const SignUp = () => {
               password: '',
             }}
             validationSchema={Yup.object({
-              firstName: Yup.string().required('Please enter your first name'),
-              lastName: Yup.string().required('Please enter your last name'),
+              firstName: Yup.string().required('Please enter your first name').max(60, "No more than 60 characters"),
+              lastName: Yup.string().required('Please enter your last name').max(60, "No more than 60 characters"),
               displayName: Yup.string().required(
                 'Please enter your display name'
-              ),
+              ).max(60, "No more than 60 characters"),
               email: Yup.string()
                 .email('Invalid email')
-                .required('An email address is required Son!'),
+                .required('An email address is required!')
+                .max(60, "No more than 60 characters"),
               password: Yup.string()
                 .required('Please enter a password')
                 .matches(
