@@ -26,13 +26,13 @@ import { AddComplaint } from '../../redux/actions/complaintActions';
 const ComplaintForm = () => {
   const initialValues = useMemo(
     () => ({
-      title: 'Title',
+      title: '',
       occurence: '',
-      crossStreet1: 'Street 1',
-      crossStreet2: 'Street 2',
-      complaintType: 'Selector',
-      description: 'Describe...',
-      imageUrl: 'link',
+      crossStreet1: '',
+      crossStreet2: '',
+      complaintType: '',
+      description: '',
+      imageUrl: '',
       authoritiesNotified: false,
       resolved: false,
     }),
@@ -48,6 +48,12 @@ const ComplaintForm = () => {
   const { userInfo, loading } = user;
 
   const formikRef = useRef();
+
+  const resetFormHandler = () => {
+    setTimeout(() => {
+      navigate('/');
+    }, 3000);
+  };
 
   return (
     <Box
@@ -97,7 +103,7 @@ const ComplaintForm = () => {
       >
         {({ errors, touched }) => (
           <Form as="form">
-            <Flex justifyContent="flex-end" mt="1" mr="1">
+            <Flex justifyContent="flex-end" mt="1" mr="1" minW="600px">
               <CloseIcon color="light.600" _dark={{ color: 'dark.400' }} />
             </Flex>
             <SimpleGrid columns={2} spacing={5}>
@@ -226,6 +232,10 @@ const ComplaintForm = () => {
                     id="description"
                     name="description"
                     type="text"
+                    component="textarea"
+                    rows="5"
+                    cols="37"
+                    
                   />
                   <FormErrorMessage>{errors.description}</FormErrorMessage>
                 </FormControl>
@@ -290,6 +300,7 @@ const ComplaintForm = () => {
                 width="full"
                 isLoading={loading}
                 loadingText="Loading"
+                onClick={resetFormHandler}
               >
                 Submit
               </Button>

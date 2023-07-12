@@ -19,7 +19,19 @@ import {
   Divider,
 } from '@chakra-ui/react';
 
-const DashComplaintViewer = ({ complaint }) => {
+const DashComplaintViewer = ({
+  title,
+  occurence,
+  complaintType,
+  description,
+  imageUrl,
+  police,
+  resolved,
+  mainStreet,
+  secondStreet,
+}) => {
+
+  console.log(police)
   return (
     <Box
       bg={useColorModeValue('gray.200', 'gray.600')}
@@ -35,7 +47,7 @@ const DashComplaintViewer = ({ complaint }) => {
             fontWeight="700"
             fontStyle="regular"
           >
-            {complaint.title}
+            {title}
           </Heading>
         </Flex>
       </Flex>
@@ -48,7 +60,7 @@ const DashComplaintViewer = ({ complaint }) => {
             fontWeight="100"
             fontStyle="regular"
           >
-            Last Week | Authorities Notified
+            {new Date(occurence).toLocaleDateString()} | {police === true ? "Authorities Notified" : "No Authorities Notified" }
           </Text>
         </Box>
         <Spacer />

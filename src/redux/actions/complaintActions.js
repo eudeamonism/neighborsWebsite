@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { setError, complaints } from '../slices/user';
+import { setError, complaints, resetComplaints, closeForm, setForm } from '../slices/user';
 
 export const AddComplaint =
   (
@@ -78,4 +78,16 @@ export const getComplaints = () => async dispatch => {
       )
     );
   }
+};
+
+export const complaintsReset = () => async dispatch => {
+  dispatch(resetComplaints);
+};
+
+export const openForm = () => async dispatch => {
+  dispatch(setForm);
+};
+
+export const shutForm = () => async dispatch => {
+  dispatch(closeForm);
 };
