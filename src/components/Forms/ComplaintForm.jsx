@@ -95,10 +95,10 @@ const ComplaintForm = () => {
           );
         }}
       >
-        {({ errors, touched, resetForm }) => (
+        {({ errors, touched }) => (
           <Form as="form">
-            <Flex justifyContent="flex-end" mt="1" mr="1" >
-              <CloseIcon color="light.600" _dark={{color: "dark.400"}}/>
+            <Flex justifyContent="flex-end" mt="1" mr="1">
+              <CloseIcon color="light.600" _dark={{ color: 'dark.400' }} />
             </Flex>
             <SimpleGrid columns={2} spacing={5}>
               <Box>

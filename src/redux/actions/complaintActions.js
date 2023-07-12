@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { setError } from '../slices/user';
+import { setError, complaints } from '../slices/user';
 
 export const AddComplaint =
   (
@@ -52,3 +52,30 @@ export const AddComplaint =
       );
     }
   };
+
+export const getComplaints = () => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axios.get(
+      'http://localhost:5000/api/complaint/getComplaints',
+      config
+    );
+
+    dispatch(complaints(data));
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+  }
+};

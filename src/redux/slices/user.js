@@ -27,10 +27,14 @@ export const userSlice = createSlice({
       state.error = payload;
       state.loading = false;
     },
+    complaints: (state, { payload }) => {
+      state.complaints = payload;
+      state.error = null;
+    }
   },
 });
 
-export const { setLoading, userLogin, setError, closeLoading } =
+export const { setLoading, userLogin, setError, closeLoading, complaints } =
   userSlice.actions;
 
 export default userSlice.reducer;
