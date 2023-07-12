@@ -10,7 +10,7 @@ import { getUserComplaints } from '../redux/actions/userActions';
 const Dashboard = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
-  const { userInfo, complaints } = user;
+  const { userInfo } = user;
 
   const id = userInfo._id;
 
@@ -18,7 +18,7 @@ const Dashboard = () => {
     dispatch(getUserComplaints(id));
   }, [userInfo]); */
 
-  console.log(id);
+  console.log(userInfo);
 
   return (
     <>

@@ -1,11 +1,5 @@
 import axios from 'axios';
-import {
-  setLoading,
-  userLogin,
-  setError,
-  closeLoading,
-  setUserComplaints,
-} from '../slices/user';
+import { setLoading, userLogin, setError, closeLoading } from '../slices/user';
 
 export const register =
   (firstName, lastName, displayName, email, password) => async dispatch => {
@@ -25,7 +19,6 @@ export const register =
 
       dispatch(userLogin(data));
       localStorage.setItem('userInfo', JSON.stringify(data));
-      
     } catch (error) {
       dispatch(
         setError(
@@ -36,8 +29,8 @@ export const register =
             : 'An unexpected error occurred. Please try again later.'
         )
       );
-    }finally{
-      dispatch(closeLoading(false))
+    } finally {
+      dispatch(closeLoading(false));
     }
   };
 
@@ -56,7 +49,7 @@ export const login = (email, password) => async dispatch => {
       config
     );
     dispatch(userLogin(data));
-    dispatch(setUserComplaints(data.complaints));
+
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
     dispatch(
@@ -84,8 +77,6 @@ export const getUserComplaints = id => async dispatch => {
       id,
       config
     );
-
-    dispatch(setUserComplaints(data));
   } catch (error) {
     dispatch(
       setError(

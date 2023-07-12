@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-import { setUserComplaints, setError } from '../slices/user';
+import { setError } from '../slices/user';
+
 export const AddComplaint =
   (
     title,
@@ -12,7 +13,7 @@ export const AddComplaint =
     imageUrl,
     authoritiesNotified,
     resolved,
-    userInfo,
+    userInfo
   ) =>
   async dispatch => {
     try {
@@ -39,11 +40,6 @@ export const AddComplaint =
         },
         config
       );
-
-      //return data
-      localStorage.setItem('userInfo', JSON.stringify(data));
-      dispatch(setUserComplaints(data));
-      
     } catch (error) {
       dispatch(
         setError(
@@ -56,5 +52,3 @@ export const AddComplaint =
       );
     }
   };
-
-

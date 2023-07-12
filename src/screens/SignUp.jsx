@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, Link as ReactLink } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
@@ -29,15 +29,19 @@ const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
-  const { loading, error, userInfo, complaints } = user;
+  const { loading, error, userInfo } = user;
   const toast = useToast();
 
   useEffect(() => {
     if (userInfo) {
-        navigate("/dashboard");
-        toast({description: 'Account created. Welcome aboard.', status: 'success', isClosable: true});
+      navigate('/dashboard');
+      toast({
+        description: 'Account created. Welcome aboard.',
+        status: 'success',
+        isClosable: true,
+      });
     }
-}, [userInfo, error, navigate, toast])
+  }, [userInfo, error, navigate, toast]);
 
   return (
     <Center minH={'100vh'}>

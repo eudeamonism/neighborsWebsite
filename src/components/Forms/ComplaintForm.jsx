@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
@@ -12,39 +12,55 @@ import {
   SimpleGrid,
   Box,
   Select,
+  useToast,
+  HStack,
+  Text,
+  Icon,
+  Flex,
 } from '@chakra-ui/react';
+import { CloseIcon } from '@chakra-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { AddComplaint } from '../../redux/actions/complaintActions';
 
 const ComplaintForm = () => {
+  const initialValues = useMemo(
+    () => ({
+      title: 'Title',
+      occurence: '',
+      crossStreet1: 'Street 1',
+      crossStreet2: 'Street 2',
+      complaintType: 'Selector',
+      description: 'Describe...',
+      imageUrl: 'link',
+      authoritiesNotified: false,
+      resolved: false,
+    }),
+    [Button]
+  );
+
   const navigate = useNavigate();
   const location = useLocation();
+  const toast = useToast();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
 
   const { userInfo, loading } = user;
 
+  const formikRef = useRef();
+
   return (
     <Box
+      ml="4"
       w="fixed"
       p="2"
       variant="elevated"
-      bg={useColorModeValue('gray.200', 'gray.600')}
+      outline="solid .1rem #C1C0C0"
+      _dark={{ outline: 'solid 1.5px gray' }}
       borderRadius="8"
     >
       <Formik
-        initialValues={{
-          title: 'Title',
-          occurence: '',
-          crossStreet1: 'Street 1',
-          crossStreet2: 'Street 2',
-          complaintType: 'Selector',
-          description: 'Describe...',
-          imageUrl: 'link',
-          authoritiesNotified: false,
-          resolved: false,
-        }}
+        initialValues={initialValues}
         validationSchema={Yup.object({
           resolved: Yup.boolean().required(),
           authoritiesNotified: Yup.boolean().required(),
@@ -59,7 +75,7 @@ const ComplaintForm = () => {
           ),
           description: Yup.string()
             .required('Please include a description.')
-            .min(20, "A minimum of 20 characters")
+            .min(20, 'A minimum of 20 characters')
             .max(200, 'No more than 200 characters!'),
         })}
         onSubmit={values => {
@@ -79,8 +95,11 @@ const ComplaintForm = () => {
           );
         }}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, resetForm }) => (
           <Form as="form">
+            <Flex justifyContent="flex-end" mt="1" mr="1" >
+              <CloseIcon color="light.600" _dark={{color: "dark.400"}}/>
+            </Flex>
             <SimpleGrid columns={2} spacing={5}>
               <Box>
                 <FormControl isInvalid={!!errors.title}>
@@ -262,19 +281,30 @@ const ComplaintForm = () => {
                 </FormControl>
               </Box>
             </SimpleGrid>
-
-            <Button
-              mt="8"
-              type="submit"
-              variant="solid"
-              colorScheme="yellow"
-              _dark={{ colorScheme: 'blue' }}
-              width="full"
-              isLoading={loading}
-              loadingText="Loading"
-            >
-              Submit
-            </Button>
+            <HStack mt="8">
+              <Button
+                type="submit"
+                variant="solid"
+                colorScheme="yellow"
+                _dark={{ colorScheme: 'blue' }}
+                width="full"
+                isLoading={loading}
+                loadingText="Loading"
+              >
+                Submit
+              </Button>
+              <Button
+                type="reset"
+                variant="solid"
+                colorScheme="gray"
+                _dark={{ colorScheme: 'blue' }}
+                width="full"
+                isLoading={loading}
+                loadingText="Loading"
+              >
+                Reset
+              </Button>
+            </HStack>
           </Form>
         )}
       </Formik>
