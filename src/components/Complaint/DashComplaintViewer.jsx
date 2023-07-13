@@ -31,7 +31,6 @@ const DashComplaintViewer = ({
   secondStreet,
 }) => {
 
-  console.log(police)
   return (
     <Box
       bg={useColorModeValue('gray.200', 'gray.600')}
