@@ -4,7 +4,7 @@ import {
   setError,
   complaints,
   resetComplaints,
-  formToggle
+  formToggle,
 } from '../slices/user';
 
 export const AddComplaint =
@@ -85,11 +85,11 @@ export const getComplaints = () => async dispatch => {
   }
 };
 
-export const complaintsReset = () => async dispatch => {
+export const complaintsReset = () => dispatch => {
   dispatch(resetComplaints());
 };
 
-export const closingForm = () => async dispatch => {
-  console.log("form closing action")
+export const closingForm = () => dispatch => {
+  console.log('form closing action');
   dispatch(formToggle());
 };

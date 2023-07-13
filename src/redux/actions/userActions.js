@@ -4,7 +4,7 @@ import {
   userLogin,
   setError,
   closeLoading,
-  userComplaints,
+  logout,
 } from '../slices/user';
 
 export const register =
@@ -55,7 +55,7 @@ export const login = (email, password) => async dispatch => {
       config
     );
     dispatch(userLogin(data));
-    console.log('Login successful')
+    console.log('Login successful');
 
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
@@ -71,3 +71,6 @@ export const login = (email, password) => async dispatch => {
   }
 };
 
+export const logoutUser = () => dispatch => {
+  dispatch(logout());
+};

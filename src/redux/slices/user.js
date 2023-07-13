@@ -12,6 +12,11 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    logout: state => {
+      localStorage.removeItem('userInfo');
+      state.userInfo = null;
+    },
+
     setLoading: state => {
       state.loading = true;
     },
@@ -50,6 +55,7 @@ export const {
   complaints,
   resetComplaints,
   formToggle,
+  logout
 } = userSlice.actions;
 
 export default userSlice.reducer;

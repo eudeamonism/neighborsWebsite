@@ -145,7 +145,7 @@ const SignLogin = () => {
           <Flex alignItems={'center'}>
             <Text
               as={ReactLink}
-              to="/login"
+              to="/signup"
               _hover={{ transform: 'scale(1.2)' }}
             >
               Sign Up?
