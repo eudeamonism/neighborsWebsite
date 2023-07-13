@@ -5,6 +5,8 @@ import {
   complaints,
   resetComplaints,
   formToggle,
+  setLoading,
+  closeLoading,
 } from '../slices/user';
 
 export const AddComplaint =
@@ -21,6 +23,7 @@ export const AddComplaint =
     userInfo
   ) =>
   async dispatch => {
+    dispatch(setLoading());
     try {
       const config = {
         headers: {
@@ -45,6 +48,7 @@ export const AddComplaint =
         },
         config
       );
+      dispatch(closeLoading());
     } catch (error) {
       dispatch(
         setError(
@@ -90,6 +94,5 @@ export const complaintsReset = () => dispatch => {
 };
 
 export const closingForm = () => dispatch => {
-  console.log('form closing action');
   dispatch(formToggle());
 };

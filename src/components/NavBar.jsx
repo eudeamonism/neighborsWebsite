@@ -34,7 +34,7 @@ const NavBar = () => {
           Mobile Hamburger Icon
         </Text>
         <Spacer />
-        <Text fontWeight="bold">Hi, Empty </Text>
+        <Text fontWeight="bold">Hi, {} </Text>
         <Spacer />
         <Button
           fontWeight="bold"

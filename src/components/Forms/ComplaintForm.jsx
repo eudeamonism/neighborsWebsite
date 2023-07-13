@@ -1,5 +1,3 @@
-import { useEffect, useMemo, useRef } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -8,14 +6,11 @@ import {
   FormLabel,
   FormErrorMessage,
   Input,
-  useColorModeValue,
   SimpleGrid,
   Box,
   Select,
   useToast,
   HStack,
-  Text,
-  Icon,
   Flex,
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
@@ -24,36 +19,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AddComplaint } from '../../redux/actions/complaintActions';
 
 const ComplaintForm = () => {
-  const initialValues = useMemo(
-    () => ({
-      title: '',
-      occurence: '',
-      crossStreet1: '',
-      crossStreet2: '',
-      complaintType: '',
-      description: '',
-      imageUrl: '',
-      authoritiesNotified: false,
-      resolved: false,
-    }),
-    [Button]
-  );
+  const initialValues = {
+    title: '',
+    occurence: '',
+    crossStreet1: '',
+    crossStreet2: '',
+    complaintType: '',
+    description: '',
+    imageUrl: '',
+    authoritiesNotified: false,
+    resolved: false,
+  };
 
-  const navigate = useNavigate();
-  const location = useLocation();
   const toast = useToast();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
 
   const { userInfo, loading } = user;
-
-  const formikRef = useRef();
-
-  const resetFormHandler = () => {
-    setTimeout(() => {
-      navigate('/');
-    }, 3000);
-  };
 
   return (
     <Box
@@ -101,7 +83,7 @@ const ComplaintForm = () => {
           );
         }}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, isValid, dirty }) => (
           <Form as="form">
             <Flex justifyContent="flex-end" mt="1" mr="1" minW="600px">
               <CloseIcon color="light.600" _dark={{ color: 'dark.400' }} />
@@ -235,7 +217,6 @@ const ComplaintForm = () => {
                     component="textarea"
                     rows="5"
                     cols="37"
-                    
                   />
                   <FormErrorMessage>{errors.description}</FormErrorMessage>
                 </FormControl>
@@ -299,10 +280,8 @@ const ComplaintForm = () => {
                 _dark={{ colorScheme: 'blue' }}
                 width="full"
                 isLoading={loading}
-                loadingText="Loading"
-                onClick={resetFormHandler}
               >
-                Submit
+                {loading ? 'Submitting...' : 'Submit'}
               </Button>
               <Button
                 type="reset"
@@ -315,6 +294,7 @@ const ComplaintForm = () => {
               >
                 Reset
               </Button>
+              <Button disabled>Testing</Button>
             </HStack>
           </Form>
         )}

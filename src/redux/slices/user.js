@@ -5,6 +5,7 @@ export const initialState = {
   error: null,
   userInfo: JSON.parse(localStorage.getItem('userInfo')) ?? null,
   complaints: [],
+  numberOfComplaints: 0,
   formClose: true,
 };
 
@@ -36,7 +37,10 @@ export const userSlice = createSlice({
     complaints: (state, { payload }) => {
       state.complaints = payload;
       state.error = null;
+
+      state.numberOfComplaints = state.complaints.length;
     },
+
     resetComplaints: state => {
       state.complaints = [];
     },
@@ -55,7 +59,7 @@ export const {
   complaints,
   resetComplaints,
   formToggle,
-  logout
+  logout,
 } = userSlice.actions;
 
 export default userSlice.reducer;

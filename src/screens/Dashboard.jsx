@@ -17,6 +17,7 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(complaintsReset);
     dispatch(getComplaints());
+
     console.log('Dashboard useEffect called');
   }, [dispatch]);
 
@@ -29,28 +30,33 @@ const Dashboard = () => {
 
   return (
     <>
-      {userInfo ? <Text>User Information present</Text> : redirect()}
-      <NavBar />
-      <VStack>
-        {formClose === false ? (
-          complaints.map(complaint => (
-            <DashComplaintViewer
-              key={complaint._id}
-              title={complaint.title}
-              occurence={complaint.occurence}
-              complaintType={complaint.complaintType}
-              description={complaint.description}
-              imageUrl={complaint.imageUrl}
-              police={complaint.authoritiesNotified}
-              resolved={complaint.resolved}
-              mainStreet={complaint.crossStreet1}
-              secondStreet={complaint.crossStreet2}
-            />
-          ))
-        ) : (
-          <ComplaintForm />
-        )}
-      </VStack>
+      {userInfo ? (
+        <>
+          <NavBar />
+          <VStack>
+            {formClose === false ? (
+              complaints.map(complaint => (
+                <DashComplaintViewer
+                  key={complaint._id}
+                  title={complaint.title}
+                  occurence={complaint.occurence}
+                  complaintType={complaint.complaintType}
+                  description={complaint.description}
+                  imageUrl={complaint.imageUrl}
+                  police={complaint.authoritiesNotified}
+                  resolved={complaint.resolved}
+                  mainStreet={complaint.crossStreet1}
+                  secondStreet={complaint.crossStreet2}
+                />
+              ))
+            ) : (
+              <ComplaintForm />
+            )}
+          </VStack>
+        </>
+      ) : (
+        redirect()
+      )}
     </>
   );
 };
