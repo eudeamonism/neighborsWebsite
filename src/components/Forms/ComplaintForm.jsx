@@ -12,10 +12,10 @@ import {
   useToast,
   HStack,
   Flex,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { AddComplaint } from '../../redux/actions/complaintActions';
 
 const ComplaintForm = () => {
@@ -83,7 +83,7 @@ const ComplaintForm = () => {
           );
         }}
       >
-        {({ errors, touched, isValid, dirty }) => (
+        {({ errors, touched}) => (
           <Form as="form">
             <Flex justifyContent="flex-end" mt="1" mr="1" minW="600px">
               <CloseIcon color="light.600" _dark={{ color: 'dark.400' }} />
@@ -276,25 +276,12 @@ const ComplaintForm = () => {
               <Button
                 type="submit"
                 variant="solid"
-                colorScheme="yellow"
-                _dark={{ colorScheme: 'blue' }}
                 width="full"
                 isLoading={loading}
+                isDisabled={errors}
               >
                 {loading ? 'Submitting...' : 'Submit'}
               </Button>
-              <Button
-                type="reset"
-                variant="solid"
-                colorScheme="gray"
-                _dark={{ colorScheme: 'blue' }}
-                width="full"
-                isLoading={loading}
-                loadingText="Loading"
-              >
-                Reset
-              </Button>
-              <Button disabled>Testing</Button>
             </HStack>
           </Form>
         )}

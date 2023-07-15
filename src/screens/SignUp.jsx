@@ -73,7 +73,7 @@ const SignUp = () => {
                 .max(60, 'No more than 60 characters'),
               displayName: Yup.string()
                 .required('Please enter your display name')
-                .max(60, 'No more than 60 characters'),
+                .max(15, 'No more than 15 characters'),
               email: Yup.string()
                 .email('Invalid email')
                 .required('An email address is required!')

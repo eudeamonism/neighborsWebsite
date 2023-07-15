@@ -6,7 +6,7 @@ export const initialState = {
   userInfo: JSON.parse(localStorage.getItem('userInfo')) ?? null,
   complaints: [],
   numberOfComplaints: 0,
-  formClose: true,
+  formClose: false,
 };
 
 export const userSlice = createSlice({

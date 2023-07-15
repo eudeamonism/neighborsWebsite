@@ -47,6 +47,10 @@ const Dashboard = () => {
                   resolved={complaint.resolved}
                   mainStreet={complaint.crossStreet1}
                   secondStreet={complaint.crossStreet2}
+                  isGuide={userInfo.isGuide}
+                  isAdmin={userInfo.isAdmin}
+                  numberOfComplaints={userInfo.numberOfComplaints}
+                  displayName={userInfo.displayName}
                 />
               ))
             ) : (

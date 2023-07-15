@@ -1,5 +1,14 @@
 import { GiPoliceBadge } from 'react-icons/gi';
-import { MaskSad, Crown, User } from '@phosphor-icons/react';
+import {
+  MaskSad,
+  Crown,
+  User,
+  Article,
+  MarkerCircle,
+  TrashSimple,
+  Trash,
+  user,
+} from '@phosphor-icons/react';
 import { RiFootprintLine } from 'react-icons/ri';
 
 import {
@@ -11,13 +20,15 @@ import {
   Heading,
   Text,
   Stack,
-  Icon,
   Spacer,
   Badge,
   Image,
   Card,
   Divider,
+  Icon,
+  Button,
 } from '@chakra-ui/react';
+import { transform } from 'framer-motion';
 
 const DashComplaintViewer = ({
   title,
@@ -29,8 +40,11 @@ const DashComplaintViewer = ({
   resolved,
   mainStreet,
   secondStreet,
+  isGuide,
+  isAdmin,
+  numberOfComplaints,
+  displayName,
 }) => {
-
   return (
     <Box
       bg={useColorModeValue('gray.200', 'gray.600')}
@@ -59,7 +73,10 @@ const DashComplaintViewer = ({
             fontWeight="100"
             fontStyle="regular"
           >
-            {new Date(occurence).toLocaleDateString()} | {police === true ? "Authorities Notified" : "No Authorities Notified" }
+            {new Date(occurence).toLocaleDateString()} |{' '}
+            {police === true
+              ? 'Authorities Notified'
+              : 'No Authorities Notified'}
           </Text>
         </Box>
         <Spacer />
@@ -71,8 +88,12 @@ const DashComplaintViewer = ({
           fontWeight="100"
           fontStyle="regular"
         >
-          <Badge borderRadius="full" px="2" colorScheme="green">
-            Closed
+          <Badge
+            borderRadius="full"
+            px="2"
+            colorScheme={resolved === true ? 'green' : 'red'}
+          >
+            {resolved === true ? 'Resolved' : 'Unresolved'}
           </Badge>
         </Flex>
       </Flex>
@@ -111,27 +132,29 @@ const DashComplaintViewer = ({
           width="200"
           height="120px"
           alt="Nuissance"
-          src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP._Kc00wIUY3OfnPOaicufBgHaEh%26pid%3DApi%26h%3D160&f=1&ipt=c9e07fd7f55a025d73ecddb3347d18563499f74d13374ec55f32f69277c10cfc&ipo=images"
+          src={imageUrl}
         />
         <Text ml="2" noOfLines="10">
-          Every weekend neighbors play loud music after hours. No one is doing
-          anything about this.
+          {description}
         </Text>
       </Flex>
       <Divider />
-      <Flex
-        mt="1"
-        mr="4"
-        mb="2"
-        alignItems="center"
-        fontSize="1em"
-        fontFamily="font-family: 'Lato', sans-serif;"
-        fontWeight="700"
-        fontStyle="bold"
-      >
+
+      <Flex gap="25px" justify="flex-end" alignItems="center">
+        <Flex gap="25px" ml="2">
+          <Flex>
+          <Icon boxSize={5}  as={Trash} _hover={{color: 'red'}} cursor="pointer"/>
+          </Flex>
+          <Flex>
+            <Icon boxSize={5}  as={MarkerCircle} _hover={{color: 'green'}} cursor="pointer"/>
+          </Flex>
+        </Flex>
         <Spacer />
-        <Icon width="14px" height="14px" as={Crown} />
-        <Text ml="1">Tomato Head</Text>
+        <Flex>Three</Flex>
+        <Flex mr="25px" alignItems="center">
+          {isGuide === true ? <Icon as={Crown} /> : <Icon as={User} mr="2" />}
+          <Text>{displayName}</Text>
+        </Flex>
       </Flex>
     </Box>
   );

@@ -32,6 +32,11 @@ export const AddComplaint =
         },
       };
 
+      if ((imageUrl === "")) {
+        imageUrl = '/assets/images/holder.jpg';
+        console.log('complaintActions Create imageUrl holder');
+      }
+
       const { data } = await axios.post(
         'http://localhost:5000/api/complaint/create',
         {
