@@ -3,34 +3,28 @@ import {
   MaskSad,
   Crown,
   User,
-  Article,
   MarkerCircle,
-  TrashSimple,
   Trash,
-  user,
+  Signpost,
 } from '@phosphor-icons/react';
-import { RiFootprintLine } from 'react-icons/ri';
 
 import {
-  VStack,
   Box,
   useColorModeValue,
   Flex,
-  HStack,
   Heading,
   Text,
-  Stack,
   Spacer,
   Badge,
   Image,
-  Card,
   Divider,
   Icon,
-  Button,
 } from '@chakra-ui/react';
-import { transform } from 'framer-motion';
 
-const DashComplaintViewer = ({
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteComplaint } from '../../redux/actions/complaintActions';
+function DashComplaintViewer({
+  complaintId,
   title,
   occurence,
   complaintType,
@@ -44,10 +38,17 @@ const DashComplaintViewer = ({
   isAdmin,
   numberOfComplaints,
   displayName,
-}) => {
+}) {
+  const user = useSelector(state => state.user);
+
+  const { userInfo } = user;
+  const userId = userInfo._id;
+
+  const dispatch = useDispatch();
+
   return (
     <Box
-      bg={useColorModeValue('gray.200', 'gray.600')}
+      bg={useColorModeValue('gray.50', 'gray.600')}
       width="650px"
       height="auto"
       borderRadius="8"
@@ -74,6 +75,7 @@ const DashComplaintViewer = ({
             fontStyle="regular"
           >
             {new Date(occurence).toLocaleDateString()} |{' '}
+            <Icon width="14px" height="14px" mr="1" as={GiPoliceBadge} />
             {police === true
               ? 'Authorities Notified'
               : 'No Authorities Notified'}
@@ -99,16 +101,19 @@ const DashComplaintViewer = ({
       </Flex>
 
       <Flex mb="1">
-        <Box ml="6">
+        <Flex ml="6" alignItems="center">
           <Text
             fontSize="1em"
             fontFamily="font-family: 'Lato', sans-serif;"
             fontWeight="100"
             fontStyle="regular"
+            alignItems="center"
           >
-            Main Street at Baird Street
+            <Icon width="14px" height="14px" as={Signpost} />{' '}
+            {`${mainStreet} at ${secondStreet}`}
           </Text>
-        </Box>
+        </Flex>
+
         <Spacer />
         <Flex
           mr="4"
@@ -118,8 +123,8 @@ const DashComplaintViewer = ({
           fontWeight="100"
           fontStyle="regular"
         >
-          <Icon width="14px" height="14px" as={GiPoliceBadge} />
-          <Text ml="1">Nuisance</Text>
+          <Icon width="14px" height="14px" as={MaskSad} />
+          <Text ml="1">{complaintType}</Text>
         </Flex>
       </Flex>
       <Divider />
@@ -140,13 +145,26 @@ const DashComplaintViewer = ({
       </Flex>
       <Divider />
 
-      <Flex gap="25px" justify="flex-end" alignItems="center">
+      <Flex gap="25px" justify="flex-end" alignItems="center" mb="2">
         <Flex gap="25px" ml="2">
           <Flex>
-          <Icon boxSize={5}  as={Trash} _hover={{color: 'red'}} cursor="pointer"/>
+            <Icon
+              boxSize={5}
+              as={Trash}
+              _hover={{ color: 'red' }}
+              cursor="pointer"
+              onClick={() => {
+                dispatch(deleteComplaint(complaintId));
+              }}
+            />
           </Flex>
           <Flex>
-            <Icon boxSize={5}  as={MarkerCircle} _hover={{color: 'green'}} cursor="pointer"/>
+            <Icon
+              boxSize={5}
+              as={MarkerCircle}
+              _hover={{ color: 'green' }}
+              cursor="pointer"
+            />
           </Flex>
         </Flex>
         <Spacer />
@@ -158,6 +176,6 @@ const DashComplaintViewer = ({
       </Flex>
     </Box>
   );
-};
+}
 
 export default DashComplaintViewer;

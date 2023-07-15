@@ -38,6 +38,7 @@ const Dashboard = () => {
               complaints.map(complaint => (
                 <DashComplaintViewer
                   key={complaint._id}
+                  complaintId={complaint._id}
                   title={complaint.title}
                   occurence={complaint.occurence}
                   complaintType={complaint.complaintType}

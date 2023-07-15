@@ -32,7 +32,7 @@ export const AddComplaint =
         },
       };
 
-      if ((imageUrl === "")) {
+      if (imageUrl === '') {
         imageUrl = '/assets/images/holder.jpg';
         console.log('complaintActions Create imageUrl holder');
       }
@@ -100,4 +100,30 @@ export const complaintsReset = () => dispatch => {
 
 export const closingForm = () => dispatch => {
   dispatch(formToggle());
+};
+
+export const deleteComplaint = complaintId => async dispatch => {
+  console.log('clicked in Action');
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axios.delete(
+      `http://localhost:5000/api/complaint/removeComplaint/${complaintId}`,
+      config
+    );
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+  }
 };
