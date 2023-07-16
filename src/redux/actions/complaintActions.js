@@ -3,10 +3,10 @@ import axios from 'axios';
 import {
   setError,
   complaints,
-  resetComplaints,
   formToggle,
   setLoading,
   closeLoading,
+  userLogin
 } from '../slices/user';
 
 export const AddComplaint =
@@ -34,7 +34,6 @@ export const AddComplaint =
 
       if (imageUrl === '') {
         imageUrl = '/assets/images/holder.jpg';
-        console.log('complaintActions Create imageUrl holder');
       }
 
       const { data } = await axios.post(
@@ -54,6 +53,10 @@ export const AddComplaint =
         config
       );
       dispatch(closeLoading());
+      dispatch(userLogin(data.user));
+      localStorage.setItem('userInfo', JSON.stringify(data.user));
+      console.log(data.user);
+      dispatch(formToggle());
     } catch (error) {
       dispatch(
         setError(
@@ -94,16 +97,11 @@ export const getComplaints = () => async dispatch => {
   }
 };
 
-export const complaintsReset = () => dispatch => {
-  dispatch(resetComplaints());
-};
-
 export const closingForm = () => dispatch => {
   dispatch(formToggle());
 };
 
 export const deleteComplaint = complaintId => async dispatch => {
-  console.log('clicked in Action');
   try {
     const config = {
       headers: {

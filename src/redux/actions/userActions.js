@@ -70,6 +70,31 @@ export const login = (email, password) => async dispatch => {
     );
   }
 };
+//This lowers in the database
+export const decrementComplaint = userId => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axios.post(
+      `http://localhost:5000/api/users/decrementComplaint/${userId}`,
+      config
+    );
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+  }
+};
 
 export const logoutUser = () => dispatch => {
   dispatch(logout());

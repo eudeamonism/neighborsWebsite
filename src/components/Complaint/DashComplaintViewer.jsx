@@ -23,6 +23,7 @@ import {
 
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteComplaint } from '../../redux/actions/complaintActions';
+import { decrementComplaint } from '../../redux/actions/userActions';
 function DashComplaintViewer({
   complaintId,
   title,
@@ -155,6 +156,7 @@ function DashComplaintViewer({
               cursor="pointer"
               onClick={() => {
                 dispatch(deleteComplaint(complaintId));
+                dispatch(decrementComplaint(userId));
               }}
             />
           </Flex>
@@ -168,7 +170,10 @@ function DashComplaintViewer({
           </Flex>
         </Flex>
         <Spacer />
-        <Flex>Three</Flex>
+        <Flex>
+          <Icon as={Crown} />
+          <Text>{numberOfComplaints}</Text>
+        </Flex>
         <Flex mr="25px" alignItems="center">
           {isGuide === true ? <Icon as={Crown} /> : <Icon as={User} mr="2" />}
           <Text>{displayName}</Text>

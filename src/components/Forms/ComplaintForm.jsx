@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -12,11 +13,14 @@ import {
   useToast,
   HStack,
   Flex,
-  useColorModeValue,
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { AddComplaint } from '../../redux/actions/complaintActions';
+import {
+  AddComplaint,
+  getComplaints,
+} from '../../redux/actions/complaintActions';
+
 
 const ComplaintForm = () => {
   const initialValues = {
@@ -36,6 +40,8 @@ const ComplaintForm = () => {
   const user = useSelector(state => state.user);
 
   const { userInfo, loading } = user;
+
+  const userId = userInfo._id;
 
   return (
     <Box
@@ -83,7 +89,7 @@ const ComplaintForm = () => {
           );
         }}
       >
-        {({ errors, touched}) => (
+        {({ errors, touched }) => (
           <Form as="form">
             <Flex justifyContent="flex-end" mt="1" mr="1" minW="600px">
               <CloseIcon color="light.600" _dark={{ color: 'dark.400' }} />
@@ -135,7 +141,7 @@ const ComplaintForm = () => {
                     name="crossStreet1"
                     type="text"
                   />
-                  <FormErrorMessage>{errors.crossStreet2}</FormErrorMessage>
+                  <FormErrorMessage>{errors.crossStreet1}</FormErrorMessage>
                 </FormControl>
 
                 <FormControl>
@@ -278,7 +284,14 @@ const ComplaintForm = () => {
                 variant="solid"
                 width="full"
                 isLoading={loading}
-                isDisabled={errors}
+                onClick={() => {
+                  toast({
+                    title: 'Complaint Created',
+                    status: 'success',
+                    isClosable: 'true',
+                    duration: 6000,
+                  });
+                }}
               >
                 {loading ? 'Submitting...' : 'Submit'}
               </Button>

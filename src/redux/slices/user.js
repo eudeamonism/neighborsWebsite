@@ -41,10 +41,6 @@ export const userSlice = createSlice({
       state.numberOfComplaints = state.complaints.length;
     },
 
-    resetComplaints: state => {
-      state.complaints = [];
-    },
-
     formToggle: state => {
       state.formClose = !state.formClose;
     },
@@ -57,7 +53,7 @@ export const {
   setError,
   closeLoading,
   complaints,
-  resetComplaints,
+  complaintCount,
   formToggle,
   logout,
 } = userSlice.actions;
