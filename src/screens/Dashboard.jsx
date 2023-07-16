@@ -22,7 +22,7 @@ const Dashboard = () => {
     dispatch(getComplaints());
 
     console.log('Dashboard useEffect called');
-  }, [dispatch, numberOfComplaints]);
+  }, [dispatch, numberOfComplaints, userInfo ]);
 
   return (
     <>

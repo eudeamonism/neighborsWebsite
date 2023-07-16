@@ -13,14 +13,14 @@ import {
   useToast,
   HStack,
   Flex,
+  Icon,
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   AddComplaint,
-  getComplaints,
+  closingForm,
 } from '../../redux/actions/complaintActions';
-
 
 const ComplaintForm = () => {
   const initialValues = {
@@ -92,7 +92,16 @@ const ComplaintForm = () => {
         {({ errors, touched }) => (
           <Form as="form">
             <Flex justifyContent="flex-end" mt="1" mr="1" minW="600px">
-              <CloseIcon color="light.600" _dark={{ color: 'dark.400' }} />
+              <Icon
+                as={CloseIcon}
+                color="light.600"
+                _dark={{ color: 'dark.400' }}
+                _hover={{ fontSize: '20px' }}
+                cursor="pointer"
+                onClick={() => {
+                  dispatch(closingForm());
+                }}
+              />
             </Flex>
             <SimpleGrid columns={2} spacing={5}>
               <Box>
