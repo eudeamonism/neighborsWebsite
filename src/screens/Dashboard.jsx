@@ -1,6 +1,6 @@
 import { VStack, Text, useToast } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ComplaintForm from '../components/Forms/ComplaintForm';
 import NavBar from '../components/NavBar';
@@ -8,6 +8,7 @@ import { getComplaints } from '../redux/actions/complaintActions';
 import DashComplaintViewer from '../components/Complaint/DashComplaintViewer';
 
 const Dashboard = () => {
+  const [editForm, setEditForm] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,12 +18,15 @@ const Dashboard = () => {
   const redirect = () => {
     navigate('/login');
   };
+  const updateToggleHandler = () => {
+    setEditForm(state => !state);
+  };
 
   useEffect(() => {
     dispatch(getComplaints());
 
     console.log('Dashboard useEffect called');
-  }, [dispatch, numberOfComplaints, userInfo ]);
+  }, [dispatch, numberOfComplaints, userInfo]);
 
   return (
     <>
@@ -48,10 +52,12 @@ const Dashboard = () => {
                   isAdmin={userInfo.isAdmin}
                   numberOfComplaints={userInfo.numberOfComplaints}
                   displayName={userInfo.displayName}
+                  updateSwitch={updateToggleHandler}
+                  editForm={editForm}
                 />
               ))
             ) : (
-              <ComplaintForm />
+              <ComplaintForm editForm={editForm} />
             )}
           </VStack>
         </>

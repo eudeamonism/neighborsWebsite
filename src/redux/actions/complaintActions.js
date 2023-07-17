@@ -3,10 +3,11 @@ import axios from 'axios';
 import {
   setError,
   complaints,
+  complaint,
   formToggle,
   setLoading,
   closeLoading,
-  userLogin
+  userLogin,
 } from '../slices/user';
 
 export const AddComplaint =
@@ -55,7 +56,7 @@ export const AddComplaint =
       dispatch(closeLoading());
       dispatch(userLogin(data.user));
       localStorage.setItem('userInfo', JSON.stringify(data.user));
-      
+
       dispatch(formToggle());
     } catch (error) {
       dispatch(
@@ -84,6 +85,35 @@ export const getComplaints = () => async dispatch => {
     );
 
     dispatch(complaints(data));
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+  }
+};
+
+export const getComplaint = complaintId => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axios.get(
+      `http://localhost:5000/api/complaint/getComplaint/${complaintId}`,
+      config
+    );
+
+    dispatch(complaint(data));
+
+    
   } catch (error) {
     dispatch(
       setError(
@@ -126,7 +156,6 @@ export const deleteComplaint = complaintId => async dispatch => {
   }
 };
 
-
 //open Original Form and populate form with fields
 //save changes button --> update http request
 //cancel form button --> closeForm
@@ -134,4 +163,3 @@ export const deleteComplaint = complaintId => async dispatch => {
 //Update Form
 //JSX will pass complaintId
 //await data of complaint
-

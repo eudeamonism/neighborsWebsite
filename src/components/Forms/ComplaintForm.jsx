@@ -22,26 +22,41 @@ import {
   closingForm,
 } from '../../redux/actions/complaintActions';
 
-const ComplaintForm = () => {
-  const initialValues = {
-    title: '',
-    occurence: '',
-    crossStreet1: '',
-    crossStreet2: '',
-    complaintType: '',
-    description: '',
-    imageUrl: '',
-    authoritiesNotified: false,
-    resolved: false,
-  };
-
+const ComplaintForm = ({ editForm, title }) => {
   const toast = useToast();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
 
-  const { userInfo, loading } = user;
+  const { userInfo, loading, complaint } = user;
 
-  const userId = userInfo._id;
+  console.log(complaint);
+  let initialValues;
+
+  if (editForm === false) {
+    initialValues = {
+      title: '',
+      occurence: '',
+      crossStreet1: '',
+      crossStreet2: '',
+      complaintType: '',
+      description: '',
+      imageUrl: '',
+      authoritiesNotified: false,
+      resolved: false,
+    };
+  } else if (editForm === true) {
+    initialValues = {
+      title: complaint.title,
+      occurence: "",
+      crossStreet1: complaint.crossStreet1,
+      crossStreet2: complaint.crossStreet2,
+      complaintType: "",
+      description: complaint.description,
+      imageUrl: complaint.imageUrl,
+      authoritiesNotified: complaint.authoritiesNotified,
+      resolved: complaint.resolved,
+    };
+  }
 
   return (
     <Box
@@ -113,7 +128,13 @@ const ComplaintForm = () => {
                   >
                     Title
                   </FormLabel>
-                  <Field as={Input} id="title" name="title" type="text" />
+                  <Field
+                    as={Input}
+                    id="title"
+                    name="title"
+                    type="text"
+                    placeholder={title}
+                  />
                   <FormErrorMessage>{errors.title}</FormErrorMessage>
                 </FormControl>
 

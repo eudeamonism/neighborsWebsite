@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+
 import { GiPoliceBadge } from 'react-icons/gi';
 import {
   MaskSad,
@@ -35,11 +37,16 @@ import {
 } from '@chakra-ui/react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteComplaint } from '../../redux/actions/complaintActions';
+import {
+  deleteComplaint,
+  closingForm,
+  getComplaint,
+} from '../../redux/actions/complaintActions';
 import {
   decrementComplaint,
   resetUserId,
 } from '../../redux/actions/userActions';
+
 function DashComplaintViewer({
   complaintId,
   title,
@@ -55,16 +62,20 @@ function DashComplaintViewer({
   isAdmin,
   numberOfComplaints,
   displayName,
+  updateSwitch,
+  editForm,
 }) {
   const user = useSelector(state => state.user);
 
-  const { userInfo, loading } = user;
+  const { userInfo, loading, formClose } = user;
   const userId = userInfo._id;
 
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const toast = useToast();
+
+  const location = useLocation();
 
   const deleteHandler = () => {
     try {
@@ -81,6 +92,17 @@ function DashComplaintViewer({
     } finally {
       onClose();
     }
+  };
+
+  const formHandler = () => {
+    updateSwitch(true);
+    dispatch(getComplaint(complaintId));
+    console.log(complaintId);
+    dispatch(closingForm());
+
+    //passComplaintId to new action
+    console.log(editForm);
+    console.log(title);
   };
 
   return (
@@ -219,6 +241,9 @@ function DashComplaintViewer({
                 as={MarkerCircle}
                 _hover={{ color: 'green' }}
                 cursor="pointer"
+                onClick={() => {
+                  formHandler();
+                }}
               />
             </Flex>
           </Flex>
