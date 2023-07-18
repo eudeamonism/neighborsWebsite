@@ -20,18 +20,39 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   AddComplaint,
   closingForm,
+  getComplaints,
+  removeStateComplaint,
 } from '../../redux/actions/complaintActions';
 
-const ComplaintForm = ({ editForm, title }) => {
+const ComplaintForm = ({ editForm, title, updateSwitch }) => {
+  const complaintTypes = {
+    ['Illegal Dumping']: 'Illegal Dumping',
+    ['Excessive Noise']: 'Excessive Noise',
+    ['Lewdness']: 'Lewdness',
+    ['Public Intoxication']: 'Public Intoxication',
+    ['Creeping']: 'Creeping',
+    ['Stalking']: 'Stalking',
+    ['Violence']: 'Violence',
+    ['Theft']: 'Theft',
+    ['Speeding']: 'Speeding',
+    ['Drugs']: 'Drugs',
+    ['Tenant Issues']: 'Tenant Issues',
+    ['Abandoned Vehicles']: 'Abandoned Vehicles',
+    ['Fireworks']: 'Fireworks',
+    ['Discrimination']: 'Discrimination',
+    ['Unsanitary Conditions']: 'Unsanitary Conditions',
+    ['Public Nuisance']: 'Public Nuisance',
+    ['Code Violations']: 'Code Violations',
+    ['Salty']: 'Salty',
+  };
   const toast = useToast();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
 
-  const { userInfo, loading, complaint } = user;
+  const { userInfo, loading, complaint, formClose } = user;
 
-  console.log(complaint);
   let initialValues;
-
+  console.log(complaint);
   if (editForm === false) {
     initialValues = {
       title: '',
@@ -47,16 +68,25 @@ const ComplaintForm = ({ editForm, title }) => {
   } else if (editForm === true) {
     initialValues = {
       title: complaint.title,
-      occurence: "",
+      occurence: complaint.occurence.split('T')[0],
       crossStreet1: complaint.crossStreet1,
       crossStreet2: complaint.crossStreet2,
-      complaintType: "",
+      complaintType: complaintTypes[complaint.complaintType],
       description: complaint.description,
       imageUrl: complaint.imageUrl,
       authoritiesNotified: complaint.authoritiesNotified,
       resolved: complaint.resolved,
     };
   }
+  console.log(`editForm: ${editForm}`);
+  const formHandler = () => {
+    if (editForm === true) {
+      dispatch(closingForm());
+    } else if (editForm === false) {
+      console.log('Hello from else if editForm = false');
+      dispatch(closingForm());
+    }
+  };
 
   return (
     <Box
@@ -104,7 +134,7 @@ const ComplaintForm = ({ editForm, title }) => {
           );
         }}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, resetForm }) => (
           <Form as="form">
             <Flex justifyContent="flex-end" mt="1" mr="1" minW="600px">
               <Icon
@@ -114,7 +144,7 @@ const ComplaintForm = ({ editForm, title }) => {
                 _hover={{ fontSize: '20px' }}
                 cursor="pointer"
                 onClick={() => {
-                  dispatch(closingForm());
+                  formHandler();
                 }}
               />
             </Flex>

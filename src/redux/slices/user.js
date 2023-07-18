@@ -44,6 +44,12 @@ export const userSlice = createSlice({
 
     complaint: (state, { payload }) => {
       state.complaint = payload;
+      localStorage.setItem('complaint', JSON.stringify(payload));
+    },
+
+    removeComplaint: state => {
+      state.complaint = null;
+      localStorage.removeItem('complaint');
     },
 
     formToggle: state => {
@@ -62,6 +68,7 @@ export const {
   complaintCount,
   formToggle,
   logout,
+  removeComplaint,
 } = userSlice.actions;
 
 export default userSlice.reducer;

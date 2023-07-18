@@ -67,7 +67,7 @@ function DashComplaintViewer({
 }) {
   const user = useSelector(state => state.user);
 
-  const { userInfo, loading, formClose } = user;
+  const { userInfo, loading, formClose, complaint } = user;
   const userId = userInfo._id;
 
   const dispatch = useDispatch();
@@ -95,14 +95,7 @@ function DashComplaintViewer({
   };
 
   const formHandler = () => {
-    updateSwitch(true);
-    dispatch(getComplaint(complaintId));
-    console.log(complaintId);
-    dispatch(closingForm());
-
-    //passComplaintId to new action
-    console.log(editForm);
-    console.log(title);
+    console.log("doodle")
   };
 
   return (

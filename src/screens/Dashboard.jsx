@@ -57,7 +57,7 @@ const Dashboard = () => {
                 />
               ))
             ) : (
-              <ComplaintForm editForm={editForm} />
+              <ComplaintForm editForm={editForm} updateSwitch={updateToggleHandler}/>
             )}
           </VStack>
         </>

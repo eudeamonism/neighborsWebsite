@@ -40,9 +40,9 @@ const NavBar = () => {
           fontWeight="bold"
           ml="6"
           size="xs"
-          colorScheme={formClose ? 'red' : 'green'}
-          _dark={{ colorScheme: 'blue' }}
+          colorScheme="green"
           onClick={formHandler}
+          hidden={formClose ? true : false}
         >
           {formClose ? 'Close Form' : '+ Complaint'}
         </Button>
@@ -55,7 +55,7 @@ const NavBar = () => {
           colorScheme="grey"
           rightIcon={<BiExit size="18" />}
           onClick={logoutHandler}
-          _hover={{color: "#A5A5A5"}}
+          _hover={{ color: '#A5A5A5' }}
         >
           Sign out
         </Button>
