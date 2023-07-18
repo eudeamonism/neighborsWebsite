@@ -22,9 +22,10 @@ import {
   closingForm,
   getComplaints,
   removeStateComplaint,
+  editFormSwitch,
 } from '../../redux/actions/complaintActions';
 
-const ComplaintForm = ({ editForm, title, updateSwitch }) => {
+const ComplaintForm = ({ title }) => {
   const complaintTypes = {
     ['Illegal Dumping']: 'Illegal Dumping',
     ['Excessive Noise']: 'Excessive Noise',
@@ -49,7 +50,9 @@ const ComplaintForm = ({ editForm, title, updateSwitch }) => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
 
-  const { userInfo, loading, complaint, formClose } = user;
+  const { userInfo, loading, complaint, formClose, editForm } = user;
+
+  //EDIT THIS FOR SANDBOX ONLY
 
   let initialValues;
   console.log(complaint);
@@ -79,8 +82,10 @@ const ComplaintForm = ({ editForm, title, updateSwitch }) => {
     };
   }
   console.log(`editForm: ${editForm}`);
-  const formHandler = () => {
+  const formHandler = async () => {
     if (editForm === true) {
+      dispatch(editFormSwitch());
+      await dispatch(removeStateComplaint());
       dispatch(closingForm());
     } else if (editForm === false) {
       console.log('Hello from else if editForm = false');

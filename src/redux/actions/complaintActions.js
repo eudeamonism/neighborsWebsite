@@ -8,7 +8,8 @@ import {
   setLoading,
   closeLoading,
   userLogin,
-  removeComplaint
+  removeComplaint,
+  editFormToggle,
 } from '../slices/user';
 
 export const AddComplaint =
@@ -113,8 +114,6 @@ export const getComplaint = complaintId => async dispatch => {
     );
 
     dispatch(complaint(data));
-
-    
   } catch (error) {
     dispatch(
       setError(
@@ -132,8 +131,12 @@ export const closingForm = () => dispatch => {
   dispatch(formToggle());
 };
 
+export const editFormSwitch = () => dispatch => {
+  dispatch(editFormToggle());
+};
+
 export const removeStateComplaint = () => dispatch => {
-  console.log('action removes state tester')
+  console.log('action removes state tester');
   dispatch(removeComplaint());
 };
 

@@ -18,9 +18,6 @@ const Dashboard = () => {
   const redirect = () => {
     navigate('/login');
   };
-  const updateToggleHandler = () => {
-    setEditForm(state => !state);
-  };
 
   useEffect(() => {
     dispatch(getComplaints());
@@ -52,12 +49,10 @@ const Dashboard = () => {
                   isAdmin={userInfo.isAdmin}
                   numberOfComplaints={userInfo.numberOfComplaints}
                   displayName={userInfo.displayName}
-                  updateSwitch={updateToggleHandler}
-                  editForm={editForm}
                 />
               ))
             ) : (
-              <ComplaintForm editForm={editForm} updateSwitch={updateToggleHandler}/>
+              <ComplaintForm />
             )}
           </VStack>
         </>

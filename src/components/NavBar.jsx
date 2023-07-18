@@ -44,7 +44,7 @@ const NavBar = () => {
           onClick={formHandler}
           hidden={formClose ? true : false}
         >
-          {formClose ? 'Close Form' : '+ Complaint'}
+          + Complaint
         </Button>
 
         <Button

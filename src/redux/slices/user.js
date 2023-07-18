@@ -8,6 +8,7 @@ export const initialState = {
   numberOfComplaints: 0,
   formClose: false,
   complaint: null,
+  editForm: false,
 };
 
 export const userSlice = createSlice({
@@ -55,6 +56,9 @@ export const userSlice = createSlice({
     formToggle: state => {
       state.formClose = !state.formClose;
     },
+    editFormToggle: state => {
+      state.editForm = !state.editForm;
+    },
   },
 });
 
@@ -69,6 +73,7 @@ export const {
   formToggle,
   logout,
   removeComplaint,
+  editFormToggle,
 } = userSlice.actions;
 
 export default userSlice.reducer;

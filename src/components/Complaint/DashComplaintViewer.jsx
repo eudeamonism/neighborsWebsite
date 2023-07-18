@@ -41,6 +41,7 @@ import {
   deleteComplaint,
   closingForm,
   getComplaint,
+  editFormSwitch,
 } from '../../redux/actions/complaintActions';
 import {
   decrementComplaint,
@@ -62,8 +63,6 @@ function DashComplaintViewer({
   isAdmin,
   numberOfComplaints,
   displayName,
-  updateSwitch,
-  editForm,
 }) {
   const user = useSelector(state => state.user);
 
@@ -74,8 +73,6 @@ function DashComplaintViewer({
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const toast = useToast();
-
-  const location = useLocation();
 
   const deleteHandler = () => {
     try {
@@ -94,8 +91,10 @@ function DashComplaintViewer({
     }
   };
 
-  const formHandler = () => {
-    console.log("doodle")
+  const formHandler = async () => {
+    await dispatch(getComplaint(complaintId));
+    dispatch(editFormSwitch());
+    dispatch(closingForm());
   };
 
   return (
