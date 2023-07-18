@@ -49,7 +49,7 @@ const SignLogin = () => {
     } else if (error) {
       toast({
         description:
-          'There was an error during the login process. Please try again later.',
+          `${error}`,
         status: 'error',
         isClosable: true,
       });

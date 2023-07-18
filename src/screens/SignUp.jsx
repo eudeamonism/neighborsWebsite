@@ -40,6 +40,15 @@ const SignUp = () => {
         status: 'success',
         isClosable: true,
       });
+    } else if (error) {
+      
+      toast({
+        title: `${error?.includes("email") ? "Email" : "Display Name"}`,
+        description: `${error?.includes("email") ? error : "Already registered! Choose another one."}`,
+        status: 'error',
+        isClosable: true,
+        duration: 9000,
+      });
     }
   }, [userInfo, error, navigate, toast]);
 
