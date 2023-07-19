@@ -1,5 +1,6 @@
 import React from 'react';
 import { Center, HStack, useMediaQuery, Flex, VStack } from '@chakra-ui/react';
+import {motion} from 'framer-motion';
 import SignLogin from '../components/SignLogin';
 import LoginImage from '../components/LoginImage';
 import ComplaintList from '../components/Complaint/ComplaintList';
@@ -17,7 +18,9 @@ const LoginRegister = () => {
               <LoginImage />
               <SignLogin />
             </HStack>
-            <VStack>< ComplaintList/></VStack>
+            <VStack>
+              <ComplaintList />
+            </VStack>
           </>
         )}
       </HStack>

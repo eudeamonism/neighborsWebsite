@@ -1,5 +1,5 @@
-import React from 'react';
 import ComplaintCard from './ComplaintCard';
+
 import { complaints } from '../../data/compliants';
 import { Box, Flex, Stack } from '@chakra-ui/react';
 

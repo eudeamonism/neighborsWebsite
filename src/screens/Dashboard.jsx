@@ -1,6 +1,7 @@
 import { VStack, Text, useToast } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import ComplaintForm from '../components/Forms/ComplaintForm';
 import NavBar from '../components/NavBar';
@@ -21,8 +22,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getComplaints());
-
-    console.log('Dashboard useEffect called');
   }, [dispatch, numberOfComplaints, userInfo]);
 
   return (

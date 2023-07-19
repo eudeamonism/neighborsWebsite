@@ -1,6 +1,7 @@
 import { GiPoliceBadge } from 'react-icons/gi';
 import { MaskSad, Crown, User } from '@phosphor-icons/react';
 import { RiFootprintLine } from 'react-icons/ri';
+import { motion, useScroll } from 'framer-motion';
 import {
   Box,
   Text,
@@ -18,6 +19,8 @@ import {
 } from '@chakra-ui/react';
 
 const ComplaintCard = ({ complaint: data }) => {
+
+
   return (
     <Stack
       minWidth="600px"
@@ -92,7 +95,13 @@ const ComplaintCard = ({ complaint: data }) => {
         fontSize="xs"
         textTransform="uppercase"
       >
-        <Icon ml="3px" width="14px" height="14px" as={RiFootprintLine} mr="6px"/>
+        <Icon
+          ml="3px"
+          width="14px"
+          height="14px"
+          as={RiFootprintLine}
+          mr="6px"
+        />
         {data.location.crossStreet1} at {data.location.crossStreet2}
       </Flex>
       <Flex mt="15px" ml="24px" mr="24px">
@@ -103,11 +112,12 @@ const ComplaintCard = ({ complaint: data }) => {
           src={data.details.imageUrl}
           alt="Theft"
         />
-        <Text ml="6px"
-        color={useColorModeValue('light.600', 'dark.500')}
-        fontWeight="medium"
+        <Text
+          ml="6px"
+          color={useColorModeValue('light.600', 'dark.500')}
+          fontWeight="medium"
         >
-         {data.details.description}
+          {data.details.description}
         </Text>
       </Flex>
       <Flex mt="15px" ml="24px" alignItems="center">
