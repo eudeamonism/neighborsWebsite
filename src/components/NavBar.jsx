@@ -1,4 +1,4 @@
-import React from 'react';
+
 import {
   Box,
   Flex,
@@ -18,6 +18,7 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const { userInfo, formClose } = user;
+  
 
   const formHandler = () => {
     dispatch(closingForm());
