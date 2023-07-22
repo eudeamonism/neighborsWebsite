@@ -47,7 +47,7 @@ const Dashboard = () => {
                   isGuide={userInfo.isGuide}
                   isAdmin={userInfo.isAdmin}
                   numberOfComplaints={userInfo.numberOfComplaints}
-                  displayName={userInfo.displayName}
+                  displayName={complaint.displayName || 'Will Erase '}
                 />
               ))
             ) : (

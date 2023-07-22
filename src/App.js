@@ -6,6 +6,7 @@ import SignUp from './screens/SignUp';
 import baseThemes from './theme/baseThemes';
 import Dashboard from './screens/Dashboard';
 import DefaultPage from './screens/DefaultPage';
+import Exist from './screens/Exist';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/login" element={<LoginRegister />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/*" element={<Exist />} />
         </Routes>
       </Router>
     </ChakraProvider>

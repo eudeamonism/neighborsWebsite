@@ -34,6 +34,8 @@ import {
   ModalBody,
   ModalFooter,
   Button,
+  Switch,
+  FormLabel,
 } from '@chakra-ui/react';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -72,6 +74,8 @@ function DashComplaintViewer({
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const [truthy, setTruthy] = useState(false);
+
   const toast = useToast();
 
   const deleteHandler = () => {
@@ -97,8 +101,9 @@ function DashComplaintViewer({
     dispatch(closingForm());
   };
 
+  console.log(truthy + 'useState Checker');
   return (
-    <>
+    <> {truthy ? <Text>truthy</Text> : <Text>falsey</Text>}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -239,6 +244,16 @@ function DashComplaintViewer({
               />
             </Flex>
           </Flex>
+
+          {user ? (
+            <Flex alignItems="center" gap="2" mt="2">
+              <FormLabel mt="1" htmlFor="myComplaints">
+                All Complaints
+              </FormLabel>
+              <Switch id="complaintSwitch" onChange={() => setTruthy(!truthy)} />
+            </Flex>
+          ) : null}
+
           <Spacer />
           <Flex alignItems="center">
             <Icon as={Article} mr="2" />
