@@ -65,6 +65,7 @@ function DashComplaintViewer({
   isAdmin,
   numberOfComplaints,
   displayName,
+  complaintSwitchHandler,
 }) {
   const user = useSelector(state => state.user);
 
@@ -101,9 +102,8 @@ function DashComplaintViewer({
     dispatch(closingForm());
   };
 
-  console.log(truthy + 'useState Checker');
   return (
-    <> {truthy ? <Text>truthy</Text> : <Text>falsey</Text>}
+    <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -247,10 +247,10 @@ function DashComplaintViewer({
 
           {user ? (
             <Flex alignItems="center" gap="2" mt="2">
+              <Switch id="complaintSwitch" onChange={complaintSwitchHandler} />
               <FormLabel mt="1" htmlFor="myComplaints">
-                All Complaints
+                My Complaints Only
               </FormLabel>
-              <Switch id="complaintSwitch" onChange={() => setTruthy(!truthy)} />
             </Flex>
           ) : null}
 
