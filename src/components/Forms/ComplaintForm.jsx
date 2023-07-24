@@ -19,78 +19,61 @@ import { CloseIcon } from '@chakra-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   AddComplaint,
-  closingForm,
-  getComplaints,
-  removeStateComplaint,
-  editFormSwitch,
-} from '../../redux/actions/complaintActions';
+  getAllComplaintsInDB,
+  getCurrentComplaint
 
+} from '../../redux/actions/complaintActions';
+import { complaintTypes } from '../../data/complaintTypes';
+import { defaultInitialValues } from '../../data/initialValues';
 const ComplaintForm = ({ title }) => {
-  const complaintTypes = {
-    ['Illegal Dumping']: 'Illegal Dumping',
-    ['Excessive Noise']: 'Excessive Noise',
-    ['Lewdness']: 'Lewdness',
-    ['Public Intoxication']: 'Public Intoxication',
-    ['Creeping']: 'Creeping',
-    ['Stalking']: 'Stalking',
-    ['Violence']: 'Violence',
-    ['Theft']: 'Theft',
-    ['Speeding']: 'Speeding',
-    ['Drugs']: 'Drugs',
-    ['Tenant Issues']: 'Tenant Issues',
-    ['Abandoned Vehicles']: 'Abandoned Vehicles',
-    ['Fireworks']: 'Fireworks',
-    ['Discrimination']: 'Discrimination',
-    ['Unsanitary Conditions']: 'Unsanitary Conditions',
-    ['Public Nuisance']: 'Public Nuisance',
-    ['Code Violations']: 'Code Violations',
-    ['Salty']: 'Salty',
-  };
   const toast = useToast();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
 
-  const { userInfo, loading, complaint, formClose, editForm } = user;
+  const complaint = useSelector(state => state.complaint);
 
-  //EDIT THIS FOR SANDBOX ONLY
+  const { openEditComplaint, loading, allComplaintData } = complaint;
+
+  const { userInfo } = user;
+
+  const userId = userInfo._id;
+
+  //Left of puzzled on complaintId
+
+if (openEditComplaint === true) {
+  
+}
+
+  useEffect(() => {
+    dispatch(getAllComplaintsInDB());
+    
+  }, []);
 
   let initialValues;
-  console.log(complaint);
-  if (editForm === false) {
+
+  if (openEditComplaint === false) {
     initialValues = {
-      title: '',
-      occurence: '',
-      crossStreet1: '',
-      crossStreet2: '',
-      complaintType: '',
-      description: '',
-      imageUrl: '',
-      authoritiesNotified: false,
-      resolved: false,
+      defaultInitialValues,
     };
-  } else if (editForm === true) {
+  } else if (openEditComplaint === true) {
     initialValues = {
-      title: complaint.title,
-      occurence: complaint.occurence.split('T')[0],
-      crossStreet1: complaint.crossStreet1,
-      crossStreet2: complaint.crossStreet2,
-      complaintType: complaintTypes[complaint.complaintType],
-      description: complaint.description,
-      imageUrl: complaint.imageUrl,
-      authoritiesNotified: complaint.authoritiesNotified,
-      resolved: complaint.resolved,
+      title: allComplaintData.title,
+      occurence: allComplaintData.occurence.split('T')[0],
+      crossStreet1: allComplaintData.crossStreet1,
+      crossStreet2: allComplaintData.crossStreet2,
+      complaintType: complaintTypes[allComplaintData.complaintType],
+      description: allComplaintData.description,
+      imageUrl: allComplaintData.imageUrl,
+      authoritiesNotified: allComplaintData.authoritiesNotified,
+      resolved: allComplaintData.resolved,
     };
   }
-  console.log(`editForm: ${editForm}`);
+
   const formHandler = async () => {
-    if (editForm === true) {
-      dispatch(editFormSwitch());
-      await dispatch(removeStateComplaint());
-      dispatch(closingForm());
-    } else if (editForm === false) {
-      dispatch(closingForm());
-    }
+    console.log('Hello!');
   };
+
+
 
   return (
     <Box
@@ -138,7 +121,7 @@ const ComplaintForm = ({ title }) => {
           );
         }}
       >
-        {({ errors, touched, resetForm }) => (
+        {({ errors, touched }) => (
           <Form as="form">
             <Flex justifyContent="flex-end" mt="1" mr="1" minW="600px">
               <Icon
@@ -224,9 +207,6 @@ const ComplaintForm = ({ title }) => {
                     type="text"
                   />
                 </FormControl>
-              </Box>
-
-              <Box>
                 <FormControl isInvalid={!!errors.complaintType}>
                   <FormLabel
                     color="light.600"
@@ -268,6 +248,9 @@ const ComplaintForm = ({ title }) => {
                   </Field>
                   <FormErrorMessage>{errors.complaintType}</FormErrorMessage>
                 </FormControl>
+              </Box>
+
+              <Box>
                 <FormControl
                   isInvalid={!!errors.description && touched.description}
                 >

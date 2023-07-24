@@ -1,9 +1,7 @@
 import React from 'react';
 import { Center, HStack, useMediaQuery, Flex, VStack } from '@chakra-ui/react';
-import {motion} from 'framer-motion';
 import SignLogin from '../components/SignLogin';
 import LoginImage from '../components/LoginImage';
-import ComplaintList from '../components/Complaint/ComplaintList';
 
 const LoginRegister = () => {
   const [isMobile] = useMediaQuery('(max-width: 768px)');
@@ -18,9 +16,6 @@ const LoginRegister = () => {
               <LoginImage />
               <SignLogin />
             </HStack>
-            <VStack>
-              <ComplaintList />
-            </VStack>
           </>
         )}
       </HStack>

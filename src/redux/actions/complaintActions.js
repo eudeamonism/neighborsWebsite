@@ -1,19 +1,88 @@
 import axios from 'axios';
 
+import { userLogin } from '../slices/user';
+
 import {
+  setLoadingOn,
+  setLoadingOff,
   setError,
-  complaints,
-  complaint,
-  formToggle,
-  setLoading,
-  closeLoading,
-  userLogin,
-  removeComplaint,
-  editFormToggle,
-  complaintSwitch,
-  removeAllUserComplaints,
-  onlyUserComplaints,
-} from '../slices/user';
+  retrieveAllComplaints,
+  retrieveSingleComplaint,
+  openSingComplaintTrue,
+  closeSingComplaintFalse,
+  openAllComplaintsTrue,
+  closeAllComplaintsFalse,
+  openKreateComplaint,
+  closeKreateComplaint,
+  openEditAComplaint,
+  closeEditAComplaint,
+} from '../slices/complaint';
+
+export const getAllComplaintsInDB = () => async dispatch => {
+  dispatch(setLoadingOn());
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axios.get(
+      'http://localhost:5000/api/complaint/getComplaints',
+      config
+    );
+
+    dispatch(retrieveAllComplaints(data));
+    dispatch(setLoadingOff());
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+  }
+};
+
+export const getCurrentComplaint =
+  ({ userId, complaintId }) =>
+  async dispatch => {
+    dispatch(setLoadingOn());
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const params = {
+        userId,
+        complaintId,
+      };
+
+      const { data } = await axios.get(
+        `http://localhost:5000/api/complaint/getComplaint/${params}`,
+        config
+      );
+
+      console.log(data)
+      /* dispatch(retrieveSingleComplaint(data)); */
+      dispatch(setLoadingOff());
+    } catch (error) {
+      dispatch(
+        setError(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+            ? error.message
+            : 'An unexpected error has occured. Please try again later.'
+        )
+      );
+    }
+  };
 
 export const AddComplaint =
   (
@@ -29,7 +98,7 @@ export const AddComplaint =
     userInfo
   ) =>
   async dispatch => {
-    dispatch(setLoading());
+    dispatch(setLoadingOn());
     try {
       const config = {
         headers: {
@@ -58,11 +127,11 @@ export const AddComplaint =
         },
         config
       );
-      dispatch(closeLoading());
+      dispatch(setLoadingOff());
       dispatch(userLogin(data.user));
       localStorage.setItem('userInfo', JSON.stringify(data.user));
 
-      dispatch(formToggle());
+      dispatch(closeKreateComplaint());
     } catch (error) {
       dispatch(
         setError(
@@ -75,108 +144,6 @@ export const AddComplaint =
       );
     }
   };
-
-export const getComplaints = () => async dispatch => {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const { data } = await axios.get(
-      'http://localhost:5000/api/complaint/getComplaints',
-      config
-    );
-
-    dispatch(complaints(data));
-  } catch (error) {
-    dispatch(
-      setError(
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message
-          ? error.message
-          : 'An unexpected error has occured. Please try again later.'
-      )
-    );
-  }
-};
-
-export const gettingOnlyAUsersComplaints = userId => async dispatch => {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const { data } = await axios.get(
-      `http://localhost:5000/api/complaint/gettingusercomplaints/${userId}`,
-      config
-    );
-
-    dispatch(onlyUserComplaints(data));
-  } catch (error) {
-    dispatch(
-      setError(
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message
-          ? error.message
-          : 'An unexpected error has occured. Please try again later.'
-      )
-    );
-  }
-};
-
-//This if for form reset
-export const getComplaint = complaintId => async dispatch => {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const { data } = await axios.get(
-      `http://localhost:5000/api/complaint/getComplaint/${complaintId}`,
-      config
-    );
-
-    dispatch(complaint(data));
-  } catch (error) {
-    dispatch(
-      setError(
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message
-          ? error.message
-          : 'An unexpected error has occured. Please try again later.'
-      )
-    );
-  }
-};
-
-export const closingForm = () => dispatch => {
-  dispatch(formToggle());
-};
-
-export const editFormSwitch = () => dispatch => {
-  dispatch(editFormToggle());
-};
-
-export const userComplaintSwitch = () => dispatch => {
-  dispatch(complaintSwitch());
-};
-
-export const removeStateComplaint = () => dispatch => {
-  dispatch(removeComplaint());
-};
-
-export const removingAllUserComplaints = () => dispatch => {
-  dispatch(removeAllUserComplaints());
-};
 
 export const deleteComplaint = complaintId => async dispatch => {
   try {
@@ -202,11 +169,3 @@ export const deleteComplaint = complaintId => async dispatch => {
     );
   }
 };
-
-//open Original Form and populate form with fields
-//save changes button --> update http request
-//cancel form button --> closeForm
-
-//Update Form
-//JSX will pass complaintId
-//await data of complaint
