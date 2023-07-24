@@ -1,20 +1,32 @@
-import { VStack, Text, useToast } from '@chakra-ui/react';
+import { VStack, Text, useToast, HStack } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import ComplaintForm from '../components/Forms/ComplaintForm';
 import NavBar from '../components/NavBar';
-import { getComplaints } from '../redux/actions/complaintActions';
-import DashComplaintViewer from '../components/Complaint/DashComplaintViewer';
-
+import {
+  getComplaints,
+  gettingOnlyAUsersComplaints,
+} from '../redux/actions/complaintActions';
+import AllComplaints from '../components/Complaint/DashStates/AllComplaints';
+import UsersComplaints from '../components/Complaint/DashStates/UsersComplaints';
+import DashboardMenu from '../components/DashboardMenu';
 const Dashboard = () => {
-  const [complaintSwitch, setComplaintSwitch] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const user = useSelector(state => state.user);
-  const { complaints, formClose, userInfo, numberOfComplaints } = user;
+  const {
+    complaints,
+    formClose,
+    userInfo,
+    numberOfComplaints,
+    complaintSwitch,
+    userComplaints,
+  } = user;
+
+  const userId = userInfo._id;
 
   const redirect = () => {
     navigate('/login');
@@ -22,13 +34,13 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getComplaints());
-  }, [dispatch, numberOfComplaints, userInfo]);
+    dispatch(gettingOnlyAUsersComplaints(userId));
+  }, [dispatch, numberOfComplaints, userInfo, userId]);
 
-  const complaintSwitchHandler = useCallback(() => {
-    setComplaintSwitch(!complaintSwitch);
-  }, [complaintSwitch]);
+  console.log(complaints);
+  console.log(userComplaints);
 
-  const allComplaints = complaints.map(complaint => (
+  /* const allComplaints = complaints.map(complaint => (
     <DashComplaintViewer
       key={complaint._id}
       complaintId={complaint._id}
@@ -41,16 +53,32 @@ const Dashboard = () => {
       resolved={complaint.resolved}
       mainStreet={complaint.crossStreet1}
       secondStreet={complaint.crossStreet2}
-      isGuide={userInfo.isGuide}
-      isAdmin={userInfo.isAdmin}
-      numberOfComplaints={userInfo.numberOfComplaints}
+      isGuide="true"
+      isAdmin="true"
+      numberOfComplaints="12"
       displayName={complaint.displayName || 'Will Erase '}
-      complaintSwitchHandler={complaintSwitchHandler}
     />
   ));
+  const singleUser = userComplaints.map(complaint => (
+    <DashComplaintViewer
+      key={complaint._id}
+      complaintId={complaint._id}
+      title={complaint.title}
+      occurence={complaint.occurence}
+      complaintType={complaint.complaintType}
+      description={complaint.description}
+      imageUrl={complaint.imageUrl}
+      police={complaint.authoritiesNotified}
+      resolved={complaint.resolved}
+      mainStreet={complaint.crossStreet1}
+      secondStreet={complaint.crossStreet2}
+      isGuide="true"
+      isAdmin="true"
+      numberOfComplaints="12"
+      displayName={complaint.displayName || 'Will Erase '}
+    />
+  )); */
 
-  
-  console.log(complaintSwitch);
   return (
     <>
       {}
@@ -58,13 +86,16 @@ const Dashboard = () => {
         <>
           <NavBar />
           <VStack>
-            {formClose === false && complaintSwitch === false ? (
-              allComplaints
-            ) : complaintSwitch === true ? (
-              <Text>Last Case</Text>
-            ) : (
-              <ComplaintForm />
-            )}
+            <DashboardMenu />
+            <VStack>
+              {formClose === false && complaintSwitch === false ? (
+                <Text>Hello</Text>
+              ) : complaintSwitch === true && complaintSwitch === false ? (
+                <Text>Hello</Text>
+              ) : (
+                <ComplaintForm />
+              )}
+            </VStack>
           </VStack>
         </>
       ) : (

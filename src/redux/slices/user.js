@@ -7,8 +7,10 @@ export const initialState = {
   complaints: [],
   numberOfComplaints: 0,
   formClose: false,
-  complaint: null,
+  complaint: JSON.parse(localStorage.getItem('complaint')) ?? null,
+  userComplaints: JSON.parse(localStorage.getItem('userComplaints')) ?? null,
   editForm: false,
+  complaintSwitch: false,
 };
 
 export const userSlice = createSlice({
@@ -39,13 +41,24 @@ export const userSlice = createSlice({
     complaints: (state, { payload }) => {
       state.complaints = payload;
       state.error = null;
-
       state.numberOfComplaints = state.complaints.length;
     },
 
     complaint: (state, { payload }) => {
       state.complaint = payload;
       localStorage.setItem('complaint', JSON.stringify(payload));
+    },
+    onlyUserComplaints: (state, { payload }) => {
+      state.userComplaints = payload;
+      localStorage.setItem('userComplaints', JSON.stringify(payload));
+    },
+    removeAllUserComplaints: (state, { payload }) => {
+      state.userComplaints = null;
+      localStorage.removeItem('userComplaints');
+    },
+
+    complaintSwitch: state => {
+      state.complaintSwitch = !state.complaintSwitch;
     },
 
     removeComplaint: state => {
@@ -74,6 +87,9 @@ export const {
   logout,
   removeComplaint,
   editFormToggle,
+  complaintSwitch,
+  onlyUserComplaints,
+  removeAllUserComplaints,
 } = userSlice.actions;
 
 export default userSlice.reducer;

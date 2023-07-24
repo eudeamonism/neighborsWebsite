@@ -10,6 +10,9 @@ import {
   userLogin,
   removeComplaint,
   editFormToggle,
+  complaintSwitch,
+  removeAllUserComplaints,
+  onlyUserComplaints,
 } from '../slices/user';
 
 export const AddComplaint =
@@ -100,6 +103,34 @@ export const getComplaints = () => async dispatch => {
   }
 };
 
+export const gettingOnlyAUsersComplaints = userId => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axios.get(
+      `http://localhost:5000/api/complaint/gettingusercomplaints/${userId}`,
+      config
+    );
+
+    dispatch(onlyUserComplaints(data));
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+  }
+};
+
+//This if for form reset
 export const getComplaint = complaintId => async dispatch => {
   try {
     const config = {
@@ -135,9 +166,16 @@ export const editFormSwitch = () => dispatch => {
   dispatch(editFormToggle());
 };
 
+export const userComplaintSwitch = () => dispatch => {
+  dispatch(complaintSwitch());
+};
+
 export const removeStateComplaint = () => dispatch => {
-  console.log('action removes state tester');
   dispatch(removeComplaint());
+};
+
+export const removingAllUserComplaints = () => dispatch => {
+  dispatch(removeAllUserComplaints());
 };
 
 export const deleteComplaint = complaintId => async dispatch => {

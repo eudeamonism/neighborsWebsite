@@ -1,6 +1,3 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-
 import { GiPoliceBadge } from 'react-icons/gi';
 import {
   MaskSad,
@@ -44,6 +41,8 @@ import {
   closingForm,
   getComplaint,
   editFormSwitch,
+  userComplaintSwitch,
+  gettingOnlyAUsersComplaints,
 } from '../../redux/actions/complaintActions';
 import {
   decrementComplaint,
@@ -65,17 +64,14 @@ function DashComplaintViewer({
   isAdmin,
   numberOfComplaints,
   displayName,
-  complaintSwitchHandler,
 }) {
   const user = useSelector(state => state.user);
 
-  const { userInfo, loading, formClose, complaint } = user;
+  const { userInfo, loading, formClose, complaint, userComplaints } = user;
   const userId = userInfo._id;
 
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const [truthy, setTruthy] = useState(false);
 
   const toast = useToast();
 
@@ -102,6 +98,12 @@ function DashComplaintViewer({
     dispatch(closingForm());
   };
 
+  const myComplaintsHandler = async () => {
+    dispatch(gettingOnlyAUsersComplaints(userId));
+    dispatch(userComplaintSwitch());
+  };
+
+  
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -247,7 +249,7 @@ function DashComplaintViewer({
 
           {user ? (
             <Flex alignItems="center" gap="2" mt="2">
-              <Switch id="complaintSwitch" onChange={complaintSwitchHandler} />
+              <Switch id="complaintSwitch" onChange={myComplaintsHandler} />
               <FormLabel mt="1" htmlFor="myComplaints">
                 My Complaints Only
               </FormLabel>

@@ -102,7 +102,7 @@ export const decrementComplaint = userId => async dispatch => {
 
 export const logoutUser = () => dispatch => {
   try {
-    dispatch(setLoading(true));
+    dispatch(setLoading());
     dispatch(logout());
   } catch (error) {
   } finally {

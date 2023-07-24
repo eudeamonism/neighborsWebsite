@@ -88,7 +88,6 @@ const ComplaintForm = ({ title }) => {
       await dispatch(removeStateComplaint());
       dispatch(closingForm());
     } else if (editForm === false) {
-      console.log('Hello from else if editForm = false');
       dispatch(closingForm());
     }
   };
