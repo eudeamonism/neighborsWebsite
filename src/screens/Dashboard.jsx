@@ -1,12 +1,14 @@
-import { useSelector } from 'react-redux';
+import { Box } from '@chakra-ui/react';
 import NavBar from '../components/NavBar';
+import ComplaintMobileViewer from '../components/ComplaintViewer/ComplaintMobileViewer';
 
 const Dashboard = () => {
-  const user = useSelector(state => state.user);
-
   return (
     <>
-      <NavBar />
+      <Box mb="10px">
+        <NavBar />
+      </Box>
+      <ComplaintMobileViewer />
     </>
   );
 };
