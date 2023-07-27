@@ -30,6 +30,17 @@ const ComplaintRowMini = ({ title, description }) => {
             >
               {description}
             </Text>
+            <Text
+              wordBreak="break-word"
+              fontSize="md"
+              width="375px"
+              fontWeight="thin"
+              overflow="hidden"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+            >
+              {description}
+            </Text>
           </Flex>
         </Flex>
       </Flex>

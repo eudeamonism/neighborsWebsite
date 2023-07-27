@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { getAllComplaintsInDB } from '../../redux/actions/complaintActions';
 import ComplaintRowMini from './ComplaintRowMini';
 
@@ -12,11 +13,10 @@ const ComplaintMobileViewer = () => {
     dispatch(getAllComplaintsInDB());
   }, [dispatch]);
 
-  console.log(allComplaintData);
   return (
     <>
       {allComplaintData !== null
-        ? allComplaintData.map(complaint => (
+        ? allComplaintData.docs.map(complaint => (
             <ComplaintRowMini
               key={complaint._id}
               title={complaint.title}

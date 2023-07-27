@@ -1,15 +1,22 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Flex, Spacer, Text } from '@chakra-ui/react';
 import NavBar from '../components/NavBar';
 import ComplaintMobileViewer from '../components/ComplaintViewer/ComplaintMobileViewer';
+import PaginationStats from '../components/ComplaintViewer/PaginationStats';
 
 const Dashboard = () => {
   return (
-    <>
+    <Flex h="844px" direction="column" width="100%">
       <Box mb="10px">
         <NavBar />
       </Box>
-      <ComplaintMobileViewer />
-    </>
+      <Flex direction="column">
+        <ComplaintMobileViewer />
+      </Flex>
+      <Spacer />
+      <Flex direction="column" mb="0" alignItems="center" justify="center">
+        <PaginationStats />
+      </Flex>
+    </Flex>
   );
 };
 
