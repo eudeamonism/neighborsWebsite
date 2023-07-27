@@ -5,7 +5,7 @@ import PaginationStats from '../components/ComplaintViewer/PaginationStats';
 
 const Dashboard = () => {
   return (
-    <Flex h="844px" direction="column" width="100%">
+    <Flex h="844px" direction="column" width="390px">
       <Box mb="10px">
         <NavBar />
       </Box>
@@ -13,7 +13,8 @@ const Dashboard = () => {
         <ComplaintMobileViewer />
       </Flex>
       <Spacer />
-      <Flex direction="column" mb="0" alignItems="center" justify="center">
+
+      <Flex direction="column" alignItems="center" justify="center">
         <PaginationStats />
       </Flex>
     </Flex>
