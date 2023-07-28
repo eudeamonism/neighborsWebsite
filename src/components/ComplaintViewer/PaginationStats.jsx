@@ -18,9 +18,12 @@ import {
   Spinner,
 } from '@chakra-ui/react';
 
+import { getAllComplaintsInDB } from '../../redux/actions/complaintActions';
+
 import { ArrowLeftIcon, ArrowRightIcon, UpDownIcon } from '@chakra-ui/icons';
 
 const PaginationStats = () => {
+  const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
 
@@ -46,6 +49,13 @@ const PaginationStats = () => {
   }
 
   // `...?page=${pageNumber}&limit=${limitNumber}`
+
+  const pageHandler = async page => {
+    await dispatch(getAllComplaintsInDB(page));
+  };
+
+  console.log(allComplaintData);
+
   return (
     <Flex
       bg="blue.800"
@@ -59,8 +69,10 @@ const PaginationStats = () => {
     >
       {allComplaintData && allComplaintData.hasPrevPage === true ? (
         <ArrowLeftIcon
-          onClick={() => console.log('Left arrow clicked')}
           ml="8px"
+          onClick={() => {
+            pageHandler(allComplaintData.prevPage);
+          }}
         />
       ) : (
         <ArrowLeftIcon ml="8px" opacity=".5" />
@@ -71,7 +83,7 @@ const PaginationStats = () => {
       {allComplaintData && allComplaintData.hasNextPage === true ? (
         <ArrowRightIcon
           onClick={() => {
-            allComplaintData.nextPage();
+            pageHandler(allComplaintData.nextPage);
           }}
           ml="8px"
         />

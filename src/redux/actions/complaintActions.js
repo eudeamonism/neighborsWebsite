@@ -18,7 +18,7 @@ import {
   closeEditAComplaint,
 } from '../slices/complaint';
 
-export const getAllComplaintsInDB = () => async dispatch => {
+export const getAllComplaintsInDB = (page, limit) => async dispatch => {
   dispatch(setLoadingOn());
   try {
     const config = {
@@ -27,10 +27,19 @@ export const getAllComplaintsInDB = () => async dispatch => {
       },
     };
 
-    const { data } = await axios.get(
-      'http://localhost:5000/api/complaint/getComplaints',
-      config
-    );
+    let url;
+
+    if (page !== undefined && limit !== undefined) {
+      url = `http://localhost:5000/api/complaint/getComplaints?page=${page}&limit=${limit}`;
+    } else if (page !== undefined && limit === undefined) {
+      url = `http://localhost:5000/api/complaint/getComplaints?page=${page}`;
+    } else if (page === undefined && limit !== undefined) {
+      url = `http://localhost:5000/api/complaint/getComplaints?limit=${limit}`;
+    } else {
+      url = 'http://localhost:5000/api/complaint/getComplaints';
+    }
+    console.log(url);
+    const { data } = await axios.get(url, config);
 
     dispatch(retrieveAllComplaints(data));
     dispatch(setLoadingOff());
@@ -68,7 +77,7 @@ export const getCurrentComplaint =
         config
       );
 
-      console.log(data)
+      console.log(data);
       /* dispatch(retrieveSingleComplaint(data)); */
       dispatch(setLoadingOff());
     } catch (error) {
