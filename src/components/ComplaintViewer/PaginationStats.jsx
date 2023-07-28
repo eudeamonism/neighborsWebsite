@@ -11,6 +11,11 @@ import {
   DrawerOverlay,
   useDisclosure,
   Spacer,
+  Skeleton,
+  Box,
+  SkeletonCircle,
+  SkeletonText,
+  Spinner,
 } from '@chakra-ui/react';
 
 import { ArrowLeftIcon, ArrowRightIcon, UpDownIcon } from '@chakra-ui/icons';
@@ -20,11 +25,11 @@ const PaginationStats = () => {
   const btnRef = useRef();
 
   const complaint = useSelector(state => state.complaint);
-  const { allComplaintData } = complaint;
+  const { allComplaintData, loading } = complaint;
 
   const pageNumbers = [];
   if (allComplaintData !== null) {
-    for (let i = 1; i <= allComplaintData.pagingCounter; i++) {
+    for (let i = 1; i <= allComplaintData.totalDocs; i++) {
       if (i <= 8) {
         pageNumbers.push(
           <Text
@@ -40,8 +45,7 @@ const PaginationStats = () => {
     }
   }
 
-  console.log(allComplaintData);
-// `...?page=${pageNumber}&limit=${limitNumber}`
+  // `...?page=${pageNumber}&limit=${limitNumber}`
   return (
     <Flex
       bg="blue.800"
@@ -53,15 +57,27 @@ const PaginationStats = () => {
       borderRadius="4"
       fontSize="xl"
     >
-      
-      <ArrowLeftIcon
-        onClick={() => console.log('RightArrow Button clicked')}
-        ml="8px"
-      />
-      {allComplaintData ? pageNumbers : null}
-      <ArrowRightIcon
-        onClick={() => console.log('RightArrow Button clicked')}
-      />
+      {allComplaintData && allComplaintData.hasPrevPage === true ? (
+        <ArrowLeftIcon
+          onClick={() => console.log('Left arrow clicked')}
+          ml="8px"
+        />
+      ) : (
+        <ArrowLeftIcon ml="8px" opacity=".5" />
+      )}
+
+      {allComplaintData ? pageNumbers : loading === true ? <Spinner /> : null}
+
+      {allComplaintData && allComplaintData.hasNextPage === true ? (
+        <ArrowRightIcon
+          onClick={() => {
+            allComplaintData.nextPage();
+          }}
+          ml="8px"
+        />
+      ) : (
+        <ArrowRightIcon ml="8px" opacity=".5" />
+      )}
       <Spacer />
       <UpDownIcon onClick={onOpen} mr="8px" />
       <Drawer
