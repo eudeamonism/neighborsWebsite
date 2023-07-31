@@ -1,31 +1,36 @@
-import React from 'react';
-import { Flex } from '@chakra-ui/react';
+// mobileForm.js
+import {
+  Flex,
+  useColorModeValue,
+  FormControl,
+  FormLabel,
+} from '@chakra-ui/react';
+import { Formik, Field, Form } from 'formik';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
-import FormComponent from './FormComponent';
+import TextField from '../FormikFields/TextField';
 
-const mobileForm = () => {
+const MobileForm = () => {
   return (
-    <Flex 
-    direction="column" 
-    width="390px" 
-    height="844px" 
-    alignItems="center"
-
+    <Formik
+      initialValues={{ name: '', age: '' }}
+      onSubmit={() => console.log('Hello!')}
     >
-      <ColorModeSwitcher />
-
-      <Flex
-        width="380px"
-        height="800px"
-        backgroundColor="gray.600"
-        borderRadius="5"
-        p="4"
-        justifyContent="center"
-      >
-        <FormComponent />
-      </Flex>
-    </Flex>
+      {() => (
+        <Form as="form">
+          <ColorModeSwitcher />
+          <FormControl>
+            <TextField
+              name="name"
+              placeholder="name"
+              type="text"
+              label="YOYO"
+            />
+            <TextField name="age" placeholder="age" type="text" label="age" />
+          </FormControl>
+        </Form>
+      )}
+    </Formik>
   );
 };
 
-export default mobileForm;
+export default MobileForm;
