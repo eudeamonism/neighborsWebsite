@@ -39,7 +39,13 @@ const Hamburger = () => {
       <MenuList>
         <MenuItem>All Complaints</MenuItem>
         <MenuItem>My Complaints</MenuItem>
-        <MenuItem>Create Complaint</MenuItem>
+        <MenuItem
+          onClick={() => {
+            navigate('/createComplaint');
+          }}
+        >
+          Create Complaint
+        </MenuItem>
         <MenuItem onClick={Signout}>Sign Out</MenuItem>
       </MenuList>
     </Menu>
