@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Select,
-  Input,
-} from '@chakra-ui/react';
 import { useField } from 'formik';
+import { FormControl, FormErrorMessage, FormLabel, Input, Checkbox, Select } from '@chakra-ui/react';
 
-const TextField = ({ label, type, name, placeholder, options }) => {
+const TextField = ({ label, type, name, options, ...rest }) => {
   const [field, meta] = useField(name);
 
   return (
@@ -17,32 +11,21 @@ const TextField = ({ label, type, name, placeholder, options }) => {
         {label}
       </FormLabel>
       {type === 'select' ? (
-        <Select
-          {...field}
-          placeholder={placeholder}
-          width="350px"
-          fontSize="20px"
-          height="40px"
-          pb="1"
-        >
+        <Select {...field} {...rest} width="350px" fontSize="20px" height="40px" pb="1">
           {options.map(option => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>
           ))}
         </Select>
+      ) : type === 'checkbox' ? (
+        <Checkbox {...field} {...rest} isChecked={field.value}>
+          {label}
+        </Checkbox>
       ) : (
-        <Input
-          {...field}
-          type={type}
-          placeholder={placeholder}
-          width="350px"
-          fontSize="20px"
-          height="40px"
-          pb="1"
-        />
+        <Input {...field} {...rest} type={type} width="350px" fontSize="20px" height="40px" pb="1" />
       )}
-      <FormErrorMessage>{meta.error}</FormErrorMessage>
+      <FormErrorMessage>{meta.touched && meta.error}</FormErrorMessage>
     </FormControl>
   );
 };

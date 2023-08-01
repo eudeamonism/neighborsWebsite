@@ -37,6 +37,13 @@ const Hamburger = () => {
         )}
       </MenuButton>
       <MenuList>
+        <MenuItem
+          onClick={() => {
+            navigate('/testing');
+          }}
+        >
+          Testing
+        </MenuItem>
         <MenuItem>All Complaints</MenuItem>
         <MenuItem>My Complaints</MenuItem>
         <MenuItem
