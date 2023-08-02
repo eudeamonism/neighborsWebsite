@@ -18,6 +18,65 @@ import {
   closeEditAComplaint,
 } from '../slices/complaint';
 
+export const createAComplaint =
+  (
+    userId,
+    displayName,
+    title,
+    occurence,
+    time,
+    complaintType,
+    description,
+    imageUrl,
+    authorities,
+    resolved,
+    crossStreet1,
+    crossStreet2
+  ) =>
+  async dispatch => {
+    dispatch(setLoadingOn());
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const { data } = await axios.post(
+        `http://localhost:5000/api/complaint/create/`,
+        {
+          userId,
+          displayName,
+          title,
+          occurence,
+          time,
+          complaintType,
+          description,
+          imageUrl,
+          authorities,
+          resolved,
+          crossStreet1,
+          crossStreet2,
+        },
+        config
+      );
+
+      dispatch(retrieveAllComplaints(data));
+      dispatch(setLoadingOff());
+
+    } catch (error) {
+      dispatch(
+        setError(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+            ? error.message
+            : 'An unexpected error has occured. Please try again later.'
+        )
+      );
+    }
+  };
+
 export const getAllComplaintsInDB = (page, limit) => async dispatch => {
   dispatch(setLoadingOn());
   try {
