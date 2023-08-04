@@ -7,16 +7,41 @@ import {
   setLoadingOff,
   setError,
   retrieveAllComplaints,
-  retrieveSingleComplaint,
-  openSingComplaintTrue,
-  closeSingComplaintFalse,
-  openAllComplaintsTrue,
-  closeAllComplaintsFalse,
-  openKreateComplaint,
   closeKreateComplaint,
-  openEditAComplaint,
-  closeEditAComplaint,
+  openKreateComplaint,
 } from '../slices/complaint';
+
+export const openForm = () => async dispatch => {
+  try {
+    dispatch(openKreateComplaint());
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+  }
+};
+
+export const closeForm = () => async dispatch => {
+  try {
+    dispatch(closeKreateComplaint());
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+  }
+};
 
 export const createAComplaint =
   (
@@ -61,9 +86,7 @@ export const createAComplaint =
         config
       );
 
-      dispatch(retrieveAllComplaints(data));
       dispatch(setLoadingOff());
-
     } catch (error) {
       dispatch(
         setError(
@@ -79,6 +102,7 @@ export const createAComplaint =
 
 export const getAllComplaintsInDB = (page, limit) => async dispatch => {
   dispatch(setLoadingOn());
+
   try {
     const config = {
       headers: {

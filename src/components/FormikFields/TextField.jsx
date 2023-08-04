@@ -1,6 +1,13 @@
 import React from 'react';
 import { useField } from 'formik';
-import { FormControl, FormErrorMessage, FormLabel, Input, Checkbox, Select } from '@chakra-ui/react';
+import {
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+  Checkbox,
+  Select,
+} from '@chakra-ui/react';
 
 const TextField = ({ label, type, name, options, ...rest }) => {
   const [field, meta] = useField(name);
@@ -11,7 +18,16 @@ const TextField = ({ label, type, name, options, ...rest }) => {
         {label}
       </FormLabel>
       {type === 'select' ? (
-        <Select {...field} {...rest} width="350px" fontSize="20px" height="40px" pb="1">
+        <Select
+          {...field}
+          {...rest}
+          width="350px"
+          fontSize="20px"
+          height="40px"
+          pb="1"
+          maxHeight="200px"
+          overflowY="auto"
+        >
           {options.map(option => (
             <option key={option.value} value={option.value}>
               {option.label}
@@ -23,7 +39,15 @@ const TextField = ({ label, type, name, options, ...rest }) => {
           {label}
         </Checkbox>
       ) : (
-        <Input {...field} {...rest} type={type} width="350px" fontSize="20px" height="40px" pb="1" />
+        <Input
+          {...field}
+          {...rest}
+          type={type}
+          width="350px"
+          fontSize="20px"
+          height="40px"
+          pb="1"
+        />
       )}
       <FormErrorMessage>{meta.touched && meta.error}</FormErrorMessage>
     </FormControl>

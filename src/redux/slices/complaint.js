@@ -9,7 +9,7 @@ export const initialState = {
     JSON.parse(localStorage.getItem('singleComplaintData')) ?? null,
   openSingleComplaint: false,
   openAllComplaints: false,
-  openCreateComplaint: false,
+  open: false,
   openEditComplaint: false,
 };
 
@@ -48,11 +48,12 @@ export const complaintSlice = createSlice({
     closeAllComplaintsFalse: state => {
       state.openAllComplaints = false;
     },
-    openKreateComplaint: state => {
-      state.openCreateComplaint = true;
+    openKreateComplaint: (state, { payload }) => {
+      state.error = payload;
+      state.open = true;
     },
     closeKreateComplaint: state => {
-      state.openCreateComplaint = false;
+      state.open = false;
     },
     openEditAComplaint: state => {
       state.openEditComplaint = true;

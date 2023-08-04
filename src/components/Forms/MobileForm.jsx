@@ -1,18 +1,27 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Flex, useColorModeValue, Text, Button } from '@chakra-ui/react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import { complaintTypes } from '../../data/complaintTypes';
 import TextField from '../FormikFields/TextField';
-import { createAComplaint } from '../../redux/actions/complaintActions';
+import {
+  createAComplaint,
+  openForm,
+} from '../../redux/actions/complaintActions';
 
 const MobileForm = () => {
-  const colorModeValue = useColorModeValue('#d2e5ff', '#ca9615')
+  useEffect(() => {}, []);
+  const colorModeValue = useColorModeValue('#d2e5ff', '#ca9615');
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user);
+  const navigate = useNavigate();
 
+  const user = useSelector(state => state.user);
+  const complaint = useSelector(state => state.complaint);
   const { userInfo } = user;
+  const { loading, open } = complaint;
 
   const userId = userInfo._id;
   const displayName = userInfo.displayName;
@@ -37,12 +46,13 @@ const MobileForm = () => {
     })
   );
 
+  console.log(open);
   return (
     <Formik
       initialValues={defaultValues}
       validationSchema={Yup.object({
         resolved: Yup.boolean().required(),
-        authorities: Yup.boolean().required(), // Corrected authoritiesNotified to authorities
+        authorities: Yup.boolean().required(),
         imageUrl: Yup.string().max(300, 'No more than 300 characters!'),
         title: Yup.string()
           .required('Please give complaint a title')
@@ -69,16 +79,18 @@ const MobileForm = () => {
             values.complaintType,
             values.description,
             values.imageUrl,
-            values.authorities, 
+            values.authorities,
             values.resolved,
             values.crossStreet1,
             values.crossStreet2
           )
         );
       }}
+      validateOnMount={true}
     >
-      {({ handleSubmit }) => (
+      {({ handleSubmit, isValid }) => (
         <Form onSubmit={handleSubmit}>
+          {open === true ? navigate('/dashboard') : null}
           <Flex direction="column">
             <Flex
               alignItems="center"
@@ -133,6 +145,13 @@ const MobileForm = () => {
                   colorScheme="blue"
                   mt="20px"
                   type="submit"
+                  isLoading={loading}
+                  isDisabled={!isValid}
+                  onClick={() => {
+                    setTimeout(() => {
+                      dispatch(openForm());
+                    }, [2000]);
+                  }}
                 >
                   Submit
                 </Button>
