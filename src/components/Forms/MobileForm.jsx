@@ -105,7 +105,13 @@ const MobileForm = () => {
                 Add a Complaint
               </Text>
 
-              <Text fontSize="3xl" marginRight="10px">
+              <Text
+                fontSize="3xl"
+                marginRight="10px"
+                onClick={() => {
+                  navigate('/dashboard');
+                }}
+              >
                 X
               </Text>
             </Flex>

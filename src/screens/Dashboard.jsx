@@ -1,26 +1,36 @@
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Flex, Spacer, Text } from '@chakra-ui/react';
 import NavBar from '../components/NavBar';
 import ComplaintMobileViewer from '../components/ComplaintViewer/ComplaintMobileViewer';
-import PaginationStats from '../components/ComplaintViewer/PaginationStats';
-import {closeForm} from '../redux/actions/complaintActions'
+import { closeForm } from '../redux/actions/complaintActions';
+import { getAllComplaintsInDB } from '../redux/actions/complaintActions';
+import { Spinner } from '@chakra-ui/react';
+
+
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  dispatch(closeForm());
+
+  useEffect(() => {
+    dispatch(closeForm());
+    dispatch(getAllComplaintsInDB());
+  }, [dispatch]);
+
+  const complaint = useSelector(state => state.complaint);
+  const { allComplaintData } = complaint;
+
+  console.log(allComplaintData);
   return (
     <Flex h="844px" direction="column" width="390px">
-      <Box mb="10px">
+      <Box mb="55px">
         <NavBar />
       </Box>
+
       <Flex direction="column">
         <ComplaintMobileViewer />
       </Flex>
       <Spacer />
-
-      <Flex direction="column" alignItems="center" justify="center">
-        <PaginationStats />
-      </Flex>
     </Flex>
   );
 };

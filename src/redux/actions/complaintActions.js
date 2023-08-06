@@ -121,7 +121,6 @@ export const getAllComplaintsInDB = (page, limit) => async dispatch => {
     } else {
       url = 'http://localhost:5000/api/complaint/getComplaints';
     }
-    console.log(url);
     const { data } = await axios.get(url, config);
 
     dispatch(retrieveAllComplaints(data));

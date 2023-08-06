@@ -9,9 +9,9 @@ const ComplaintMobileViewer = () => {
   const complaintData = useSelector(state => state.complaint);
   const { loading, allComplaintData } = complaintData;
 
-  useEffect(() => {
+  /*   useEffect(() => {
     dispatch(getAllComplaintsInDB());
-  }, [dispatch]);
+  }, [dispatch]); */
 
   return (
     <>
@@ -21,6 +21,7 @@ const ComplaintMobileViewer = () => {
               key={complaint._id}
               title={complaint.title}
               description={complaint.description}
+              time={complaint.time}
             />
           ))
         : null}
