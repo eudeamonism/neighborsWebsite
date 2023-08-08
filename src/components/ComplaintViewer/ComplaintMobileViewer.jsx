@@ -19,14 +19,26 @@ const ComplaintMobileViewer = () => {
     }, [3500]);
   }, [dispatch]);
 
+  console.log(allComplaintData);
   return (
     <>
       {allComplaintData.map(complaint => (
         <Suspense fallback={<Spinner />} key={complaint._id}>
           <LazyRow
-            title={complaint.title}
+            authoritiesNotified={complaint.authoritiesNotified}
+            complaintType={complaint.complaintType}
+            createdAt={complaint.createdAt}
+            crossStreet1={complaint.crossStreet1}
+            crossStreet2={complaint.crossStreet2}
             description={complaint.description}
+            displayName={complaint.displayName}
+            imageUrl={complaint.imageUrl}
+            occurence={complaint.occurence}
             time={complaint.time}
+            title={complaint.title}
+            updatedAt={complaint.updatedAt}
+            userId={complaint.userId}
+            id={complaint._id}
           />
         </Suspense>
       ))}

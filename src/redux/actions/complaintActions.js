@@ -6,7 +6,6 @@ import {
   setLoadingOn,
   setLoadingOff,
   setError,
-  retrieveAllComplaints,
   closeKreateComplaint,
   openKreateComplaint,
 } from '../slices/complaint';
@@ -116,7 +115,7 @@ export const getAllComplaintsInDB = () => async dispatch => {
     );
 
     localStorage.setItem('allComplaintData', JSON.stringify(data));
-    console.log(data);
+
     dispatch(setLoadingOff());
   } catch (error) {
     dispatch(
@@ -131,42 +130,35 @@ export const getAllComplaintsInDB = () => async dispatch => {
   }
 };
 
-export const getCurrentComplaint =
-  ({ userId, complaintId }) =>
-  async dispatch => {
-    dispatch(setLoadingOn());
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
+export const getAComplaintInDBFromUser = id => async dispatch => {
+  dispatch(setLoadingOn());
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    console.log(id + 'ACTION CREATOR');
+    const { data } = await axios.get(
+      `http://localhost:5000/api/complaint/getComplaint/${id}`,
+      config
+    );
 
-      const params = {
-        userId,
-        complaintId,
-      };
+    localStorage.setItem('singleComplaintData', JSON.stringify(data));
 
-      const { data } = await axios.get(
-        `http://localhost:5000/api/complaint/getComplaint/${params}`,
-        config
-      );
-
-      console.log(data);
-      /* dispatch(retrieveSingleComplaint(data)); */
-      dispatch(setLoadingOff());
-    } catch (error) {
-      dispatch(
-        setError(
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message
-            ? error.message
-            : 'An unexpected error has occured. Please try again later.'
-        )
-      );
-    }
-  };
+    dispatch(setLoadingOff());
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+  }
+};
 
 export const AddComplaint =
   (

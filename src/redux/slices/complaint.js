@@ -28,14 +28,6 @@ export const complaintSlice = createSlice({
     setLoadingOff: state => {
       state.loading = false;
     },
-    retrieveAllComplaints: (state, { payload }) => {
-      state.loading = true;
-      state.allComplaintData = payload;
-    },
-    retrieveSingleComplaint: (state, { payload }) => {
-      state.loading = true;
-      state.singleComplaintData = payload;
-    },
     openSingComplaintTrue: state => {
       state.openSingleComplaint = true;
     },
@@ -68,8 +60,6 @@ export const {
   setError,
   setLoadingOn,
   setLoadingOff,
-  retrieveAllComplaints,
-  retrieveSingleComplaint,
   openSingComplaintTrue,
   closeSingComplaintFalse,
   openAllComplaintsTrue,

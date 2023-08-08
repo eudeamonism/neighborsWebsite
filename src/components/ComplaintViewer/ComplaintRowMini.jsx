@@ -1,6 +1,32 @@
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Flex, Text } from '@chakra-ui/react';
+import { getAComplaintInDBFromUser } from '../../redux/actions/complaintActions';
 
-const ComplaintRowMini = ({ title, description, time }) => {
+const ComplaintRowMini = ({
+  authoritiesNotified,
+  complaintType,
+  createdAt,
+  crossStreet1,
+  crossStreet2,
+  description,
+  displayName,
+  imageUrl,
+  occurence,
+  time,
+  title,
+  updatedAt,
+  userId,
+  id,
+}) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const theComplaintHandler = () => {
+    dispatch(getAComplaintInDBFromUser(id));
+    navigate('/singleComplaint');
+  };
+
   function convertMilitaryToStandardTime(militaryTime) {
     var hour = parseInt(militaryTime.substring(0, 2));
     var minute = militaryTime.substring(3, 5);
@@ -17,6 +43,7 @@ const ComplaintRowMini = ({ title, description, time }) => {
         mb="4"
         bg="gray.600"
         borderRadius="5px"
+        _hover={{ bg: 'gray.300' }}
       >
         <Flex width="370px" alignItems="center">
           <Flex direction="column" mb="1">
@@ -29,6 +56,7 @@ const ComplaintRowMini = ({ title, description, time }) => {
               whiteSpace="nowrap"
               _focus={{ fontSize: '25px' }}
               mb="-1"
+              onClick={theComplaintHandler}
             >
               {title}
             </Text>
