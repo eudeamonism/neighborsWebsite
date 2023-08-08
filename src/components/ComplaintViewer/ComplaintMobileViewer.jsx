@@ -1,34 +1,37 @@
-import { useEffect } from 'react';
+import React, { useEffect, Suspense, lazy } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getAllComplaintsInDB } from '../../redux/actions/complaintActions';
-import ComplaintRowMini from './ComplaintRowMini';
+
+import { Skeleton, Spinner } from '@chakra-ui/react';
 
 const ComplaintMobileViewer = () => {
+  const LazyRow = lazy(() => import('./ComplaintRowMini'));
   const dispatch = useDispatch();
   const complaintData = useSelector(state => state.complaint);
-  const { loading, allComplaintData } = complaintData;
 
-  /*   useEffect(() => {
-    dispatch(getAllComplaintsInDB());
-  }, [dispatch]); */
+  const { allComplaintData } = complaintData;
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(getAllComplaintsInDB());
+    }, [3500]);
+  }, [dispatch]);
 
   return (
     <>
-      {allComplaintData !== null
-        ? allComplaintData.docs.map(complaint => (
-            <ComplaintRowMini
-              key={complaint._id}
-              title={complaint.title}
-              description={complaint.description}
-              time={complaint.time}
-            />
-          ))
-        : null}
+      {allComplaintData.map(complaint => (
+        <Suspense fallback={<Spinner />} key={complaint._id}>
+          <LazyRow
+            title={complaint.title}
+            description={complaint.description}
+            time={complaint.time}
+          />
+        </Suspense>
+      ))}
     </>
   );
 };
 
 export default ComplaintMobileViewer;
-
-//LESSON: Data is fetched asynchronously, so the JSX will not have anything to map since allComplaintData is initially set to null. So having the ternary expression, in a way, waits for the data to come...

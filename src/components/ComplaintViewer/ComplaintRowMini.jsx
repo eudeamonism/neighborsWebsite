@@ -1,6 +1,5 @@
 import { Flex, Text } from '@chakra-ui/react';
 
-
 const ComplaintRowMini = ({ title, description, time }) => {
   function convertMilitaryToStandardTime(militaryTime) {
     var hour = parseInt(militaryTime.substring(0, 2));
@@ -9,8 +8,6 @@ const ComplaintRowMini = ({ title, description, time }) => {
     hour = hour % 12 || 12;
     return hour + ':' + minute + ' ' + period;
   }
-
-  console.log(convertMilitaryToStandardTime(time));
 
   return (
     <Flex width="390px" justifyContent="center">

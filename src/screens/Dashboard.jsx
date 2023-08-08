@@ -7,8 +7,6 @@ import { closeForm } from '../redux/actions/complaintActions';
 import { getAllComplaintsInDB } from '../redux/actions/complaintActions';
 import { Spinner } from '@chakra-ui/react';
 
-
-
 const Dashboard = () => {
   const dispatch = useDispatch();
 
@@ -20,7 +18,6 @@ const Dashboard = () => {
   const complaint = useSelector(state => state.complaint);
   const { allComplaintData } = complaint;
 
-  console.log(allComplaintData);
   return (
     <Flex h="844px" direction="column" width="390px">
       <Box mb="55px">

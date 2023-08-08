@@ -39,15 +39,6 @@ const Hamburger = () => {
       <MenuList>
         <MenuItem
           onClick={() => {
-            navigate('/testing');
-          }}
-        >
-          Testing
-        </MenuItem>
-        <MenuItem>All Complaints</MenuItem>
-        <MenuItem>My Complaints</MenuItem>
-        <MenuItem
-          onClick={() => {
             navigate('/createComplaint');
           }}
         >

@@ -10,8 +10,10 @@ import {
   DrawerCloseButton,
   DrawerOverlay,
   useDisclosure,
-  useColorModeValue
+  useColorModeValue,
 } from '@chakra-ui/react';
+
+import { getAllComplaintsInDB } from '../../redux/actions/complaintActions';
 
 const ScrollPagination = () => {
   const dispatch = useDispatch();
@@ -42,7 +44,7 @@ const ScrollPagination = () => {
               }}
               fontSize="xl"
             >
-              Most Recent
+              My Complaints
             </Text>
             <Text
               onClick={() => {
@@ -50,7 +52,7 @@ const ScrollPagination = () => {
               }}
               fontSize="xl"
             >
-              Oldest
+              By User
             </Text>
             <Text
               onClick={() => {
@@ -59,7 +61,7 @@ const ScrollPagination = () => {
               fontSize="xl"
               mb="10px"
             >
-              By User
+              Oldest
             </Text>
           </DrawerBody>
         </DrawerContent>
@@ -67,10 +69,9 @@ const ScrollPagination = () => {
     </>
   );
 
-  console.log(allComplaintData);
   return (
     <Flex
-      bg={useColorModeValue("red", "purple.500")}
+      bg={useColorModeValue('red', 'purple.500')}
       width="60px"
       height="25px"
       alignItems="center"

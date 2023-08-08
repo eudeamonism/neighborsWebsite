@@ -100,7 +100,7 @@ export const createAComplaint =
     }
   };
 
-export const getAllComplaintsInDB = (page, limit) => async dispatch => {
+export const getAllComplaintsInDB = () => async dispatch => {
   dispatch(setLoadingOn());
 
   try {
@@ -110,20 +110,13 @@ export const getAllComplaintsInDB = (page, limit) => async dispatch => {
       },
     };
 
-    let url;
+    const { data } = await axios.get(
+      'http://localhost:5000/api/complaint/getComplaints',
+      config
+    );
 
-    if (page !== undefined && limit !== undefined) {
-      url = `http://localhost:5000/api/complaint/getComplaints?page=${page}&limit=${limit}`;
-    } else if (page !== undefined && limit === undefined) {
-      url = `http://localhost:5000/api/complaint/getComplaints?page=${page}`;
-    } else if (page === undefined && limit !== undefined) {
-      url = `http://localhost:5000/api/complaint/getComplaints?limit=${limit}`;
-    } else {
-      url = 'http://localhost:5000/api/complaint/getComplaints';
-    }
-    const { data } = await axios.get(url, config);
-
-    dispatch(retrieveAllComplaints(data));
+    localStorage.setItem('allComplaintData', JSON.stringify(data));
+    console.log(data);
     dispatch(setLoadingOff());
   } catch (error) {
     dispatch(
