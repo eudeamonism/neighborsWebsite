@@ -3,10 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 export const initialState = {
   loading: false,
   error: null,
-  allComplaintData:
-    JSON.parse(localStorage.getItem('allComplaintData')) ?? null,
-  singleComplaintData:
-    JSON.parse(localStorage.getItem('singleComplaintData')) ?? null,
+  allComplaintData: [] ?? null,
+  singleComplaintData: [] ?? null,
   openSingleComplaint: false,
   openAllComplaints: false,
   open: false,
@@ -19,6 +17,18 @@ export const complaintSlice = createSlice({
   reducers: {
     setError: (state, { payload }) => {
       state.error = payload;
+      state.loading = false;
+    },
+    refillComplaints: (state, { payload }) => {
+      state.allComplaintData = payload;
+      state.loading = false;
+    },
+    refillOneComplaint: (state, { payload }) => {
+      state.singleComplaintData = payload;
+      state.loading = false;
+    },
+    resetAComplaint: (state) => {
+      state.singleComplaintData = [];
       state.loading = false;
     },
 
@@ -68,6 +78,10 @@ export const {
   closeKreateComplaint,
   openEditAComplaint,
   closeEditAComplaint,
+  refillComplaints,
+  refillOneComplaint,
+  resetAComplaint
+
 } = complaintSlice.actions;
 
 export default complaintSlice.reducer;

@@ -8,7 +8,7 @@ import Dashboard from './screens/Dashboard';
 import DefaultPage from './screens/DefaultPage';
 import Exist from './screens/Exist';
 import CreateComplaint from './screens/CreateComplaint';
-import SingleComplaint from './components/ComplaintViewer/SingleComplaint';
+import SingleComplaint from './components/ComplaintViewer/Single/SingleComplaint';
 
 function App() {
   return (

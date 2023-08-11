@@ -8,6 +8,9 @@ import {
   setError,
   closeKreateComplaint,
   openKreateComplaint,
+  refillComplaints,
+  refillOneComplaint,
+  resetAComplaint
 } from '../slices/complaint';
 
 export const openForm = () => async dispatch => {
@@ -113,10 +116,8 @@ export const getAllComplaintsInDB = () => async dispatch => {
       'http://localhost:5000/api/complaint/getComplaints',
       config
     );
-
-    localStorage.setItem('allComplaintData', JSON.stringify(data));
-
-    dispatch(setLoadingOff());
+    
+    dispatch(refillComplaints(data));
   } catch (error) {
     dispatch(
       setError(
@@ -130,7 +131,7 @@ export const getAllComplaintsInDB = () => async dispatch => {
   }
 };
 
-export const getAComplaintInDBFromUser = id => async dispatch => {
+export const getOneComplaintInDB = id => async dispatch => {
   dispatch(setLoadingOn());
   try {
     const config = {
@@ -138,15 +139,13 @@ export const getAComplaintInDBFromUser = id => async dispatch => {
         'Content-Type': 'application/json',
       },
     };
-    console.log(id + 'ACTION CREATOR');
+
     const { data } = await axios.get(
       `http://localhost:5000/api/complaint/getComplaint/${id}`,
       config
     );
 
-    localStorage.setItem('singleComplaintData', JSON.stringify(data));
-
-    dispatch(setLoadingOff());
+    dispatch(refillOneComplaint(data));
   } catch (error) {
     dispatch(
       setError(
@@ -160,33 +159,34 @@ export const getAComplaintInDBFromUser = id => async dispatch => {
   }
 };
 
+
 export const AddComplaint =
-  (
-    title,
-    occurence,
-    crossStreet1,
-    crossStreet2,
-    complaintType,
-    description,
-    imageUrl,
-    authoritiesNotified,
+(
+  title,
+  occurence,
+  crossStreet1,
+  crossStreet2,
+  complaintType,
+  description,
+  imageUrl,
+  authoritiesNotified,
     resolved,
     userInfo
-  ) =>
-  async dispatch => {
-    dispatch(setLoadingOn());
-    try {
-      const config = {
+    ) =>
+    async dispatch => {
+      dispatch(setLoadingOn());
+      try {
+        const config = {
         headers: {
           'Content-Type': 'application/json',
           Authorization: userInfo.token,
         },
       };
-
+      
       if (imageUrl === '') {
         imageUrl = '/assets/images/holder.jpg';
       }
-
+      
       const { data } = await axios.post(
         'http://localhost:5000/api/complaint/create',
         {
@@ -202,46 +202,51 @@ export const AddComplaint =
           userId: userInfo._id,
         },
         config
-      );
-      dispatch(setLoadingOff());
-      dispatch(userLogin(data.user));
-      localStorage.setItem('userInfo', JSON.stringify(data.user));
-
-      dispatch(closeKreateComplaint());
-    } catch (error) {
-      dispatch(
+        );
+        dispatch(setLoadingOff());
+        dispatch(userLogin(data.user));
+        localStorage.setItem('userInfo', JSON.stringify(data.user));
+        
+        dispatch(closeKreateComplaint());
+      } catch (error) {
+        dispatch(
         setError(
           error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message
-            ? error.message
-            : 'An unexpected error has occured. Please try again later.'
-        )
-      );
-    }
-  };
-
-export const deleteComplaint = complaintId => async dispatch => {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    const { data } = await axios.delete(
-      `http://localhost:5000/api/complaint/removeComplaint/${complaintId}`,
-      config
-    );
-  } catch (error) {
-    dispatch(
-      setError(
-        error.response && error.response.data.message
           ? error.response.data.message
           : error.message
           ? error.message
           : 'An unexpected error has occured. Please try again later.'
+          )
+          );
+        }
+      };
+      
+      export const deleteComplaint = complaintId => async dispatch => {
+        try {
+          const config = {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          };
+          
+          const { data } = await axios.delete(
+            `http://localhost:5000/api/complaint/removeComplaint/${complaintId}`,
+            config
+            );
+          } catch (error) {
+            dispatch(
+              setError(
+                error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+                ? error.message
+                : 'An unexpected error has occured. Please try again later.'
       )
-    );
-  }
-};
+      );
+    }
+  };
+
+ export const resetOneComplaint = () => dispatch => {
+  dispatch(setLoadingOn());
+  dispatch(resetAComplaint());
+ };
