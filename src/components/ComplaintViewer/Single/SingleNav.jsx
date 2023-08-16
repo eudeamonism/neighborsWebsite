@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import { Flex, Text } from '@chakra-ui/react';
 
 const SingleNav = () => {
+  const navigate = useNavigate();
   return (
     <Flex width="390px" justify="space-between" mt="20px" mb="20px">
       <Flex>
@@ -32,6 +34,9 @@ const SingleNav = () => {
         alignItems="center"
         justify="center"
         mr="20px"
+        onClick={() => {
+          navigate('/dashboard');
+        }}
       >
         <Text
           fontFamily="'Inter', sans-serif;"

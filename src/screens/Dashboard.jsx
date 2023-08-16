@@ -11,7 +11,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const complaint = useSelector(state => state.complaint);
 
-  const { allComplaintData } = complaint;
+  const { allComplaintData, singleComplaintData } = complaint;
 
   // New state to manage retry logic
   const [retrying, setRetrying] = useState(false);
@@ -36,6 +36,7 @@ const Dashboard = () => {
   // Determine whether to show loading screen
   const isLoading = allComplaintData.length === 0 || retrying;
 
+  console.log(singleComplaintData);
   return (
     <Flex h="844px" direction="column" width="390px">
       <Box mb="55px">
@@ -60,4 +61,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-

@@ -18,7 +18,7 @@ const ComplaintRowMini = ({ description, time, title, id, loading }) => {
 
   const singularComplHandler = () => {
     dispatch(getOneComplaintInDB(id));
-    navigate('/singleComplaint');
+    navigate(`/singleComplaint?id=${id}`);
   };
 
   const mapperData = (

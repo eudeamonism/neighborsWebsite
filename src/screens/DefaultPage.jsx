@@ -1,9 +1,30 @@
-import { Box, Text, useMediaQuery } from '@chakra-ui/react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Box, useMediaQuery, useToast } from '@chakra-ui/react';
 import SmallLanding from '../components/SmallLanding';
 import BigLanding from '../components/BigLanding';
 
 const DefaultPage = () => {
+  const user = useSelector(state => state.user);
+  const { userInfo } = user;
+  const navigate = useNavigate();
+  const toast = useToast();
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/dashboard');
+      toast({
+        description: 'Welcome back!',
+        status: 'success',
+        isClosable: true,
+      });
+    } else {
+    }
+  }, []);
+
   const [isSmallerThan400] = useMediaQuery('(width < 400px)');
+
   return <Box>{isSmallerThan400 ? <SmallLanding /> : <BigLanding />}</Box>;
 };
 
