@@ -1,172 +1,162 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { Flex, useColorModeValue, Text, Button } from '@chakra-ui/react';
-import { Formik, Form } from 'formik';
+import React, { useEffect } from 'react';
+
+import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
-import { ColorModeSwitcher } from '../ColorModeSwitcher';
-import { complaintTypes } from '../../data/complaintTypes';
-import TextField from '../FormikFields/TextField';
+
 import {
-  createAComplaint,
-  openForm,
-} from '../../redux/actions/complaintActions';
+  Flex,
+  FormLabel,
+  Input,
+  Text,
+  FormControl,
+  FormErrorMessage,
+  Button,
+  Select,
+  Textarea,
+} from '@chakra-ui/react';
 
 const MobileForm = () => {
-  useEffect(() => {}, []);
-  const colorModeValue = useColorModeValue('#d2e5ff', '#ca9615');
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const user = useSelector(state => state.user);
-  const complaint = useSelector(state => state.complaint);
-  const { userInfo } = user;
-  const { loading, open } = complaint;
-
-  const userId = userInfo._id;
-  const displayName = userInfo.displayName;
-
-  const defaultValues = {
-    title: '',
-    occurence: '',
-    time: '',
-    complaintType: 'Illegal Dumping',
-    description: '',
-    imageUrl: '',
-    authorities: false,
-    resolved: false,
-    crossStreet1: '',
-    crossStreet2: '',
-  };
-
-  const complaintTypeOptions = Object.keys(complaintTypes).map(
-    complaintType => ({
-      label: complaintTypes[complaintType],
-      value: complaintTypes[complaintType],
-    })
-  );
-
-  console.log(open);
   return (
-    <Formik
-      initialValues={defaultValues}
-      validationSchema={Yup.object({
-        resolved: Yup.boolean().required(),
-        authorities: Yup.boolean().required(),
-        imageUrl: Yup.string().max(300, 'No more than 300 characters!'),
-        title: Yup.string()
-          .required('Please give complaint a title')
-          .max(40, 'No more than 40 characters'),
-        occurence: Yup.date().required('Please pick a date'),
-        time: Yup.string().required('Please pick a time'),
-        crossStreet1: Yup.string().required('Enter first street name only!'),
-        complaintType: Yup.string()
-          .default('Illegal Dumping')
-          .required('Must select type of complaint.'),
-        description: Yup.string()
-          .required('Please include a description.')
-          .min(20, 'A minimum of 20 characters')
-          .max(200, 'No more than 200 characters!'),
-      })}
-      onSubmit={values => {
-        dispatch(
-          createAComplaint(
-            userId,
-            displayName,
-            values.title,
-            values.occurence,
-            values.time,
-            values.complaintType,
-            values.description,
-            values.imageUrl,
-            values.authorities,
-            values.resolved,
-            values.crossStreet1,
-            values.crossStreet2
-          )
-        );
-      }}
-      validateOnMount={true}
-    >
-      {({ handleSubmit, isValid }) => (
-        <Form onSubmit={handleSubmit}>
-          {open === true ? navigate('/dashboard') : null}
-          <Flex direction="column">
-            <Flex
-              alignItems="center"
-              bgColor={colorModeValue}
-              height="55px"
-              mb="15px"
-              width="390px"
-              justify="space-between"
-            >
-              <ColorModeSwitcher />
-              <Text fontSize="2xl" fontWeight="medium">
-                Add a Complaint
-              </Text>
+    <Flex direction="column" mt="25px">
+      <Flex w="390px" justify="center">
+        <Text fontSize="24px">Testing Form</Text>
+      </Flex>
 
-              <Text
-                fontSize="3xl"
-                marginRight="10px"
-                onClick={() => {
-                  navigate('/dashboard');
-                }}
-              >
-                X
-              </Text>
-            </Flex>
-            <Flex width="390px" justify="center">
-              <Flex
-                width="350px"
-                direction="column"
-                alignItems="center"
-                justify="center"
-              >
-                <TextField name="title" type="text" label="Title" />
-                <TextField name="occurence" type="date" label="Date" />
-                <TextField name="time" type="time" label="Time" />
-                <TextField
-                  name="complaintType"
-                  type="select"
-                  label="Complaint Type"
-                  options={complaintTypeOptions}
-                />
-                <TextField name="description" type="text" label="Description" />
-                <TextField name="imageUrl" type="text" label="Image URL" />
-                <TextField
-                  name="authorities"
-                  type="checkbox"
-                  label="Authorities Notified"
-                />
-                <TextField name="resolved" type="checkbox" label="Resolved" />
-                <TextField name="crossStreet1" type="text" label="Street" />
-                <TextField
-                  name="crossStreet2"
+      <Formik
+        initialValues={{ title: 'A great title for this complaint!' }}
+        validationSchema={Yup.object({
+          title: Yup.string().required(
+            'A title for this complaint is required.'
+          ),
+          complaintType: Yup.string().required('Pick a complaint!'),
+          occurence: Yup.date().required('Select a date for this complaint.'),
+          time: Yup.string().required('Select a time for this complaint.'),
+          description: Yup.string().required('Please describe the complaint. ADD NUMBER LIMIT'),
+        })}
+        onSubmit={values => {
+          console.log(values);
+        }}
+      >
+        {({ errors, touched, dirty }) => (
+          <Form as="form">
+            <Flex
+              width="390px"
+              m="25px"
+              fontFamily="'Inter', sans-serif;"
+              direction="column"
+              gap="20px"
+            >
+              <FormControl isInvalid={!!errors.title && touched.title}>
+                <FormLabel htmlFor="title">Title of Complaint</FormLabel>
+                <Field
+                  as={Input}
+                  id="title"
+                  name="title"
                   type="text"
-                  label="Cross Street"
+                  width="85%"
+                  variant="filled"
+                  focusBorderColor="green.400"
+                  errorBorderColor="red.600"
                 />
-                <Button
-                  width="350px"
-                  height="50px"
-                  colorScheme="blue"
-                  mt="20px"
-                  type="submit"
-                  isLoading={loading}
-                  isDisabled={!isValid}
-                  onClick={() => {
-                    setTimeout(() => {
-                      dispatch(openForm());
-                    }, [2000]);
-                  }}
+                <FormErrorMessage>{errors.title}</FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                isInvalid={!!errors.complaintType && touched.complaintType}
+              >
+                <FormLabel htmlFor="complaintType">
+                  Type of Complaint (Pick One)
+                </FormLabel>
+                <Field
+                  as={Select}
+                  id="complaintType"
+                  name="complaintType"
+                  type="complaintType"
+                  width="85%"
+                  variant="filled"
                 >
-                  Submit
-                </Button>
-              </Flex>
+                  <option value=""></option>
+                  <option value="Excessive Noise">Excessive Noise</option>
+                  <option value="Lewdness">Lewdness</option>
+                  <option value="Public Intoxication">
+                    Public Intoxication
+                  </option>
+                  <option value="Creeping">Creeping</option>
+                  <option value="Stalking">Stalking</option>
+                  <option value="Violence">Violence</option>
+                  <option value="Theft">Theft</option>
+                  <option value="Speeding">Speeding</option>
+                  <option value="Drugs">Drugs</option>
+                  <option value="Tenant Issues">Tenant Issues</option>
+                  <option value="Abandoned Vehicles">Abandoned Vehicles</option>
+                  <option value="Fireworks">Fireworks</option>
+                  <option value="Discrimination">Discrimination</option>
+                  <option value="Unsanitary Conditions">
+                    Unsanitary Conditions
+                  </option>
+                  <option value="Public Nuisance">Public Nuisance</option>
+                  <option value="Code Violations">Code Violations</option>
+                  <option value="Salty">Salty</option>
+                </Field>
+                <FormErrorMessage>{errors.complaintType}</FormErrorMessage>
+              </FormControl>
+
+              <FormControl isInvalid={!!errors.occurence && touched.occurence}>
+                <FormLabel htmlFor="occurence">Date of Complaint</FormLabel>
+                <Field
+                  as={Input}
+                  id="occurence"
+                  name="occurence"
+                  type="date"
+                  width="85%"
+                  variant="filled"
+                  focusBorderColor="green.400"
+                  errorBorderColor="red.600"
+                />
+                <FormErrorMessage>{errors.occurence}</FormErrorMessage>
+              </FormControl>
+
+              <FormControl isInvalid={!!errors.time && touched.time}>
+                <FormLabel htmlFor="time">Time of Complaint</FormLabel>
+                <Field
+                  as={Input}
+                  id="time"
+                  name="time"
+                  type="time"
+                  width="85%"
+                  variant="filled"
+                  focusBorderColor="green.400"
+                  errorBorderColor="red.600"
+                />
+                <FormErrorMessage>{errors.occurence}</FormErrorMessage>
+              </FormControl>
+
+              <FormControl
+                isInvalid={!!errors.description && touched.description}
+              >
+                <FormLabel htmlFor="description">
+                  Description of the Complaint
+                </FormLabel>
+                <Field
+                  as={Textarea}
+                  id="description"
+                  name="description"
+                  type="text"
+                  width="85%"
+                  variant="filled"
+                  focusBorderColor="green.400"
+                  errorBorderColor="red.600"
+                  rows="5"
+                />
+                <FormErrorMessage>{errors.description}</FormErrorMessage>
+              </FormControl>
             </Flex>
-          </Flex>
-        </Form>
-      )}
-    </Formik>
+
+            <Button type="submit">Submit</Button>
+          </Form>
+        )}
+      </Formik>
+    </Flex>
   );
 };
 
