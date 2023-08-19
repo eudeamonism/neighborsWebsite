@@ -11,7 +11,69 @@ import {
   refillComplaints,
   refillOneComplaint,
   resetAComplaint,
+  cloudinarySecureUrlUpload,
 } from '../slices/complaint';
+
+export const setLoadingOffSwitch = () => dispatch => {
+  dispatch(setLoadingOff());
+  try {
+    dispatch(setLoadingOff());
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+  }
+};
+
+export const removeCloudinaryUrl =
+  (publicId, deletionToken) => async dispatch => {
+    dispatch(setLoadingOn());
+    try {
+      const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDNAME}/delete_by_token`;
+
+      const response = await axios.post(cloudinaryUrl, {
+        public_id: publicId,
+        deletion_token: deletionToken,
+      });
+
+      console.log(response);
+    } catch (error) {
+      dispatch(
+        setError(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+            ? error.message
+            : 'An unexpected error has occured. Please try again later.'
+        )
+      );
+    }
+  };
+
+//CONSIDERING SETTING LOADING OFF IF ERROR ALSO OTHER ACTIONS
+export const retrieveCloudinaryUrl = (cloudinaryUrl, delToken, publicId) => dispatch => {
+  dispatch(setLoadingOn());
+
+  try {
+    dispatch(cloudinarySecureUrlUpload({cloudinaryUrl, delToken, publicId}));
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+  }
+};
 
 export const openForm = () => async dispatch => {
   try {

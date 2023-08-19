@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
-
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
+
 import UploadWidget from '../../Widgets/UploadWidget';
 
 import {
@@ -18,11 +17,15 @@ import {
 
 const MobileForm = () => {
   return (
-    <Flex direction="column" mt="25px">
-      <Flex w="390px" justify="center">
+    <Flex
+      direction="column"
+      mt="25px"
+      fontFamily="'Inter', sans-serif;"
+      w="390px"
+    >
+      <Flex justify="center">
         <Text fontSize="24px">Testing Form</Text>
       </Flex>
-      <UploadWidget />
 
       <Formik
         initialValues={{ title: 'A great title for this complaint!' }}
@@ -44,7 +47,6 @@ const MobileForm = () => {
         {({ errors, touched }) => (
           <Form as="form">
             <Flex
-              width="390px"
               m="25px"
               fontFamily="'Inter', sans-serif;"
               direction="column"
@@ -57,7 +59,6 @@ const MobileForm = () => {
                   id="title"
                   name="title"
                   type="text"
-                  width="85%"
                   variant="filled"
                   focusBorderColor="green.400"
                   errorBorderColor="red.600"
@@ -76,7 +77,6 @@ const MobileForm = () => {
                   id="complaintType"
                   name="complaintType"
                   type="complaintType"
-                  width="85%"
                   variant="filled"
                 >
                   <option value=""></option>
@@ -112,7 +112,6 @@ const MobileForm = () => {
                   id="occurence"
                   name="occurence"
                   type="date"
-                  width="85%"
                   variant="filled"
                   focusBorderColor="green.400"
                   errorBorderColor="red.600"
@@ -127,7 +126,6 @@ const MobileForm = () => {
                   id="time"
                   name="time"
                   type="time"
-                  width="85%"
                   variant="filled"
                   focusBorderColor="green.400"
                   errorBorderColor="red.600"
@@ -146,7 +144,6 @@ const MobileForm = () => {
                   id="description"
                   name="description"
                   type="text"
-                  width="85%"
                   variant="filled"
                   focusBorderColor="green.400"
                   errorBorderColor="red.600"
@@ -154,6 +151,8 @@ const MobileForm = () => {
                 />
                 <FormErrorMessage>{errors.description}</FormErrorMessage>
               </FormControl>
+
+              <UploadWidget />
             </Flex>
 
             <Button type="submit">Submit</Button>

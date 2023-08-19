@@ -71,6 +71,7 @@ export const login = (email, password) => async dispatch => {
     dispatch(closeLoading(false));
   }
 };
+
 //This lowers in the database
 export const decrementComplaint = userId => async dispatch => {
   dispatch(setLoading(true));

@@ -9,6 +9,9 @@ export const initialState = {
   openAllComplaints: false,
   open: false,
   openEditComplaint: false,
+  imageUrl: '/assets/images/holder.jpg',
+  deleteToken: null,
+  publicId: null,
 };
 
 export const complaintSlice = createSlice({
@@ -19,6 +22,13 @@ export const complaintSlice = createSlice({
       state.error = payload;
       state.loading = false;
     },
+
+    cloudinarySecureUrlUpload: (state, { payload }) => {
+      state.imageUrl = payload.cloudinaryUrl;
+      state.deleteToken = payload.delToken;
+      state.publicId = payload.publicId;
+      state.loading = false;
+    },
     refillComplaints: (state, { payload }) => {
       state.allComplaintData = payload;
       state.loading = false;
@@ -27,7 +37,7 @@ export const complaintSlice = createSlice({
       state.singleComplaintData = payload;
       state.loading = false;
     },
-    resetAComplaint: (state) => {
+    resetAComplaint: state => {
       state.singleComplaintData = [];
       state.loading = false;
     },
@@ -80,8 +90,10 @@ export const {
   closeEditAComplaint,
   refillComplaints,
   refillOneComplaint,
-  resetAComplaint
-
+  resetAComplaint,
+  cloudinarySecureUrlUpload,
+  resetCloudinaryDeletionToken,
+  cloudinaryDeletionToken,
 } = complaintSlice.actions;
 
 export default complaintSlice.reducer;
