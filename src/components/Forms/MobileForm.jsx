@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
+import UploadWidget from '../../Widgets/UploadWidget';
 
 import {
   Flex,
@@ -21,6 +22,7 @@ const MobileForm = () => {
       <Flex w="390px" justify="center">
         <Text fontSize="24px">Testing Form</Text>
       </Flex>
+      <UploadWidget />
 
       <Formik
         initialValues={{ title: 'A great title for this complaint!' }}
@@ -31,13 +33,15 @@ const MobileForm = () => {
           complaintType: Yup.string().required('Pick a complaint!'),
           occurence: Yup.date().required('Select a date for this complaint.'),
           time: Yup.string().required('Select a time for this complaint.'),
-          description: Yup.string().required('Please describe the complaint. ADD NUMBER LIMIT'),
+          description: Yup.string().required(
+            'Please describe the complaint. ADD NUMBER LIMIT'
+          ),
         })}
         onSubmit={values => {
           console.log(values);
         }}
       >
-        {({ errors, touched, dirty }) => (
+        {({ errors, touched }) => (
           <Form as="form">
             <Flex
               width="390px"
