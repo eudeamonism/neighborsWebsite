@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Flex, Spinner, Text, Image } from '@chakra-ui/react';
-import { retrieveCloudinaryUrl } from '../redux/actions/complaintActions';
+import { retrieveCloudinaryUrl, deletingAssets } from '../redux/actions/complaintActions';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const UploadWidget = () => {
   const cloudinaryRef = useRef();
@@ -10,7 +11,7 @@ const UploadWidget = () => {
   const dispatch = useDispatch();
   const complaint = useSelector(state => state.complaint);
 
-  const { imageUrl, loading, deleteToken, publicId } = complaint;
+  const { imageUrl, loading, deleteToken, publicId, signature } = complaint;
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
     widgetRef.current = cloudinaryRef.current.createUploadWidget(
@@ -23,18 +24,29 @@ const UploadWidget = () => {
           const cloudinaryUrl = result.info.secure_url;
           const delToken = result.info.delete_token;
           const publicId = result.info.public_id;
+          const signature = result.info.signature;
 
           console.log(result);
-          console.log(delToken);
-          console.log(publicId);
 
           try {
-            dispatch(retrieveCloudinaryUrl(cloudinaryUrl, delToken, publicId));
+            dispatch(
+              retrieveCloudinaryUrl(
+                cloudinaryUrl,
+                delToken,
+                publicId,
+                signature
+              )
+            );
           } catch (error) {}
         }
       }
     );
   }, []);
+
+  const deleteHandler = async () => {
+    dispatch(deletingAssets(publicId));
+
+  };
 
   return (
     <Flex gap="2" justify="space-between">
@@ -60,9 +72,7 @@ const UploadWidget = () => {
             colorScheme="red"
             fontFamily="'Inter', sans-serif;"
             variant="outline"
-            onClick={() => {
-              console.log('Why is this going off?');
-            }}
+            onClick={deleteHandler}
           >
             {!loading ? 'Delete' : <Spinner size="xs" />}
           </Button>

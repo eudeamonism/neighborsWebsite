@@ -12,6 +12,7 @@ export const initialState = {
   imageUrl: '/assets/images/holder.jpg',
   deleteToken: null,
   publicId: null,
+  signature: null,
 };
 
 export const complaintSlice = createSlice({
@@ -27,6 +28,7 @@ export const complaintSlice = createSlice({
       state.imageUrl = payload.cloudinaryUrl;
       state.deleteToken = payload.delToken;
       state.publicId = payload.publicId;
+      state.signature = payload.signature;
       state.loading = false;
     },
     refillComplaints: (state, { payload }) => {

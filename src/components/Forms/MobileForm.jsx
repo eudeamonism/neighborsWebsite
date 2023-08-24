@@ -14,6 +14,8 @@ import {
   Select,
   Textarea,
 } from '@chakra-ui/react';
+import ReactCloudinary from '../../Widgets/ReactCloudinary';
+import ScratchCloudinary from '../../Widgets/ScratchCloudinary';
 
 const MobileForm = () => {
   return (
@@ -153,6 +155,7 @@ const MobileForm = () => {
               </FormControl>
 
               <UploadWidget />
+              
             </Flex>
 
             <Button type="submit">Submit</Button>

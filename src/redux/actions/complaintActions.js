@@ -57,11 +57,50 @@ export const removeCloudinaryUrl =
   };
 
 //CONSIDERING SETTING LOADING OFF IF ERROR ALSO OTHER ACTIONS
-export const retrieveCloudinaryUrl = (cloudinaryUrl, delToken, publicId) => dispatch => {
-  dispatch(setLoadingOn());
+export const retrieveCloudinaryUrl =
+  (cloudinaryUrl, delToken, publicId, signature) => dispatch => {
+    dispatch(setLoadingOn());
 
+    try {
+      dispatch(
+        cloudinarySecureUrlUpload({
+          cloudinaryUrl,
+          delToken,
+          publicId,
+          signature,
+        })
+      );
+    } catch (error) {
+      dispatch(
+        setError(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+            ? error.message
+            : 'An unexpected error has occured. Please try again later.'
+        )
+      );
+    }
+  };
+
+export const deletingAssets = publicId => async dispatch => {
   try {
-    dispatch(cloudinarySecureUrlUpload({cloudinaryUrl, delToken, publicId}));
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'api_key': '365479561511973',
+      },
+    };
+    console.log('Before Waka');
+
+    const { data } = await axios.post(
+      `http://localhost:5000/api/complaint/deleteAsset/${publicId}`,
+      config
+    );
+
+    console.log('After Waka');
+
+    console.log(data);
   } catch (error) {
     dispatch(
       setError(
