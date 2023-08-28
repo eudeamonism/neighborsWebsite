@@ -23,7 +23,10 @@ export const complaintSlice = createSlice({
       state.error = payload;
       state.loading = false;
     },
-
+    imageUrlReset: state => {
+      state.imageUrl = '/assets/images/holder.jpg';
+      state.loading = false;
+    },
     cloudinarySecureUrlUpload: (state, { payload }) => {
       state.imageUrl = payload.cloudinaryUrl;
       state.deleteToken = payload.delToken;
@@ -79,6 +82,7 @@ export const complaintSlice = createSlice({
 });
 
 export const {
+  imageUrlReset,
   setError,
   setLoadingOn,
   setLoadingOff,

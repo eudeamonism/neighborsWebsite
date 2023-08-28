@@ -12,6 +12,7 @@ import {
   refillOneComplaint,
   resetAComplaint,
   cloudinarySecureUrlUpload,
+  imageUrlReset
 } from '../slices/complaint';
 
 export const setLoadingOffSwitch = () => dispatch => {
@@ -88,18 +89,21 @@ export const deletingAssets = publicId => async dispatch => {
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        'api_key': '365479561511973',
+        api_key: '365479561511973',
       },
     };
-    console.log('Before Waka');
 
     const { data } = await axios.post(
       `http://localhost:5000/api/complaint/deleteAsset/${publicId}`,
       config
     );
 
-    console.log('After Waka');
-
+    if (data.deleted) {
+      console.log('Dat was deleted');
+      dispatch(imageUrlReset());
+    } else {
+      console.log('Stuff not deleted!');
+    }
     console.log(data);
   } catch (error) {
     dispatch(
@@ -146,7 +150,6 @@ export const closeForm = () => async dispatch => {
   }
 };
 
-//Create Complaint Action Needed
 
 export const getAllComplaintsInDB = () => async dispatch => {
   dispatch(setLoadingOn());
@@ -177,6 +180,8 @@ export const getAllComplaintsInDB = () => async dispatch => {
   }
 };
 
+
+//Double check if this is active still!
 export const getOneComplaintInDB = id => async dispatch => {
   dispatch(setLoadingOn());
   try {
@@ -266,6 +271,8 @@ export const AddComplaint =
     }
   };
 
+
+  //Is this still used?
 export const deleteComplaint = complaintId => async dispatch => {
   try {
     const config = {

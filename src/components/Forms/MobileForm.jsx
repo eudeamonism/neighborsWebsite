@@ -1,5 +1,6 @@
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
+import { useSelector } from 'react-redux';
 
 import UploadWidget from '../../Widgets/UploadWidget';
 
@@ -14,10 +15,14 @@ import {
   Select,
   Textarea,
 } from '@chakra-ui/react';
-import ReactCloudinary from '../../Widgets/ReactCloudinary';
-import ScratchCloudinary from '../../Widgets/ScratchCloudinary';
 
 const MobileForm = () => {
+  const complaint = useSelector(state => state.complaint);
+  const user = useSelector(state => state.user);
+  const { imageUrl } = complaint;
+  const { userInfo } = user;
+
+  console.log(userInfo);
   return (
     <Flex
       direction="column"
@@ -38,12 +43,14 @@ const MobileForm = () => {
           complaintType: Yup.string().required('Pick a complaint!'),
           occurence: Yup.date().required('Select a date for this complaint.'),
           time: Yup.string().required('Select a time for this complaint.'),
-          description: Yup.string().required(
-            'Please describe the complaint. ADD NUMBER LIMIT'
-          ),
+          description: Yup.string()
+            .required('Please describe the complaint. ADD NUMBER LIMIT')
+            .min(21, 'Twenty characters minimum!')
+            .max(199, 'Two hundred characters maximum!'),
         })}
         onSubmit={values => {
           console.log(values);
+          console.log(imageUrl);
         }}
       >
         {({ errors, touched }) => (
@@ -155,7 +162,6 @@ const MobileForm = () => {
               </FormControl>
 
               <UploadWidget />
-              
             </Flex>
 
             <Button type="submit">Submit</Button>

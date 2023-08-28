@@ -33,28 +33,12 @@ const SignLogin = () => {
   const user = useSelector(state => state.user);
   const { loading, error, userInfo } = user;
 
-  //WILL NEED TO WIRE ID PATH LOGIC
   useEffect(() => {
-    if (userInfo) {
-      if (location.state?.from) {
-        navigate(location.state.from);
-      } else {
-        navigate("/dashboard");
-        toast({
-          description: 'Login successful.',
-          status: 'success',
-          isClosable: true,
-        });
-      }
-    } else if (error) {
-      toast({
-        description:
-          `${error}`,
-        status: 'error',
-        isClosable: true,
-      });
+    console.log(userInfo);
+    if (userInfo && userInfo !== null) {
+      navigate(`/dashboard?id=${userInfo.userId}`)
     }
-  }, [userInfo, error, navigate, location.state, toast]);
+  }, [dispatch, userInfo]);
 
   return (
     <Center minH={'100vh'}>
