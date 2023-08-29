@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate, Link as ReactLink, useLocation } from 'react-router-dom';
+import { useNavigate, Link as ReactLink } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -27,18 +27,33 @@ import { login } from '../redux/actions/userActions';
 
 const SignLogin = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+
   const dispatch = useDispatch();
   const toast = useToast();
   const user = useSelector(state => state.user);
   const { loading, error, userInfo } = user;
 
   useEffect(() => {
-    console.log(userInfo);
-    if (userInfo && userInfo !== null) {
-      navigate(`/dashboard?id=${userInfo.userId}`)
+    if (userInfo) {
+      navigate('/dashboard');
+      toast({
+        description: 'Welcome Back!',
+        status: 'success',
+        isClosable: true,
+      });
+    } else if (error) {
+      
+      toast({
+        description: 'Email or password is incorrect!',
+        status: 'error',
+        isClosable: true,
+      });
     }
-  }, [dispatch, userInfo]);
+  }, [userInfo, error, navigate, toast]);
+
+  
+
+
 
   return (
     <Center minH={'100vh'}>

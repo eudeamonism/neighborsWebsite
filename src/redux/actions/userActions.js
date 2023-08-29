@@ -55,7 +55,6 @@ export const login = (email, password) => async dispatch => {
       config
     );
     dispatch(userLogin(data));
-
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
     dispatch(
