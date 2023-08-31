@@ -4,15 +4,22 @@ export const initialState = {
   loading: false,
   error: null,
   userInfo: JSON.parse(localStorage.getItem('userInfo')) ?? null,
+  resetTokenEmail: null,
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    forgotPasswordToken: (state, { payload }) => {
+      state.resetTokenEmail = payload;
+      state.error = null;
+      state.loading = false;
+    },
     logout: state => {
       localStorage.removeItem('userInfo');
       state.userInfo = null;
+      state.loading = false;
     },
 
     setLoading: state => {
@@ -31,17 +38,11 @@ export const userSlice = createSlice({
       state.error = payload;
       state.loading = false;
     },
-
   },
 });
 
-export const {
-  setLoading,
-  userLogin,
-  setError,
-  closeLoading,
-  logout,
-} = userSlice.actions;
+export const { setLoading, userLogin, setError, closeLoading, logout, forgotPasswordToken } =
+  userSlice.actions;
 
 export default userSlice.reducer;
 

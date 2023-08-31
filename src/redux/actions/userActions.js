@@ -5,7 +5,39 @@ import {
   setError,
   closeLoading,
   logout,
+  forgotPasswordToken,
 } from '../slices/user';
+
+export const forgotTokenPassword = email => async dispatch => {
+  dispatch(setLoading(true));
+
+
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const { data } = await axios.get(
+      `http://localhost:5000/api/users/forgotPassword/${email}`,
+      config
+    );
+    setTimeout(() => {
+      dispatch(forgotPasswordToken(data));
+    }, 1000)
+    
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data
+          ? error.response.data
+          : error.message
+          ? error.message
+          : 'An unexpected error occurred. Please try again later.'
+      )
+    );
+  }
+};
 
 export const register =
   (firstName, lastName, displayName, email, password) => async dispatch => {

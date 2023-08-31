@@ -42,7 +42,6 @@ const SignLogin = () => {
         isClosable: true,
       });
     } else if (error) {
-      
       toast({
         description: 'Email or password is incorrect!',
         status: 'error',
@@ -50,10 +49,6 @@ const SignLogin = () => {
       });
     }
   }, [userInfo, error, navigate, toast]);
-
-  
-
-
 
   return (
     <Center minH={'100vh'}>
@@ -79,7 +74,7 @@ const SignLogin = () => {
             validationSchema={Yup.object({
               email: Yup.string()
                 .email('Invalid email')
-                .required('An email address is required Son!'),
+                .required('Email required'),
               password: Yup.string()
                 .required('Please enter a password')
                 .matches(
@@ -153,6 +148,14 @@ const SignLogin = () => {
             <ColorModeSwitcher _hover={{ transform: 'scale(1.2)' }} />
           </Flex>
         </CardFooter>
+        <Text
+          mb="25px"
+          onClick={() => {
+            navigate('/reset');
+          }}
+        >
+          Forgot Password?
+        </Text>
       </Card>
     </Center>
   );
