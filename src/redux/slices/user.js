@@ -11,6 +11,9 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    resetForgotSlice: state => {
+      state.resetTokenEmail = null;
+    },
     forgotPasswordToken: (state, { payload }) => {
       state.resetTokenEmail = payload;
       state.error = null;
@@ -41,8 +44,15 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setLoading, userLogin, setError, closeLoading, logout, forgotPasswordToken } =
-  userSlice.actions;
+export const {
+  setLoading,
+  userLogin,
+  setError,
+  closeLoading,
+  logout,
+  forgotPasswordToken,
+  resetForgotSlice
+} = userSlice.actions;
 
 export default userSlice.reducer;
 

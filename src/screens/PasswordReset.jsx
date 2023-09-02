@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate, Link as ReactLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -12,19 +12,41 @@ import {
   Text,
   VStack,
   Spinner,
+  useToast,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { forgotTokenPassword } from '../redux/actions/userActions';
+import { forgotTokenPassword, resetForgot } from '../redux/actions/userActions';
 
 const PasswordReset = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const { resetTokenEmail, loading } = user;
+  const navigate = useNavigate();
 
-  console.log(loading);
+  const toast = useToast();
+
+  useEffect(() => {
+    if (resetTokenEmail === 'true') {
+      console.log('Beeb bo beeb!');
+    } else if (resetTokenEmail === 'false') {
+      toast({
+        title: 'Not Found',
+        duration: 3000,
+        isClosable: true,
+        description: 'Email address not found!',
+        status: 'error',
+      });
+      navigate('/login');
+      dispatch(resetForgot());
+    } else if (resetTokenEmail === null) {
+      console.log('null beeb bo beeb!');
+    }
+  }, [dispatch, resetTokenEmail]);
+
+  console.log(resetTokenEmail);
   return (
-    <Flex width="390px" height="844px" mt="30%" justify="center">
+    <Flex width="390px" height="844px" mt="50px" justify="center">
       <Flex
         width="300px"
         height="360px"
@@ -64,10 +86,16 @@ const PasswordReset = () => {
                 </FormControl>
               </Flex>
               <Flex direction="column" width="90px" gap="6" mt="25px">
-                {loading === false ? <><Button colorScheme="green" type="submit">
-                  Reset
-                </Button>
-                <Button colorScheme="red">Cancel</Button></> : <Spinner />}
+                {loading === false ? (
+                  <>
+                    <Button colorScheme="green" type="submit">
+                      Reset
+                    </Button>
+                    <Button colorScheme="red">Cancel</Button>
+                  </>
+                ) : (
+                  <Spinner />
+                )}
               </Flex>
             </Form>
           )}

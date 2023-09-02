@@ -6,11 +6,15 @@ import {
   closeLoading,
   logout,
   forgotPasswordToken,
+  resetForgotSlice,
 } from '../slices/user';
+
+export const resetForgot = () => dispatch => {
+  dispatch(resetForgotSlice());
+};
 
 export const forgotTokenPassword = email => async dispatch => {
   dispatch(setLoading(true));
-
 
   try {
     const config = {
@@ -24,8 +28,7 @@ export const forgotTokenPassword = email => async dispatch => {
     );
     setTimeout(() => {
       dispatch(forgotPasswordToken(data));
-    }, 1000)
-    
+    }, 1000);
   } catch (error) {
     dispatch(
       setError(
