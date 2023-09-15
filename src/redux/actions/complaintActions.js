@@ -99,7 +99,7 @@ export const deletingAssets = publicId => async dispatch => {
     );
 
     if (data.deleted) {
-      console.log('Dat was deleted');
+      console.log('Data was deleted');
       dispatch(imageUrlReset());
     } else {
       console.log('Stuff not deleted!');

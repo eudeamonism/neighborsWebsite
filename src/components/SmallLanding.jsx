@@ -4,6 +4,7 @@ import {
   VStack,
   Button,
   Text,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { useNavigate } from 'react-router-dom';
@@ -47,6 +48,7 @@ const SmallLanding = () => {
           ))}
         </motion.div>
         <Button
+        colorScheme={useColorModeValue("yellow", "orange")}
           mt="2rem"
           onClick={() => {
             navigate('/signup');

@@ -43,8 +43,8 @@ const SignUp = () => {
     } else if (error) {
       
       toast({
-        title: `${error?.includes("email") ? "Email" : "Display Name"}`,
-        description: `${error?.includes("email") ? error : "Already registered! Choose another one."}`,
+        title: 'Error',
+        description: 'Something went wrong signing up.',
         status: 'error',
         isClosable: true,
         duration: 9000,

@@ -13,6 +13,22 @@ export const resetForgot = () => dispatch => {
   dispatch(resetForgotSlice());
 };
 
+export const otpMatch = (entry, email) => async dispatch => {
+  dispatch(setLoading(true));
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    
+    const { data } = await axios.get(
+      `http://localhost:5000/api/users/matchotp/${entry}/${email}`,
+      config
+    );
+  } catch (error) {}
+};
+
 export const forgotTokenPassword = email => async dispatch => {
   dispatch(setLoading(true));
 
