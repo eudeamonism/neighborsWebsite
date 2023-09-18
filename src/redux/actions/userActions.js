@@ -13,6 +13,24 @@ export const resetForgot = () => dispatch => {
   dispatch(resetForgotSlice());
 };
 
+export const resetPassword = (password, email) => async dispatch => {
+  dispatch(setLoading(true));
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axios.put(
+      `http://localhost:5000/api/users/resetPassword/${password}/${email}`,
+      config
+    );
+
+    dispatch(forgotPasswordToken(data));
+  } catch (error) {console.log(error);}
+};
+
 export const otpMatch = (entry, email) => async dispatch => {
   dispatch(setLoading(true));
   try {
@@ -21,12 +39,16 @@ export const otpMatch = (entry, email) => async dispatch => {
         'Content-Type': 'application/json',
       },
     };
-    
+
     const { data } = await axios.get(
       `http://localhost:5000/api/users/matchotp/${entry}/${email}`,
       config
     );
-  } catch (error) {}
+
+    dispatch(forgotPasswordToken(data));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const forgotTokenPassword = email => async dispatch => {

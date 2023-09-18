@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { forgotTokenPassword, resetForgot } from '../redux/actions/userActions';
 import OtbReset from './OtbReset';
+import UpdatePassword from './UpdatePassword';
 
 const PasswordReset = () => {
   const dispatch = useDispatch();
@@ -119,7 +120,7 @@ const PasswordReset = () => {
           email={resetTokenEmail?.email}
         />
       ) : resetTokenEmail?.stat === 'change' ? (
-        <Text>Change Password</Text>
+        <UpdatePassword />
       ) : (
         <Text>Locked out. Button redirect.</Text>
       )}
