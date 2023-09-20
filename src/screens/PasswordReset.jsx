@@ -53,6 +53,24 @@ const PasswordReset = () => {
         description: 'Check your email!',
         status: 'success',
       });
+    } else if (resetTokenEmail === false) {
+      toast({
+        title: 'Error',
+        description: 'Forbidden Access!',
+        status: 'error',
+      });
+      dispatch(resetForgot());
+      navigate('/');
+    } else if (resetTokenEmail === 'error') {
+      toast({
+        title: 'Error',
+        description: 'Something went wrong! Please try again later. ',
+        status: 'error',
+      });
+      dispatch(resetForgot());
+      navigate('/');
+    } else if (resetTokenEmail === 'login') {
+      navigate('/login');
     }
   }, [dispatch, resetTokenEmail]);
 
@@ -104,7 +122,14 @@ const PasswordReset = () => {
                         <Button colorScheme="green" type="submit">
                           Reset
                         </Button>
-                        <Button colorScheme="red">Cancel</Button>
+                        <Button
+                          colorScheme="red"
+                          onClick={() => {
+                            navigate('/login');
+                          }}
+                        >
+                          Cancel
+                        </Button>
                       </>
                     ) : (
                       <Spinner />
@@ -116,9 +141,7 @@ const PasswordReset = () => {
           </Flex>
         </Flex>
       ) : resetTokenEmail && resetTokenEmail?.stat === 'true' ? (
-        <OtbReset
-          email={resetTokenEmail?.email}
-        />
+        <OtbReset email={resetTokenEmail?.email} />
       ) : resetTokenEmail?.stat === 'change' ? (
         <UpdatePassword />
       ) : (

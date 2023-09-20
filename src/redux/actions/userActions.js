@@ -26,7 +26,7 @@ export const resetPassword = (password, email) => async dispatch => {
       `http://localhost:5000/api/users/resetPassword/${password}/${email}`,
       config
     );
-
+      alert(data);
     dispatch(forgotPasswordToken(data));
   } catch (error) {console.log(error);}
 };

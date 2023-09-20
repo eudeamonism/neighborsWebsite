@@ -24,27 +24,18 @@ import {
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { resetPassword } from '../redux/actions/userActions';
+import { resetPassword, resetForgot } from '../redux/actions/userActions';
 //Need Toasts?
 
 const UpdatePassword = () => {
   const dispatch = useDispatch();
-  const toast = useToast();
+  
 
   const user = useSelector(state => state.user);
   const { loading, resetTokenEmail } = user;
 
   const email = resetTokenEmail?.email;
-  useEffect(() => {
-    console.log(resetTokenEmail.email);
-    if (resetTokenEmail?.stat === 'updated') {
-      console.log('Updated!');
-      //Set up toast
-    } else if (resetTokenEmail?.stat === 'error') {
-      console.log('ERROR');
-      //Set up toast
-    }
-  }, [dispatch, resetTokenEmail]);
+  
   return (
     <Center minH={'100vh'}>
       <Card height="auto" width="300px" align="center" variant="elevated">
@@ -69,7 +60,7 @@ const UpdatePassword = () => {
                 ),
             })}
             onSubmit={values => {
-              dispatch(resetPassword(values.password, email))
+              dispatch(resetPassword(values.password, email));
             }}
           >
             {({ errors, touched }) => (
