@@ -147,6 +147,9 @@ const SignLogin = () => {
             <Divider orientation="vertical" mr={'4'} ml={'4'} />
             <ColorModeSwitcher _hover={{ transform: 'scale(1.2)' }} />
           </Flex>
+          <Flex>
+            <Text>Captcha</Text>
+          </Flex>
         </CardFooter>
         <Text
           mb="25px"

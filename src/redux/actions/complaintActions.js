@@ -94,7 +94,7 @@ export const deletingAssets = publicId => async dispatch => {
     };
 
     const { data } = await axios.post(
-      `http://localhost:5000/api/complaint/deleteAsset/${publicId}`,
+      `${process.env.REACT_APP_DATABASE_URL}complaint/deleteAsset/${publicId}`,
       config
     );
 
@@ -162,7 +162,7 @@ export const getAllComplaintsInDB = () => async dispatch => {
     };
 
     const { data } = await axios.get(
-      'http://localhost:5000/api/complaint/getComplaints',
+      `${process.env.REACT_APP_DATABASE_URL}complaint/getComplaints`,
       config
     );
 
@@ -192,7 +192,7 @@ export const getOneComplaintInDB = id => async dispatch => {
     };
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/complaint/getComplaint/${id}`,
+      `${process.env.REACT_APP_DATABASE_URL}complaint/getComplaint/${id}`,
       config
     );
 
@@ -238,7 +238,7 @@ export const AddComplaint =
       }
 
       const { data } = await axios.post(
-        'http://localhost:5000/api/complaint/create',
+        `${process.env.REACT_APP_DATABASE_URL}complaint/create`,
         {
           title,
           occurence,
@@ -282,7 +282,7 @@ export const deleteComplaint = complaintId => async dispatch => {
     };
 
     const { data } = await axios.delete(
-      `http://localhost:5000/api/complaint/removeComplaint/${complaintId}`,
+      `${process.env.REACT_APP_DATABASE_URL}complaint/removeComplaint/${complaintId}`,
       config
     );
   } catch (error) {

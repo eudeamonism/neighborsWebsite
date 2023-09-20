@@ -23,7 +23,7 @@ export const resetPassword = (password, email) => async dispatch => {
     };
 
     const { data } = await axios.put(
-      `http://localhost:5000/api/users/resetPassword/${password}/${email}`,
+      `${process.env.REACT_APP_DATABASE_URL}users/resetPassword/${password}/${email}`,
       config
     );
       alert(data);
@@ -41,7 +41,7 @@ export const otpMatch = (entry, email) => async dispatch => {
     };
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/users/matchotp/${entry}/${email}`,
+      `${process.env.REACT_APP_DATABASE_URL}users/matchotp/${entry}/${email}`,
       config
     );
 
@@ -61,7 +61,7 @@ export const forgotTokenPassword = email => async dispatch => {
       },
     };
     const { data } = await axios.get(
-      `http://localhost:5000/api/users/forgotPassword/${email}`,
+      `${process.env.REACT_APP_DATABASE_URL}users/forgotPassword/${email}`,
       config
     );
     setTimeout(() => {
@@ -91,7 +91,7 @@ export const register =
       };
 
       const { data } = await axios.post(
-        'http://localhost:5000/api/users/register',
+        '${process.env.REACT_APP_DATABASE_URL}users/register',
         { firstName, lastName, displayName, email, password },
         config
       );
@@ -123,7 +123,7 @@ export const login = (email, password) => async dispatch => {
     };
 
     const { data } = await axios.post(
-      'http://localhost:5000/api/users/login',
+      '${process.env.REACT_APP_DATABASE_URL}users/login',
       { email, password },
       config
     );
@@ -155,7 +155,7 @@ export const decrementComplaint = userId => async dispatch => {
     };
 
     const { data } = await axios.post(
-      `http://localhost:5000/api/users/decrementComplaint/${userId}`,
+      `${process.env.REACT_APP_DATABASE_URL}users/decrementComplaint/${userId}`,
       config
     );
   } catch (error) {
@@ -193,7 +193,7 @@ export const resetUserId = userId => async dispatch => {
     };
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/users/resetUserId/${userId}`,
+      `${process.env.REACT_APP_DATABASE_URL}users/resetUserId/${userId}`,
       config
     );
     dispatch(userLogin(data));

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, Link as ReactLink } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
@@ -21,16 +21,24 @@ import {
   Center,
   useToast,
 } from '@chakra-ui/react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { ColorModeSwitcher } from '../components/ColorModeSwitcher';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../redux/actions/userActions';
 
 const SignUp = () => {
+  const [captchaStatus, setCaptchaStatus] = useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const { loading, error, userInfo } = user;
   const toast = useToast();
+
+
+  
+  function onChange(value) {
+    console.log('Captcha value:', value);
+  }
 
   useEffect(() => {
     if (userInfo) {
@@ -41,7 +49,6 @@ const SignUp = () => {
         isClosable: true,
       });
     } else if (error) {
-      
       toast({
         title: 'Error',
         description: 'Something went wrong signing up.',
@@ -64,6 +71,11 @@ const SignUp = () => {
             Neighbors
           </Heading>
         </CardHeader>
+        <VStack>
+          <Flex>
+            <ReCAPTCHA sitekey={process.env.REACT_APP_CAPTCHA} onChange={onChange} />
+          </Flex>
+        </VStack>
         <CardBody>
           <Formik
             initialValues={{
@@ -206,6 +218,7 @@ const SignUp = () => {
             )}
           </Formik>
         </CardBody>
+
         <CardFooter>
           <Flex alignItems={'center'}>
             <Text

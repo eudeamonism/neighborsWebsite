@@ -19,6 +19,7 @@
     "formik": "^2.4.2",
     "framer-motion": "^6.5.1",
     "react-dom": "^18.2.0",
+    "react-google-recaptcha": "^3.1.0",
     "react-icons": "^3.11.0",
     "react-infinite-scroll-component": "^6.1.0",
     "react-paginate": "^8.2.0",
