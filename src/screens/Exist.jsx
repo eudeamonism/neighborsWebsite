@@ -1,4 +1,4 @@
-import { VStack, Box, Flex, Text, Center, Button } from '@chakra-ui/react';
+import { VStack, Text, Button } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
 const Exist = () => {

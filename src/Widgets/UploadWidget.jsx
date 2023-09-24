@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { Button, Flex, Spinner, Text, Image } from '@chakra-ui/react';
 import { retrieveCloudinaryUrl, deletingAssets } from '../redux/actions/complaintActions';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 
 const UploadWidget = () => {
   const cloudinaryRef = useRef();
@@ -11,7 +10,7 @@ const UploadWidget = () => {
   const dispatch = useDispatch();
   const complaint = useSelector(state => state.complaint);
 
-  const { imageUrl, loading, deleteToken, publicId, signature } = complaint;
+  const { imageUrl, loading, publicId } = complaint;
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
     widgetRef.current = cloudinaryRef.current.createUploadWidget(

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, Image, Flex } from '@chakra-ui/react';
+import { Image, Flex } from '@chakra-ui/react';
 
 const LoginImage = () => {
   return (

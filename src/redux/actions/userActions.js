@@ -26,9 +26,11 @@ export const resetPassword = (password, email) => async dispatch => {
       `${process.env.REACT_APP_DATABASE_URL}users/resetPassword/${password}/${email}`,
       config
     );
-      alert(data);
+    alert(data);
     dispatch(forgotPasswordToken(data));
-  } catch (error) {console.log(error);}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const otpMatch = (entry, email) => async dispatch => {
@@ -83,19 +85,23 @@ export const forgotTokenPassword = email => async dispatch => {
 export const register =
   (firstName, lastName, displayName, email, password) => async dispatch => {
     dispatch(setLoading(true));
+    console.log('Inside!');
+    console.log(process.env.REACT_APP_DATABASE_URL);
+
     try {
       const config = {
         headers: {
           'Content-Type': 'application/json',
         },
       };
-
+      console.log("checkpoint 221");
       const { data } = await axios.post(
-        '${process.env.REACT_APP_DATABASE_URL}users/register',
+        `${process.env.REACT_APP_DATABASE_URL}users/register`,
         { firstName, lastName, displayName, email, password },
         config
       );
 
+      console.log("checkpoint 22");
       dispatch(userLogin(data));
       localStorage.setItem('userInfo', JSON.stringify(data));
     } catch (error) {

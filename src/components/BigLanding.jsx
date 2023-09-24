@@ -2,9 +2,7 @@ import { motion } from 'framer-motion';
 import {
   Box,
   VStack,
-  Stack,
   Button,
-  useColorModeValue,
   Text,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';

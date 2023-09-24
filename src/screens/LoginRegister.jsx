@@ -1,5 +1,5 @@
 import React from 'react';
-import { Center, HStack, useMediaQuery, Flex, VStack } from '@chakra-ui/react';
+import { Center, HStack, useMediaQuery } from '@chakra-ui/react';
 import SignLogin from '../components/SignLogin';
 import LoginImage from '../components/LoginImage';
 

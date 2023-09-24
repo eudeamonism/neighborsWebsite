@@ -1,10 +1,7 @@
-import { useEffect } from 'react';
-import { useNavigate, Link as ReactLink } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import {
   Button,
-  Flex,
   FormControl,
   FormLabel,
   FormErrorMessage,
@@ -13,18 +10,14 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
-  Text,
   Heading,
   useColorModeValue,
-  Divider,
   Center,
-  useToast,
 } from '@chakra-ui/react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { resetPassword, resetForgot } from '../redux/actions/userActions';
+import { resetPassword } from '../redux/actions/userActions';
 //Need Toasts?
 
 const UpdatePassword = () => {

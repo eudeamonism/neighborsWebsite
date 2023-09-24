@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { useNavigate, Link as ReactLink } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
@@ -21,24 +22,18 @@ import {
   Center,
   useToast,
 } from '@chakra-ui/react';
-import ReCAPTCHA from 'react-google-recaptcha';
+
 import { ColorModeSwitcher } from '../components/ColorModeSwitcher';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../redux/actions/userActions';
 
 const SignUp = () => {
-  const [captchaStatus, setCaptchaStatus] = useState(false)
+  const [captchaState, setCaptchaState] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const { loading, error, userInfo } = user;
   const toast = useToast();
-
-
-  
-  function onChange(value) {
-    console.log('Captcha value:', value);
-  }
 
   useEffect(() => {
     if (userInfo) {
@@ -56,8 +51,13 @@ const SignUp = () => {
         isClosable: true,
         duration: 9000,
       });
+      console.log(error);
     }
   }, [userInfo, error, navigate, toast]);
+
+  const CaptchaOnChange = () => {
+    setCaptchaState(false);
+  };
 
   return (
     <Center minH={'100vh'}>
@@ -71,11 +71,11 @@ const SignUp = () => {
             Neighbors
           </Heading>
         </CardHeader>
-        <VStack>
-          <Flex>
-            <ReCAPTCHA sitekey={process.env.REACT_APP_CAPTCHA} onChange={onChange} />
-          </Flex>
-        </VStack>
+        <ReCAPTCHA
+          sitekey={process.env.REACT_APP_CAPTCHA_SITE_KEY}
+          onChange={CaptchaOnChange}
+        />
+
         <CardBody>
           <Formik
             initialValues={{
@@ -202,6 +202,7 @@ const SignUp = () => {
                     <FormErrorMessage>{errors.password}</FormErrorMessage>
                   </FormControl>
                 </VStack>
+
                 <Button
                   mt="8"
                   type="submit"
@@ -211,6 +212,7 @@ const SignUp = () => {
                   width="full"
                   isLoading={loading}
                   loadingText="Loading"
+                  isDisabled={captchaState}
                 >
                   Sign Up
                 </Button>
