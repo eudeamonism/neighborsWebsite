@@ -3,12 +3,12 @@ import {
   Spacer,
   useColorModeValue,
   useMediaQuery,
+  Text,
 } from '@chakra-ui/react';
 
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 
 import Hamburger from './HamburgerMenu/Hamburger';
-import ScrollPagination from './ComplaintViewer/ScrollPagination';
 
 const NavBar = () => {
   const [isLargerThan800] = useMediaQuery('(min-width: 800px)');
@@ -16,12 +16,13 @@ const NavBar = () => {
     <Flex
       justifyContent="space-between"
       alignItems="center"
-      position="fixed"
-      bg={useColorModeValue('red', 'purple.800')}
-      width={isLargerThan800 ? '800px' : '390px'}
+      borderBottom="1px"
+      borderColor="gray"
     >
-      <Hamburger />
-      <ScrollPagination />
+      {isLargerThan800 ? null : <Hamburger />}
+      {isLargerThan800 ? <Text>Welcome Profile Name</Text> : null}
+      {isLargerThan800 ? <Text>Create A Complaint</Text> : null}
+      
 
       <ColorModeSwitcher />
     </Flex>

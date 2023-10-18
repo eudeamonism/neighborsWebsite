@@ -7,6 +7,7 @@ import {
   logout,
   forgotPasswordToken,
   resetForgotSlice,
+  loadProfile,
 } from '../slices/user';
 
 export const resetForgot = () => dispatch => {
@@ -28,6 +29,64 @@ export const resetPassword = (password, email) => async dispatch => {
     );
     alert(data);
     dispatch(forgotPasswordToken(data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const gettingProfile = (token, refresh) => async dispatch => {
+  dispatch(setLoading(true));
+  console.log('userAction.gettingPRofile');
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    if (token === undefined) {
+      let token = 'empty';
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_DATABASE_URL}users/profile/${token}/${refresh}`,
+        config
+      );
+
+      dispatch(loadProfile(data));
+    } else if (token && refresh) {
+      console.log('Both token and refresh present!');
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_DATABASE_URL}users/profile/${token}/${refresh}`,
+        config
+      );
+      console.log(data);
+      dispatch(loadProfile(data));
+    }
+  } catch (error) {
+    dispatch(loadProfile(error.response.data));
+  }
+};
+
+export const gmailData = token => async dispatch => {
+  dispatch(setLoading(true));
+
+  const { credential, clientId } = token;
+
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        credential: credential,
+        clientId: clientId,
+      },
+    };
+
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_DATABASE_URL}users/gmailverify`,
+      config
+    );
+
+    dispatch(userLogin(data));
+    localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
     console.log(error);
   }
@@ -86,7 +145,6 @@ export const register =
   (firstName, lastName, displayName, email, password) => async dispatch => {
     dispatch(setLoading(true));
     console.log('Inside!');
-    console.log(process.env.REACT_APP_DATABASE_URL);
 
     try {
       const config = {
@@ -94,14 +152,14 @@ export const register =
           'Content-Type': 'application/json',
         },
       };
-      console.log("checkpoint 221");
+      console.log('checkpoint 221');
       const { data } = await axios.post(
         `${process.env.REACT_APP_DATABASE_URL}users/register`,
         { firstName, lastName, displayName, email, password },
         config
       );
 
-      console.log("checkpoint 22");
+      console.log('checkpoint 22');
       dispatch(userLogin(data));
       localStorage.setItem('userInfo', JSON.stringify(data));
     } catch (error) {
@@ -129,7 +187,7 @@ export const login = (email, password) => async dispatch => {
     };
 
     const { data } = await axios.post(
-      '${process.env.REACT_APP_DATABASE_URL}users/login',
+      `${process.env.REACT_APP_DATABASE_URL}users/login`,
       { email, password },
       config
     );
@@ -204,7 +262,6 @@ export const resetUserId = userId => async dispatch => {
     );
     dispatch(userLogin(data));
     localStorage.setItem('userInfo', JSON.stringify(data));
-    console.log(data);
   } catch (error) {
     dispatch(
       setError(

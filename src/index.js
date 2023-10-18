@@ -4,20 +4,22 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 
-
 import { Provider } from 'react-redux';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import store from './redux/store';
-
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
 
 root.render(
   <Provider store={store}>
-    
+    <GoogleOAuthProvider
+      clientId={process.env.REACT_APP_GMAIL_CLIENT_ID}
+      key={process.env.REACT_APP_GMAIL_SECRET_KEY}
+    >
       <App />
-    
+    </GoogleOAuthProvider>
   </Provider>
 );
 

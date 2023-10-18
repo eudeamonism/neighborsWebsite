@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { useNavigate, Link as ReactLink } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
@@ -20,17 +21,20 @@ import {
   Divider,
   Center,
   useToast,
+  Spacer,
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../components/ColorModeSwitcher';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/actions/userActions';
+import GLogin from './GmailButton/GLogin';
 
 const SignLogin = () => {
+  const [captchaState, setCaptchaState] = useState(true);
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const toast = useToast();
   const user = useSelector(state => state.user);
+  const toast = useToast();
   const { loading, error, userInfo } = user;
 
   useEffect(() => {
@@ -50,6 +54,10 @@ const SignLogin = () => {
     }
   }, [userInfo, error, navigate, toast]);
 
+  const CaptchaOnChange = () => {
+    setCaptchaState(false);
+  };
+
   return (
     <Center minH={'100vh'}>
       <Card height="auto" width="300px" align="center" variant="elevated">
@@ -62,6 +70,10 @@ const SignLogin = () => {
             Neighbors
           </Heading>
         </CardHeader>
+        <ReCAPTCHA
+          sitekey={process.env.REACT_APP_CAPTCHA_SITE_KEY}
+          onChange={CaptchaOnChange}
+        />
         <CardBody>
           <Formik
             initialValues={{
@@ -128,6 +140,7 @@ const SignLogin = () => {
                   width="full"
                   isLoading={loading}
                   loadingText="Loading"
+                  isDisabled={captchaState}
                 >
                   Login
                 </Button>
@@ -147,9 +160,6 @@ const SignLogin = () => {
             <Divider orientation="vertical" mr={'4'} ml={'4'} />
             <ColorModeSwitcher _hover={{ transform: 'scale(1.2)' }} />
           </Flex>
-          <Flex>
-            <Text>Captcha</Text>
-          </Flex>
         </CardFooter>
         <Text
           mb="25px"
@@ -161,6 +171,9 @@ const SignLogin = () => {
         >
           Forgot Password?
         </Text>
+        {captchaState === true ? null : <GLogin />}
+
+        <Flex mb="25px"></Flex>
       </Card>
     </Center>
   );

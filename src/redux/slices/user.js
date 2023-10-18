@@ -5,6 +5,7 @@ export const initialState = {
   error: null,
   userInfo: JSON.parse(localStorage.getItem('userInfo')) ?? null,
   resetTokenEmail: null,
+  profile: null,
 };
 
 export const userSlice = createSlice({
@@ -13,6 +14,11 @@ export const userSlice = createSlice({
   reducers: {
     resetForgotSlice: state => {
       state.resetTokenEmail = null;
+    },
+    loadProfile: (state, { payload }) => {
+      state.profile = payload;
+      state.error = null;
+      state.loading = false;
     },
     forgotPasswordToken: (state, { payload }) => {
       state.resetTokenEmail = payload;
@@ -51,7 +57,8 @@ export const {
   closeLoading,
   logout,
   forgotPasswordToken,
-  resetForgotSlice
+  resetForgotSlice,
+  loadProfile
 } = userSlice.actions;
 
 export default userSlice.reducer;

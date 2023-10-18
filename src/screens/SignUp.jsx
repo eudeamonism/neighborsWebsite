@@ -222,17 +222,19 @@ const SignUp = () => {
         </CardBody>
 
         <CardFooter>
-          <Flex alignItems={'center'}>
-            <Text
-              as={ReactLink}
-              to="/login"
-              _hover={{ transform: 'scale(1.2)' }}
-            >
-              Login?
-            </Text>
-            <Divider orientation="vertical" mr={'4'} ml={'4'} />
-            <ColorModeSwitcher _hover={{ transform: 'scale(1.2)' }} />
-          </Flex>
+          <VStack>
+            <Flex alignItems={'center'}>
+              <Text
+                as={ReactLink}
+                to="/login"
+                _hover={{ transform: 'scale(1.2)' }}
+              >
+                Login?
+              </Text>
+              <Divider orientation="vertical" mr={'4'} ml={'4'} />
+              <ColorModeSwitcher _hover={{ transform: 'scale(1.2)' }} />
+            </Flex>
+          </VStack>
         </CardFooter>
       </Card>
     </Center>
