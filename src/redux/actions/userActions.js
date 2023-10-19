@@ -179,6 +179,8 @@ export const register =
 
 export const login = (email, password) => async dispatch => {
   dispatch(setLoading(true));
+  console.log('login userAction');
+  console.log(process.env.REACT_APP_DATABASE_URL)
   try {
     const config = {
       headers: {

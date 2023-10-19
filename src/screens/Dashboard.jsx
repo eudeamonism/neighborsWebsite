@@ -35,11 +35,16 @@ const Dashboard = () => {
   console.log(profile);
 
   return (
-    <Flex bg="red" direction="column">
+    <Flex direction="column"  >
       <NavBar />
-      <Flex direction="row" maxH="1000px">
-        <Flex bg="orange" width="30%" height="40%"><BarMenu /></Flex>
-        <Flex bg="blue" width="70%">asf</Flex>
+      <Flex direction="row">
+        <Flex >
+          <BarMenu />
+        </Flex>
+        <Flex direction="column">
+          <Flex bg="blue">Popular Preview</Flex>
+          <Flex bg="green">Split Viewer</Flex>
+        </Flex>
       </Flex>
     </Flex>
   );
