@@ -1,8 +1,15 @@
 {
     "headers": [
-      {
-        "value": "same-origin-allow-popups"
-      }
+        {
+            "source": "www.google.com",
+            "headers": [
+                {
+                    "key": "Cross-Origin-Opener-Policy",
+                    "value": "same-origin-allow-popups"
+                }
+            ]
+        }
     ]
-  }
+}
+
   
