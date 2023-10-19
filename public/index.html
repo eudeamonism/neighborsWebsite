@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <meta name="referrer" content="no-referrer-when-downgrade">
+
   <meta charset="utf-8" />
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -35,6 +35,11 @@
   </style>
 
   <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript">
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js');
+    }
   </script>
 </head>
 
