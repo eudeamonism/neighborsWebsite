@@ -163,8 +163,11 @@ const MobileForm = () => {
 
               <UploadWidget />
             </Flex>
-
-            <Button type="submit">Submit</Button>
+            <Flex justify="center">
+              <Button type="submit" mb="40px" w="90%">
+                Submit
+              </Button>
+            </Flex>
           </Form>
         )}
       </Formik>

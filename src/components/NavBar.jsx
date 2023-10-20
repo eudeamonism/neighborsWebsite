@@ -22,7 +22,6 @@ const NavBar = () => {
       {isLargerThan800 ? null : <Hamburger />}
       {isLargerThan800 ? <Text>Welcome Profile Name</Text> : null}
       {isLargerThan800 ? <Text>Create A Complaint</Text> : null}
-      
 
       <ColorModeSwitcher />
     </Flex>
