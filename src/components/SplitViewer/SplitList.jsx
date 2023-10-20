@@ -3,7 +3,13 @@ import ListDetail from './ListDetail';
 
 const SplitList = () => {
   return (
-    <Flex w="100%" direction="column">
+    <Flex w="100%" direction="column" >
+      <ListDetail />
+      <ListDetail />
+      <ListDetail />
+      <ListDetail />
+      <ListDetail />
+      <ListDetail />
       <ListDetail />
       <ListDetail />
       <ListDetail />

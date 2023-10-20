@@ -8,7 +8,8 @@ const BarMenu = () => {
       borderRightColor="gray"
       borderBottom="1px"
       borderBottomColor="gray"
-      h="calc(100vh + 20px)"
+      minW="200px"
+    
     >
       <Flex direction="column">
         <Flex direction="column">

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Flex, HStack } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { gettingProfile, logoutUser } from '../redux/actions/userActions';
@@ -7,6 +7,22 @@ import NavBar from '../components/NavBar';
 import BarMenu from '../components/BarMenu/BarMenu';
 import Popular from '../components/PopularPreview/Popular';
 import SplitCase from '../components/SplitViewer/SplitCase';
+
+const Dashboard1 = () => {
+  return (
+    <Flex direction="column">
+      <NavBar />
+      <Flex width="100%">
+        <BarMenu />
+
+        <Flex direction="column" w="85%">
+          <Popular />
+          <SplitCase />
+        </Flex>
+      </Flex>
+    </Flex>
+  );
+};
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -39,10 +55,11 @@ const Dashboard = () => {
   return (
     <Flex direction="column">
       <NavBar />
+
       <Flex width="100%">
         <BarMenu />
 
-        <Flex direction="column" w="85%">
+        <Flex direction="column" w="95%">
           <Popular />
           <SplitCase />
         </Flex>

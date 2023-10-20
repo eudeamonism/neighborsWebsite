@@ -7,16 +7,16 @@ const SplitCase = () => {
     <Flex>
       <Flex
         w="100%"
-        h="510px"
         direction="column"
         align="center"
         overflowY="scroll"
+        h="calc(80vh)"
       >
         <SplitList />
       </Flex>
       <Flex
         w="100%"
-        h="510px"
+        h="calc(80vh)"
         bg="blue.900"
         overflowY="scroll"
         align="center"
