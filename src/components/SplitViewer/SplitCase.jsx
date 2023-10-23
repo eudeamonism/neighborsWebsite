@@ -4,25 +4,15 @@ import MobileForm from '../Forms/MobileForm';
 
 const SplitCase = () => {
   return (
-    <Flex>
+    <Flex justify="space-evenly">
       <Flex
-        w="100%"
         direction="column"
         align="center"
         overflowY="scroll"
         h="calc(80vh)"
+        w="100%"
       >
         <SplitList />
-      </Flex>
-      <Flex
-        w="100%"
-        h="calc(80vh)"
-        bg="blue.900"
-        overflowY="scroll"
-        align="center"
-        direction="column"
-      >
-        <MobileForm />
       </Flex>
     </Flex>
   );

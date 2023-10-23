@@ -2,7 +2,7 @@ import { Image, Text, Flex, Card, CardBody, Box } from '@chakra-ui/react';
 
 const PopularDetail = () => {
   const basicBoxStyles = {
-    display: 'flex',
+    display: 'inline-block',
     boxSize: '200px',
     textShadow: '0 0 20px black',
     px: 4,

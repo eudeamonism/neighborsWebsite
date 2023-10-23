@@ -18,7 +18,7 @@ const BigLanding = () => {
   return (
     <Box>
       <VStack>
-        <Text fontFamily="Caprasimo, Cursive" fontSize="4rem" mt="5rem">
+        <Text fontFamily="Caprasimo, Cursive" fontSize="4rem" mt="30%">
           Neighbors <ColorModeSwitcher />
         </Text>
 

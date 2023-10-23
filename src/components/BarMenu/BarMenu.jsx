@@ -2,15 +2,7 @@ import { Flex, Text } from '@chakra-ui/react';
 
 const BarMenu = () => {
   return (
-    <Flex
-      p="2"
-      borderRight="1px"
-      borderRightColor="gray"
-      borderBottom="1px"
-      borderBottomColor="gray"
-      minW="200px"
-    
-    >
+    <Flex p="2" borderRight="1px" borderRightColor="gray" minW="200px">
       <Flex direction="column">
         <Flex direction="column">
           <Text fontSize="larger">Profile</Text>

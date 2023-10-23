@@ -1,30 +1,13 @@
 import { useEffect } from 'react';
-import { Flex } from '@chakra-ui/react';
+import { Flex, VStack, useMediaQuery } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { gettingProfile, logoutUser } from '../redux/actions/userActions';
-import NavBar from '../components/NavBar';
-import BarMenu from '../components/BarMenu/BarMenu';
-import Popular from '../components/PopularPreview/Popular';
-import SplitCase from '../components/SplitViewer/SplitCase';
-
-const Dashboard1 = () => {
-  return (
-    <Flex direction="column">
-      <NavBar />
-      <Flex width="100%">
-        <BarMenu />
-
-        <Flex direction="column" w="85%">
-          <Popular />
-          <SplitCase />
-        </Flex>
-      </Flex>
-    </Flex>
-  );
-};
+import SmallDash from '../components/Dashboard/SmallDash';
 
 const Dashboard = () => {
+  const [isLargerThan430] = useMediaQuery('(width > 431px)');
+
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
 
@@ -52,20 +35,7 @@ const Dashboard = () => {
 
   console.log(profile);
 
-  return (
-    <Flex direction="column">
-      <NavBar />
-
-      <Flex width="100%">
-        <BarMenu />
-
-        <Flex direction="column" w="95%">
-          <Popular />
-          <SplitCase />
-        </Flex>
-      </Flex>
-    </Flex>
-  );
+  return <>{isLargerThan430 ? 'Larger' : <SmallDash />}</>;
 };
 
 export default Dashboard;

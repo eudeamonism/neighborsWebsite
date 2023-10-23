@@ -65,8 +65,7 @@ export const complaintSlice = createSlice({
     closeAllComplaintsFalse: state => {
       state.openAllComplaints = false;
     },
-    openKreateComplaint: (state, { payload }) => {
-      state.error = payload;
+    openKreateComplaint: state => {
       state.open = true;
     },
     closeKreateComplaint: state => {

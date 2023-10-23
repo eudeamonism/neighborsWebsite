@@ -11,6 +11,7 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../redux/actions/userActions';
+import { openForm } from '../../redux/actions/complaintActions';
 
 const Hamburger = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const Hamburger = () => {
     dispatch(logoutUser());
   };
 
-  const [isLargerThan390] = useMediaQuery('(min-width: 390px)');
+  const [isLargerThan430] = useMediaQuery('(min-width: 431px)');
 
   const { isOpen, onClose, onOpen } = useDisclosure();
   return (
@@ -31,15 +32,15 @@ const Hamburger = () => {
           <CloseIcon />
         ) : (
           <HamburgerIcon
-            boxSize={isLargerThan390 ? '22px' : '36px'}
-            marginLeft={isLargerThan390 ? '10px' : '26px'}
+            boxSize={isLargerThan430 ? '30px' : '24px'}
+            marginLeft={isLargerThan430 ? '20px' : '10px'}
           />
         )}
       </MenuButton>
       <MenuList>
         <MenuItem
           onClick={() => {
-            navigate('/createComplaint');
+            dispatch(openForm());
           }}
         >
           Create Complaint
@@ -51,23 +52,3 @@ const Hamburger = () => {
 };
 
 export default Hamburger;
-
-/* const singleUser = userComplaints.map(complaint => (
-  <DashComplaintViewer
-    key={complaint._id}
-    complaintId={complaint._id}
-    title={complaint.title}
-    occurence={complaint.occurence}
-    complaintType={complaint.complaintType}
-    description={complaint.description}
-    imageUrl={complaint.imageUrl}
-    police={complaint.authoritiesNotified}
-    resolved={complaint.resolved}
-    mainStreet={complaint.crossStreet1}
-    secondStreet={complaint.crossStreet2}
-    isGuide="true"
-    isAdmin="true"
-    numberOfComplaints="12"
-    displayName={complaint.displayName || 'Will Erase '}
-  />
-));  */

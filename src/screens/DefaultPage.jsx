@@ -23,9 +23,9 @@ const DefaultPage = () => {
     }
   }, []);
 
-  const [isSmallerThan400] = useMediaQuery('(width < 400px)');
+  const [isSmallerThan431] = useMediaQuery('(width < 431px)');
 
-  return <Box>{isSmallerThan400 ? <SmallLanding /> : <BigLanding />}</Box>;
+  return <Box>{isSmallerThan431 ? <SmallLanding /> : <BigLanding />}</Box>;
 };
 
 export default DefaultPage;

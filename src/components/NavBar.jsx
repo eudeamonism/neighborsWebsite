@@ -18,6 +18,8 @@ const NavBar = () => {
       alignItems="center"
       borderBottom="1px"
       borderColor="gray"
+      position="sticky"
+      top="0"
     >
       {isLargerThan800 ? null : <Hamburger />}
       {isLargerThan800 ? <Text>Welcome Profile Name</Text> : null}
@@ -30,6 +32,3 @@ const NavBar = () => {
 
 export default NavBar;
 
-/* <Flex direction="column" alignItems="center" justify="center">
-        {allComplaintData ? <ScrollPagination /> : <Spinner />}
-      </Flex> */

@@ -19,7 +19,7 @@ const SmallLanding = () => {
   return (
     <Box>
       <VStack>
-        <Text fontFamily="Caprasimo, Cursive" fontSize="3rem" mt="5rem">
+        <Text fontFamily="Caprasimo, Cursive" fontSize="3rem" mt="40%">
           Neighbors <ColorModeSwitcher />
         </Text>
 
