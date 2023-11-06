@@ -36,7 +36,7 @@ export const resetPassword = (password, email) => async dispatch => {
 
 export const gettingProfile = (token, refresh) => async dispatch => {
   dispatch(setLoading(true));
-  console.log('userAction.gettingPRofile');
+
   try {
     const config = {
       headers: {
@@ -45,6 +45,7 @@ export const gettingProfile = (token, refresh) => async dispatch => {
     };
 
     if (token === undefined) {
+      console.log('Token is undefined');
       let token = 'empty';
       const { data } = await axios.get(
         `${process.env.REACT_APP_DATABASE_URL}users/profile/${token}/${refresh}`,
@@ -53,12 +54,11 @@ export const gettingProfile = (token, refresh) => async dispatch => {
 
       dispatch(loadProfile(data));
     } else if (token && refresh) {
-      console.log('Both token and refresh present!');
       const { data } = await axios.get(
         `${process.env.REACT_APP_DATABASE_URL}users/profile/${token}/${refresh}`,
         config
       );
-      console.log(data);
+
       dispatch(loadProfile(data));
     }
   } catch (error) {
@@ -179,8 +179,7 @@ export const register =
 
 export const login = (email, password) => async dispatch => {
   dispatch(setLoading(true));
-  console.log('login userAction');
-  console.log(process.env.REACT_APP_DATABASE_URL)
+
   try {
     const config = {
       headers: {
@@ -242,6 +241,7 @@ export const decrementComplaint = userId => async dispatch => {
 export const logoutUser = () => dispatch => {
   try {
     dispatch(setLoading());
+
     dispatch(logout());
   } catch (error) {
   } finally {

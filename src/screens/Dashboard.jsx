@@ -3,7 +3,7 @@ import { Flex, VStack, useMediaQuery } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { gettingProfile, logoutUser } from '../redux/actions/userActions';
-import SmallDash from '../components/Dashboard/SmallDash';
+import SmallDash from '../components/Dashboard/Small/SmallDash';
 
 const Dashboard = () => {
   const [isLargerThan430] = useMediaQuery('(width > 431px)');
@@ -31,9 +31,9 @@ const Dashboard = () => {
     if (profile === 'expired') {
       dispatch(logoutUser());
     }
-  }, [dispatch, token]);
+  }, []);
 
-  console.log(profile);
+  
 
   return <>{isLargerThan430 ? 'Larger' : <SmallDash />}</>;
 };

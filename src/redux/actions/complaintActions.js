@@ -12,7 +12,8 @@ import {
   refillOneComplaint,
   resetAComplaint,
   cloudinarySecureUrlUpload,
-  imageUrlReset
+  imageUrlReset,
+  getMyComplaints,
 } from '../slices/complaint';
 
 export const setLoadingOffSwitch = () => dispatch => {
@@ -150,7 +151,6 @@ export const closeForm = () => async dispatch => {
   }
 };
 
-
 export const getAllComplaintsInDB = () => async dispatch => {
   dispatch(setLoadingOn());
 
@@ -179,7 +179,6 @@ export const getAllComplaintsInDB = () => async dispatch => {
     );
   }
 };
-
 
 //Double check if this is active still!
 export const getOneComplaintInDB = id => async dispatch => {
@@ -210,26 +209,59 @@ export const getOneComplaintInDB = id => async dispatch => {
   }
 };
 
+export const myDBComplaints = (token, refresh) => async dispatch => {
+  dispatch(setLoadingOn());
+
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}, Refresh ${refresh}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_DATABASE_URL}complaint/myComplaints`,
+      config
+    );
+
+    dispatch(getMyComplaints(data));
+    console.log(data);
+  } catch (error) {
+    dispatch(
+      setError(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+  }
+};
+
 export const AddComplaint =
   (
     title,
     occurence,
-    crossStreet1,
-    crossStreet2,
+    street,
+    cross,
     complaintType,
     description,
     imageUrl,
-    authoritiesNotified,
+    authorities,
     resolved,
-    userInfo
+    token,
+    refresh,
+    time
   ) =>
   async dispatch => {
     dispatch(setLoadingOn());
+
     try {
       const config = {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: userInfo.token,
         },
       };
 
@@ -238,27 +270,28 @@ export const AddComplaint =
       }
 
       const { data } = await axios.post(
-        `${process.env.REACT_APP_DATABASE_URL}complaint/create`,
+        `${process.env.REACT_APP_DATABASE_URL}complaint/createComplaint`,
         {
           title,
           occurence,
-          crossStreet1,
-          crossStreet2,
+          street,
+          cross,
           complaintType,
           description,
           imageUrl,
-          authoritiesNotified,
+          authorities,
           resolved,
-          userId: userInfo._id,
+          time,
+          token,
+          refresh,
         },
         config
       );
       dispatch(setLoadingOff());
-      dispatch(userLogin(data.user));
-      localStorage.setItem('userInfo', JSON.stringify(data.user));
 
       dispatch(closeKreateComplaint());
     } catch (error) {
+      console.log(error);
       dispatch(
         setError(
           error.response && error.response.data.message
@@ -271,8 +304,7 @@ export const AddComplaint =
     }
   };
 
-
-  //Is this still used?
+//Is this still used?
 export const deleteComplaint = complaintId => async dispatch => {
   try {
     const config = {

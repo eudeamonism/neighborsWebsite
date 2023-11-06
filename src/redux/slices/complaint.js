@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const initialState = {
   loading: false,
   error: null,
+  myComplaints: [],
   allComplaintData: [] ?? null,
   singleComplaintData: [] ?? null,
   openSingleComplaint: false,
@@ -32,6 +33,10 @@ export const complaintSlice = createSlice({
       state.deleteToken = payload.delToken;
       state.publicId = payload.publicId;
       state.signature = payload.signature;
+      state.loading = false;
+    },
+    getMyComplaints: (state, { payload }) => {
+      state.myComplaints = payload;
       state.loading = false;
     },
     refillComplaints: (state, { payload }) => {
@@ -93,6 +98,7 @@ export const {
   closeKreateComplaint,
   openEditAComplaint,
   closeEditAComplaint,
+  getMyComplaints,
   refillComplaints,
   refillOneComplaint,
   resetAComplaint,

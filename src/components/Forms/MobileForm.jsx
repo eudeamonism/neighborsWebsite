@@ -1,4 +1,5 @@
 import { Formik, Field, Form } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import {
   Button,
@@ -10,18 +11,44 @@ import {
   Input,
   VStack,
   Select,
+  Spinner,
+  HStack,
+  useColorModeValue,
 } from '@chakra-ui/react';
+
+import { closeForm } from '../../redux/actions/complaintActions';
 
 import UploadWidget from '../../Widgets/UploadWidget';
 
+import { AddComplaint } from '../../redux/actions/complaintActions';
+
 const MobileForm = () => {
+  const dispatch = useDispatch();
+  const complaint = useSelector(state => state.complaint);
+  const user = useSelector(state => state.user);
+
+  const { loading, imageUrl } = complaint;
+  const { userInfo } = user;
+  const { token, refresh } = userInfo;
+
   return (
     <Flex direction="column" w="100%" p="6">
-      <VStack mb="10px">
-        <Text fontWeight="bold" fontSize="18px">
-          {' '}
-          Complaint Form
-        </Text>
+      <VStack mb="20px">
+        <Flex w="100%" px="5" justify="space-between" align="center">
+          <Text fontWeight="bold" fontSize="18px">
+            Complaint Form
+          </Text>
+          <Text
+            fontWeight="extrabold"
+            fontSize="24px"
+            color={useColorModeValue('red.400', 'red.600')}
+            onClick={() => {
+              dispatch(closeForm());
+            }}
+          >
+            X
+          </Text>
+        </Flex>
       </VStack>
       <Formik
         initialValues={{
@@ -32,26 +59,43 @@ const MobileForm = () => {
           complaintType: '',
           description: '',
           imageUrl: '',
-          authorities: '',
-          resolved: '',
+          authorities: 'false',
+          resolved: 'false',
+          time: '',
         }}
         validationSchema={Yup.object().shape({
           title: Yup.string()
             .required('Please give complaint a title')
             .max(40, 'No more than 40 characters'),
           occurence: Yup.date().required('Please pick a date'),
+          time: Yup.string().required('Please select time for this complaint'),
           street: Yup.string().required('Required'),
           cross: Yup.string().required('Required'),
           complaintType: Yup.string().required(
             'Must select type of complaint.'
           ),
-          /* description: Yup.string()
+          description: Yup.string()
             .required('Please include a description.')
             .min(20, 'A minimum of 20 characters')
-            .max(200, 'No more than 200 characters!'), */
+            .max(200, 'No more than 200 characters!'),
         })}
         onSubmit={values => {
-          console.log(values);
+          dispatch(
+            AddComplaint(
+              values.title,
+              values.occurence,
+              values.street,
+              values.cross,
+              values.complaintType,
+              values.description,
+              values.imageUrl,
+              values.authorities,
+              values.resolved,
+              token,
+              refresh,
+              values.time
+            )
+          );
         }}
       >
         {({ handleSubmit, errors, isValid, dirty }) => (
@@ -68,6 +112,20 @@ const MobileForm = () => {
                 />
                 <FormErrorMessage>{errors.title}</FormErrorMessage>
               </FormControl>
+              <FormControl isInvalid={!!errors.description}>
+                <FormLabel htmlFor="description">Description</FormLabel>
+                <Field
+                  as={Input}
+                  id="description"
+                  name="description"
+                  type="text"
+                  placeHolder="Complaint's description"
+                  component="textarea"
+                  rows="5"
+                  cols="37"
+                />
+                <FormErrorMessage>{errors.description}</FormErrorMessage>
+              </FormControl>
               <FormControl isInvalid={!!errors.occurence}>
                 <FormLabel htmlFor="occurence">Occurence</FormLabel>
                 <Field
@@ -78,6 +136,17 @@ const MobileForm = () => {
                   placeHolder="Complaint's occurence"
                 />
                 <FormErrorMessage>{errors.occurence}</FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={!!errors.time}>
+                <FormLabel htmlFor="time">Time</FormLabel>
+                <Field
+                  as={Input}
+                  id="time"
+                  name="time"
+                  type="time"
+                  placeHolder="Complaint's time"
+                />
+                <FormErrorMessage>{errors.time}</FormErrorMessage>
               </FormControl>
               <FormControl isInvalid={!!errors.street}>
                 <FormLabel htmlFor="street">Street</FormLabel>
@@ -100,6 +169,34 @@ const MobileForm = () => {
                   placeHolder="Intersecting Street"
                 />
                 <FormErrorMessage>{errors.cross}</FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={!!errors.authorities}>
+                <FormLabel htmlFor="authorities">
+                  Authorities Notified?
+                </FormLabel>
+                <Field
+                  as={Select}
+                  id="authorities"
+                  name="authorities"
+                  placeHolder="Intersecting Street"
+                >
+                  <option value={false}>false</option>
+                  <option value={true}>true</option>
+                </Field>
+                <FormErrorMessage>{errors.authorities}</FormErrorMessage>
+              </FormControl>
+              <FormControl isInvalid={!!errors.resolved}>
+                <FormLabel htmlFor="resolved">Resolved?</FormLabel>
+                <Field
+                  as={Select}
+                  id="resolved"
+                  name="resolved"
+                  placeHolder="Intersecting Street"
+                >
+                  <option value={false}>false</option>
+                  <option value={true}>true</option>
+                </Field>
+                <FormErrorMessage>{errors.resolved}</FormErrorMessage>
               </FormControl>
               <FormControl isInvalid={!!errors.complaintType}>
                 <FormLabel htmlFor="complaintType">Complaint Type</FormLabel>
@@ -136,8 +233,12 @@ const MobileForm = () => {
               </FormControl>
               <UploadWidget />
 
-              <Button type="submit" width="full" isDisabled={!dirty || !isValid}>
-                Submit
+              <Button
+                type="submit"
+                width="full"
+                isDisabled={!dirty || !isValid}
+              >
+                {loading === true ? <Spinner /> : 'Submit'}
               </Button>
             </VStack>
           </form>
