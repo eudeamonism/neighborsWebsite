@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-import { userLogin } from '../slices/user';
-
 import {
   setLoadingOn,
   setLoadingOff,
@@ -306,6 +304,7 @@ export const AddComplaint =
 
 //Is this still used?
 export const deleteComplaint = complaintId => async dispatch => {
+  dispatch(setLoadingOn());
   try {
     const config = {
       headers: {
@@ -317,6 +316,8 @@ export const deleteComplaint = complaintId => async dispatch => {
       `${process.env.REACT_APP_DATABASE_URL}complaint/removeComplaint/${complaintId}`,
       config
     );
+
+    dispatch(setLoadingOff());
   } catch (error) {
     dispatch(
       setError(

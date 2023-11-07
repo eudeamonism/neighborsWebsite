@@ -27,9 +27,14 @@ const MobileForm = () => {
   const complaint = useSelector(state => state.complaint);
   const user = useSelector(state => state.user);
 
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
   const { loading, imageUrl } = complaint;
   const { userInfo } = user;
   const { token, refresh } = userInfo;
+  console.log(imageUrl);
 
   return (
     <Flex direction="column" w="100%" p="6">
@@ -88,7 +93,7 @@ const MobileForm = () => {
               values.cross,
               values.complaintType,
               values.description,
-              values.imageUrl,
+              imageUrl,
               values.authorities,
               values.resolved,
               token,
@@ -96,11 +101,45 @@ const MobileForm = () => {
               values.time
             )
           );
+          refreshPage();
         }}
       >
         {({ handleSubmit, errors, isValid, dirty }) => (
           <form onSubmit={handleSubmit}>
             <VStack border="1px" borderColor="gray.700" p="5" borderRadius="8">
+              <FormControl isInvalid={!!errors.complaintType}>
+                <FormLabel htmlFor="complaintType">Complaint Type</FormLabel>
+                <Field
+                  as={Select}
+                  id="complaintType"
+                  name="complaintType"
+                  type="complaintType"
+                >
+                  <option value=""></option>
+                  <option value="Excessive Noise">Excessive Noise</option>
+                  <option value="Lewdness">Lewdness</option>
+                  <option value="Public Intoxication">
+                    Public Intoxication
+                  </option>
+                  <option value="Creeping">Creeping</option>
+                  <option value="Stalking">Stalking</option>
+                  <option value="Violence">Violence</option>
+                  <option value="Theft">Theft</option>
+                  <option value="Speeding">Speeding</option>
+                  <option value="Drugs">Drugs</option>
+                  <option value="Tenant Issues">Tenant Issues</option>
+                  <option value="Abandoned Vehicles">Abandoned Vehicles</option>
+                  <option value="Fireworks">Fireworks</option>
+                  <option value="Discrimination">Discrimination</option>
+                  <option value="Unsanitary Conditions">
+                    Unsanitary Conditions
+                  </option>
+                  <option value="Public Nuisance">Public Nuisance</option>
+                  <option value="Code Violations">Code Violations</option>
+                  <option value="Salty">Salty</option>
+                </Field>
+                <FormErrorMessage>{errors.complaintType}</FormErrorMessage>
+              </FormControl>
               <FormControl isInvalid={!!errors.title}>
                 <FormLabel htmlFor="title">Title</FormLabel>
                 <Field
@@ -198,39 +237,7 @@ const MobileForm = () => {
                 </Field>
                 <FormErrorMessage>{errors.resolved}</FormErrorMessage>
               </FormControl>
-              <FormControl isInvalid={!!errors.complaintType}>
-                <FormLabel htmlFor="complaintType">Complaint Type</FormLabel>
-                <Field
-                  as={Select}
-                  id="complaintType"
-                  name="complaintType"
-                  type="complaintType"
-                >
-                  <option value=""></option>
-                  <option value="Excessive Noise">Excessive Noise</option>
-                  <option value="Lewdness">Lewdness</option>
-                  <option value="Public Intoxication">
-                    Public Intoxication
-                  </option>
-                  <option value="Creeping">Creeping</option>
-                  <option value="Stalking">Stalking</option>
-                  <option value="Violence">Violence</option>
-                  <option value="Theft">Theft</option>
-                  <option value="Speeding">Speeding</option>
-                  <option value="Drugs">Drugs</option>
-                  <option value="Tenant Issues">Tenant Issues</option>
-                  <option value="Abandoned Vehicles">Abandoned Vehicles</option>
-                  <option value="Fireworks">Fireworks</option>
-                  <option value="Discrimination">Discrimination</option>
-                  <option value="Unsanitary Conditions">
-                    Unsanitary Conditions
-                  </option>
-                  <option value="Public Nuisance">Public Nuisance</option>
-                  <option value="Code Violations">Code Violations</option>
-                  <option value="Salty">Salty</option>
-                </Field>
-                <FormErrorMessage>{errors.complaintType}</FormErrorMessage>
-              </FormControl>
+
               <UploadWidget />
 
               <Button

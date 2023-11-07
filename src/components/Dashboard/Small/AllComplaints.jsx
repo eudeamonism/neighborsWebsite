@@ -13,11 +13,11 @@ import { deleteComplaint } from '../../../redux/actions/complaintActions';
 import { GiPoliceBadge } from 'react-icons/gi';
 import { FaSmile, FaSadTear } from 'react-icons/fa';
 
-const MyComplaints = ({ clickHandler }) => {
+const AllComplaints = ({ clickHandler }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const complaint = useSelector(state => state.complaint);
-  const { loading, myComplaints } = complaint;
+  const { loading, myComplaints, allComplaintData } = complaint;
 
   function militaryTimeToRegularTime(militaryTime) {
     // Check if the input is a valid military time string.
@@ -39,9 +39,10 @@ const MyComplaints = ({ clickHandler }) => {
     return `${regularHours}:${formattedMinutes}${amPm}`;
   }
 
+  
   return (
     <>
-      {myComplaints.map(data => (
+      {allComplaintData.map(data => (
         <Flex
           bg="gray.50"
           _dark={{ backgroundColor: 'gray.600' }}
@@ -93,26 +94,10 @@ const MyComplaints = ({ clickHandler }) => {
           <Text fontSize="xs" mt="1" fontWeight="medium">
             -{data.displayName}
           </Text>
-          <Flex gap="2" mt="2">
-            <Flex
-              bg="red.100"
-              _dark={{ backgroundColor: 'red.300' }}
-              p="1"
-              borderRadius="2"
-              onClick={() => {
-                clickHandler();
-                dispatch(deleteComplaint(data._id));
-              }}
-            >
-              <Text fontSize="xs">
-                {loading === false ? 'Delete' : <Spinner />}
-              </Text>
-            </Flex>
-          </Flex>
         </Flex>
       ))}
     </>
   );
 };
 
-export default MyComplaints;
+export default AllComplaints;

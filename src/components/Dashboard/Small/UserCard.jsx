@@ -12,8 +12,12 @@ import {
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
-import { myDBComplaints } from '../../../redux/actions/complaintActions';
+import {
+  myDBComplaints,
+  getAllComplaintsInDB,
+} from '../../../redux/actions/complaintActions';
 import MyComplaints from './MyComplaints';
+import AllComplaints from './AllComplaints';
 
 const UserCard = () => {
   const dispatch = useDispatch();
@@ -27,6 +31,12 @@ const UserCard = () => {
 
   const [myClick, setMyClick] = useState(false);
 
+  const [allClick, setAllClick] = useState(false);
+
+  const clickHandler = () => {
+    setMyClick(false);
+  };
+
   return (
     <>
       <Flex
@@ -35,13 +45,14 @@ const UserCard = () => {
         p="2"
         justify="space-between"
       >
-        <Text fontWeight="medium">Flex Complaints</Text>
+        <Text fontWeight="medium">My Complaints</Text>
         {myClick === false ? (
           <ChevronDownIcon
             boxSize="6"
             onClick={() => {
               dispatch(myDBComplaints(token, refresh));
               setMyClick(!myClick);
+              setAllClick(false);
             }}
           />
         ) : (
@@ -53,7 +64,34 @@ const UserCard = () => {
           />
         )}
       </Flex>
-      {myClick === true ? <MyComplaints /> : null}
+      {myClick === true ? <MyComplaints clickHandler={clickHandler} /> : null}
+
+      <Flex
+        bg={useColorModeValue('blue.100', 'blue.600')}
+        align="center"
+        p="2"
+        justify="space-between"
+      >
+        <Text fontWeight="medium">All Complaints</Text>
+        {allClick === false ? (
+          <ChevronDownIcon
+            boxSize="6"
+            onClick={() => {
+              dispatch(getAllComplaintsInDB());
+              setAllClick(!allClick);
+              setMyClick(false);
+            }}
+          />
+        ) : (
+          <ChevronUpIcon
+            boxSize="6"
+            onClick={() => {
+              setAllClick(!allClick);
+            }}
+          />
+        )}
+      </Flex>
+      {allClick === true ? <AllComplaints /> : null}
     </>
   );
 };

@@ -40,6 +40,13 @@ const Hamburger = () => {
       <MenuList>
         <MenuItem
           onClick={() => {
+            navigate('/');
+          }}
+        >
+          Home
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
             dispatch(openForm());
           }}
         >
