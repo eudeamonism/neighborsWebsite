@@ -101,7 +101,7 @@ const MobileForm = () => {
               values.time
             )
           );
-          refreshPage();
+          /* refreshPage(); */
         }}
       >
         {({ handleSubmit, errors, isValid, dirty }) => (
