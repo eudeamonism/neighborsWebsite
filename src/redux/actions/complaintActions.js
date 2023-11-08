@@ -288,6 +288,7 @@ export const AddComplaint =
       dispatch(setLoadingOff());
 
       dispatch(closeKreateComplaint());
+      window.location.reload(false);
     } catch (error) {
       console.log(error);
       dispatch(
