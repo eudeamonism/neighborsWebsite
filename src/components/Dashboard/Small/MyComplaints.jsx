@@ -1,14 +1,6 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  Flex,
-  Text,
-  Image,
-  useColorModeValue,
-  Spinner,
-  Divider,
-} from '@chakra-ui/react';
+import { Flex, Text, Image, Spinner, Divider } from '@chakra-ui/react';
 import { deleteComplaint } from '../../../redux/actions/complaintActions';
 import { GiPoliceBadge } from 'react-icons/gi';
 import { FaSmile, FaSadTear } from 'react-icons/fa';
@@ -38,9 +30,15 @@ const MyComplaints = ({ clickHandler }) => {
     // Return the converted regular time string.
     return `${regularHours}:${formattedMinutes}${amPm}`;
   }
+  console.log(myComplaints);
 
   return (
     <>
+      {myComplaints.length === 0 ? (
+        <Flex justify="center" p="2" bg="gray.200" _dark={{backgroundColor: "gray.600"}}>
+          <Text>No Complaints</Text>
+        </Flex>
+      ) : null}
       {myComplaints.map(data => (
         <Flex
           bg="gray.50"

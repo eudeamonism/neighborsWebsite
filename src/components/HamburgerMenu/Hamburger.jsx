@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../redux/actions/userActions';
 import { openForm } from '../../redux/actions/complaintActions';
 
-const Hamburger = () => {
+const Hamburger = ({ filterHandler }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -27,15 +27,11 @@ const Hamburger = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   return (
     <Menu>
-      <MenuButton onClick={isOpen ? onClose : onOpen}>
-        {isOpen ? (
-          <CloseIcon />
-        ) : (
-          <HamburgerIcon
-            boxSize={isLargerThan430 ? '30px' : '24px'}
-            marginLeft={isLargerThan430 ? '20px' : '10px'}
-          />
-        )}
+      <MenuButton>
+        <HamburgerIcon
+          boxSize={isLargerThan430 ? '30px' : '24px'}
+          marginLeft={isLargerThan430 ? '20px' : '10px'}
+        />
       </MenuButton>
       <MenuList>
         <MenuItem
@@ -52,6 +48,7 @@ const Hamburger = () => {
         >
           Create Complaint
         </MenuItem>
+        <MenuItem onClick={filterHandler}>Filter</MenuItem>
         <MenuItem onClick={Signout}>Sign Out</MenuItem>
       </MenuList>
     </Menu>

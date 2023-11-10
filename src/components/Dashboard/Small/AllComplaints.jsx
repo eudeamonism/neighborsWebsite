@@ -9,12 +9,11 @@ import {
   Spinner,
   Divider,
 } from '@chakra-ui/react';
-import { deleteComplaint } from '../../../redux/actions/complaintActions';
+
 import { GiPoliceBadge } from 'react-icons/gi';
 import { FaSmile, FaSadTear } from 'react-icons/fa';
 
-const AllComplaints = ({ clickHandler }) => {
-  const navigate = useNavigate();
+const AllComplaints = () => {
   const dispatch = useDispatch();
   const complaint = useSelector(state => state.complaint);
   const { loading, myComplaints, allComplaintData } = complaint;
@@ -39,7 +38,6 @@ const AllComplaints = ({ clickHandler }) => {
     return `${regularHours}:${formattedMinutes}${amPm}`;
   }
 
-  
   return (
     <>
       {allComplaintData.map(data => (

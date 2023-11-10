@@ -27,10 +27,6 @@ const MobileForm = () => {
   const complaint = useSelector(state => state.complaint);
   const user = useSelector(state => state.user);
 
-  function refreshPage() {
-    window.location.reload(false);
-  }
-
   const { loading, imageUrl } = complaint;
   const { userInfo } = user;
   const { token, refresh } = userInfo;

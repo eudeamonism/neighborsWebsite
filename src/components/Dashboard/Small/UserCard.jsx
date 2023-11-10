@@ -72,7 +72,9 @@ const UserCard = () => {
         p="2"
         justify="space-between"
       >
-        <Text fontWeight="medium">All Complaints</Text>
+        <Text fontWeight="medium">
+          {loading === true ? <>Loading... {<Spinner />}</> : 'All Complaints'}
+        </Text>
         {allClick === false ? (
           <ChevronDownIcon
             boxSize="6"

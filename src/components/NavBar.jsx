@@ -10,7 +10,7 @@ import { ColorModeSwitcher } from './ColorModeSwitcher';
 
 import Hamburger from './HamburgerMenu/Hamburger';
 
-const NavBar = () => {
+const NavBar = ({ filterHandler }) => {
   const user = useSelector(state => state.user);
 
   const { profile } = user;
@@ -26,11 +26,13 @@ const NavBar = () => {
       bg={useColorModeValue('gray.50', 'gray.800')}
       zIndex={100}
     >
-      {isLargerThan800 ? null : <Hamburger />}
+      {isLargerThan800 ? null : <Hamburger filterHandler={filterHandler} />}
       {isLargerThan800 ? (
         <Text>Welcome Profile Name</Text>
       ) : (
-        <Text fontWeight="medium">{profile !== null ? profile.displayName : null}</Text>
+        <Text fontWeight="medium">
+          {profile !== null ? profile.displayName : null}
+        </Text>
       )}
       {isLargerThan800 ? <Text>Create A Complaint</Text> : null}
 
