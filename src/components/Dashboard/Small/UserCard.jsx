@@ -44,6 +44,7 @@ const UserCard = () => {
         align="center"
         p="2"
         justify="space-between"
+        
       >
         <Text fontWeight="medium">My Complaints</Text>
         {myClick === false ? (

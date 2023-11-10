@@ -1,58 +1,74 @@
 import { useState, useEffect } from 'react';
-import { Flex, HStack, Text, useColorModeValue } from '@chakra-ui/react';
+import axios from 'axios';
+import { Divider, Flex, HStack, Text } from '@chakra-ui/react';
 import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
-import Sample from './Data/Sample.json';
+import CWrapper from './CWrapper';
+
 
 const Filter = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [currentData, setCurrentData] = useState([]);
+  const [cCurrentPage, cSetCurrentPage] = useState(2);
+  const [cData, setCData] = useState([]);
+  const [cMapData, cSetMapData] = useState([]);
 
-  const previousHandler = () => {
-    alert('previous');
-  };
-  const nextHandler = () => {
-    alert('next');
-  };
+  const getData = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
 
-  const data = Sample.pokemon;
-  const pages = data.length / 4 + 1;
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_DATABASE_URL}complaint/getComplaints`,
+      config
+    );
 
-  let pageButtons = [];
-
-  for (let i = currentPage; i < currentPage + 5 && i < pages; i++) {
-    pageButtons.push(i);
-  }
-
-  const previousButtonHandler = () => {
-    if (currentPage - 1 !== 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-  const nextButtonHandler = () => {
-    if (currentPage + 1 < pages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const getCorrectData = () => {
-    const start = currentPage;
-    const end = currentPage + 5;
-
-    return data.slice(start, end);
+    setCData(data);
   };
 
   useEffect(() => {
-    setCurrentData(getCorrectData());
-  }, [currentPage]);
+    getData();
+  }, [cCurrentPage]);
 
-  console.log(currentData);
+  const cPages = cData.length / 2 + 2;
+  console.log(cPages);
+
+  let cPageButtons = [];
+
+  for (let j = cCurrentPage; j < cCurrentPage + 4 && j < cPages; j++) {
+    
+    cPageButtons.push(j);
+  }
+
+  const nextHandler = () => {
+    if (cCurrentPage + 1 < cPages) {
+      cSetCurrentPage(cCurrentPage + 1);
+    }
+  };
+
+  const previousHandler = () => {
+    if (cCurrentPage - 1 !== 0) {
+      cSetCurrentPage(cCurrentPage - 1);
+    }
+  };
+
+  const cGetCorrectData = () => {
+    const start = cCurrentPage;
+    const end = cCurrentPage + 5;
+
+    return cData.slice(start, end);
+  };
+
+  useEffect(() => {
+    cSetMapData(cGetCorrectData());
+  }, [cCurrentPage]);
+
   return (
     <>
-      <HStack>
+      <HStack mt="2" mb="1" position="sticky">
         <Flex gap="2" direction="column">
-          {currentPage > 1 ? (
+          {cCurrentPage > 1 ? (
             <Flex
-              onClick={previousButtonHandler}
+              onClick={previousHandler}
               p="1"
               bg="gray.200"
               _dark={{ backgroundColor: 'gray.500' }}
@@ -61,41 +77,40 @@ const Filter = () => {
               <ArrowLeftIcon />
             </Flex>
           ) : null}
-          
         </Flex>
 
         <Flex gap="2">
-          {pageButtons.map(e => (
+          {cPageButtons.map(e => (
             <Text
               key={e}
               borderWidth={1}
               borderColor="gray.400"
               borderRadius="6"
               px="2"
-              bg={currentPage === e ? 'green.300' : null}
+              bg={cCurrentPage === e ? 'green.300' : null}
               onClick={() => {
-                setCurrentPage(e);
+                cSetCurrentPage(e);
               }}
             >
               {e}
             </Text>
           ))}
         </Flex>
-        {currentPage !== pages - 1 ? (
-            <Flex
-              p="1"
-              bg="gray.200"
-              _dark={{ backgroundColor: 'gray.500' }}
-              borderRadius={5}
-              onClick={nextButtonHandler}
-            >
-              <ArrowRightIcon />
-            </Flex>
-          ) : null}
+        {cCurrentPage !== cPages - 1 ? (
+          <Flex
+            p="1"
+            bg="gray.200"
+            _dark={{ backgroundColor: 'gray.500' }}
+            borderRadius={5}
+            onClick={nextHandler}
+          >
+            <ArrowRightIcon />
+          </Flex>
+        ) : null}
       </HStack>
-      {currentData.length > 0
-        ? currentData.map(e => <Text key={e.key}>{e.title}</Text>)
-        : 'empty'}
+
+      <Divider mt="2" />
+      {cMapData.length > 0 ? <CWrapper props={cMapData} /> : null}
     </>
   );
 };
