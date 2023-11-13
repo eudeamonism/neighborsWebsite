@@ -1,16 +1,26 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Divider, Flex, HStack, Text } from '@chakra-ui/react';
+import {
+  Button,
+  Divider,
+  Flex,
+  HStack,
+  Spinner,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import CWrapper from './CWrapper';
 
-
 const Filter = () => {
-  const [cCurrentPage, cSetCurrentPage] = useState(2);
+  const [cCurrentPage, cSetCurrentPage] = useState(1);
   const [cData, setCData] = useState([]);
   const [cMapData, cSetMapData] = useState([]);
+  const [cLoading, cSetLoading] = useState(false);
+  const [f1, setF1] = useState(false);
 
   const getData = async () => {
+    cSetLoading(true);
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -18,24 +28,23 @@ const Filter = () => {
     };
 
     const { data } = await axios.get(
-      `${process.env.REACT_APP_DATABASE_URL}complaint/getComplaints`,
+      `${process.env.REACT_APP_DATABASE_URL}complaint/testing`,
       config
     );
-
+    cSetLoading(false);
     setCData(data);
   };
 
   useEffect(() => {
     getData();
+    cSetMapData(cGetCorrectData());
   }, [cCurrentPage]);
 
   const cPages = cData.length / 2 + 2;
-  console.log(cPages);
 
   let cPageButtons = [];
 
   for (let j = cCurrentPage; j < cCurrentPage + 4 && j < cPages; j++) {
-    
     cPageButtons.push(j);
   }
 
@@ -57,13 +66,10 @@ const Filter = () => {
 
     return cData.slice(start, end);
   };
-
-  useEffect(() => {
-    cSetMapData(cGetCorrectData());
-  }, [cCurrentPage]);
-
+  
   return (
     <>
+      {cLoading === false ? null : <Spinner />}
       <HStack mt="2" mb="1" position="sticky">
         <Flex gap="2" direction="column">
           {cCurrentPage > 1 ? (
@@ -110,7 +116,24 @@ const Filter = () => {
       </HStack>
 
       <Divider mt="2" />
-      {cMapData.length > 0 ? <CWrapper props={cMapData} /> : null}
+      {f1 === false ? (
+        <Flex
+          m="4"
+          bg="orange.200"
+          _dark={{ backgroundColor: 'orange.600' }}
+          borderRadius="5"
+          align="center"
+          justify="center"
+          onClick={() => {
+            setF1(true);
+          }}
+        >
+          <Text>Example 1</Text>
+        </Flex>
+      ) : null}
+      {f1 === true && cMapData.length > 0 ? (
+        <CWrapper props={cMapData} />
+      ) : null}
     </>
   );
 };

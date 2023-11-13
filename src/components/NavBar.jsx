@@ -30,7 +30,7 @@ const NavBar = ({ filterHandler }) => {
       {isLargerThan800 ? (
         <Text>Welcome Profile Name</Text>
       ) : (
-        <Text fontWeight="medium">
+        <Text fontWeight="medium" mx="2">
           {profile !== null ? profile.displayName : null}
         </Text>
       )}

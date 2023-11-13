@@ -1,17 +1,21 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import NavBar from '../../NavBar';
 import MobileForm from '../../Forms/MobileForm';
 import { Text, VStack } from '@chakra-ui/react';
 import UserCard from './UserCard';
-import Filter from './Filter';
+import FilterDash from './FilterDash';
+import FilterPag from './FilterPag';
+import { filterMode } from '../../../redux/actions/filterActions';
 const SmallDash = () => {
+  const dispatch = useDispatch();
   const [filter, setFilter] = useState(false);
   const complaint = useSelector(state => state.complaint);
   const user = useSelector(state => state.user);
   const { open } = complaint;
 
   const filterHandler = () => {
+    dispatch(filterMode());
     setFilter(!filter);
   };
 
@@ -21,7 +25,7 @@ const SmallDash = () => {
       <>
         {filter === false ? (
           <>
-            {open === false ? (
+            {open === false && filter === false ? (
               <UserCard />
             ) : (
               <VStack>
@@ -30,7 +34,10 @@ const SmallDash = () => {
             )}
           </>
         ) : (
-          <Filter />
+          <>
+            <FilterDash />
+            <FilterPag />
+          </>
         )}
       </>
     </>
