@@ -1,22 +1,60 @@
+import { useState, useEffect } from 'react';
 import { Flex, Text, useColorModeValue } from '@chakra-ui/react';
 import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { getData2 } from '../../../redux/actions/filterActions';
+
 const FilterPag = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [batch, setBatch] = useState([]);
   const dispatch = useDispatch();
   const filter = useSelector(state => state.filter);
-  const { firstResults } = filter;
+  const { firstResults, secondResults } = filter;
+  //button length
+  const perPage = Math.ceil(firstResults.complaintNum / 4);
 
-  
-  const perPage = Math.ceil(firstResults.complaintNum / 4)
-  const dataSlice = firstResults.complaints;
+  //unfiltered data
+  const unfiltered = firstResults.complaints;
 
-  console.log(perPage)
-  
+  //filtered functionality
+  let example;
 
-  
+  useEffect(() => {
+    if (currentPage === 0 && unfiltered !== undefined) {
+      console.log('No Pages');
+    } else if (currentPage === 1 && unfiltered !== undefined) {
+      example = unfiltered.slice(0, 4);
+      dispatch(getData2(example));
+    } else if (currentPage > 1 && unfiltered !== undefined) {
+      const startIndex = (currentPage - 1) * 4;
+      const endIndex = startIndex + 4;
+      example = unfiltered.slice(startIndex, endIndex);
+      dispatch(getData2(example));
+    }
+  }, [dispatch, currentPage, firstResults]);
 
-  console.log(dataSlice);
+  //next and prev functionality
+  let pageButtons = [];
+
+  for (let i = currentPage; i < perPage + 1; i++) {
+    pageButtons.push(i);
+  }
+
+  const nextPage = () => {
+    if (currentPage < perPage) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage - 1 !== 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  console.log(secondResults);
+
   return (
     <Flex
       borderColor={useColorModeValue('blue.100', 'blue.700')}
@@ -27,13 +65,27 @@ const FilterPag = () => {
       gap="2"
       align="center"
     >
-      <ArrowLeftIcon />
-      1
+      <ArrowLeftIcon
+        onClick={() => {
+          prevPage();
+        }}
+      />
+      {pageButtons.map(e => (
+        <Text
+          bgColor={currentPage === e ? 'green.400' : null}
+          key={e}
+          borderWidth={1}
+          width="5"
+          borderColor="gray.400"
+          borderRadius="6"
+          align="center"
+        >
+          {e}
+        </Text>
+      ))}
       <ArrowRightIcon
         onClick={() => {
-          alert(
-            'New Query where we skip the previous amount selected however retrieve the same amount, ie skip 4, limit 4'
-          );
+          nextPage();
         }}
       />
     </Flex>

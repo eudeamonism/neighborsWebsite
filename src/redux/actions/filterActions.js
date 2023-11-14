@@ -13,6 +13,10 @@ export const filterMode = () => dispatch => {
   dispatch(filterOn());
 };
 
+export const getData2 = data => dispatch => {
+  dispatch(getSecondResults(data))
+};
+
 export const getData1 = incoming => async dispatch => {
   dispatch(loadingOn());
   try {

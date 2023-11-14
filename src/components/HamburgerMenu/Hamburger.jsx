@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../redux/actions/userActions';
 import { openForm } from '../../redux/actions/complaintActions';
-import {filterMode} from '../../redux/actions/filterActions'
+import { filterMode } from '../../redux/actions/filterActions';
 
 const Hamburger = ({ filterHandler }) => {
   const filter = useSelector(state => state.filter);
@@ -28,7 +28,7 @@ const Hamburger = ({ filterHandler }) => {
   const [isLargerThan430] = useMediaQuery('(min-width: 431px)');
 
   const { isOpen, onClose, onOpen } = useDisclosure();
-  console.log(filterOn);
+
   return (
     <>
       {filterOn === true ? null : (
