@@ -3,16 +3,30 @@ import { Flex, Text, useColorModeValue } from '@chakra-ui/react';
 import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getData2 } from '../../../redux/actions/filterActions';
+import {
+  getData2,
+  getData1,
+  hidingButtons,
+} from '../../../redux/actions/filterActions';
 
 const FilterPag = () => {
+  const darkStuff = e => {
+    if (currentPage === e) {
+      return 'green.600';
+    } else {
+      return null;
+    }
+  };
+
   const [currentPage, setCurrentPage] = useState(1);
-  const [batch, setBatch] = useState([]);
   const dispatch = useDispatch();
   const filter = useSelector(state => state.filter);
-  const { firstResults, secondResults } = filter;
+  const { firstResults, hideButtons } = filter;
   //button length
-  const perPage = Math.ceil(firstResults.complaintNum / 4);
+  console.log(hideButtons);
+  const lengthA = firstResults.complaints?.length;
+
+  const perPage = lengthA / 4;
 
   //unfiltered data
   const unfiltered = firstResults.complaints;
@@ -44,6 +58,11 @@ const FilterPag = () => {
   const nextPage = () => {
     if (currentPage < perPage) {
       setCurrentPage(currentPage + 1);
+    } else {
+      //TODO
+      //need to send this new key value using same action Handler and see if it is received in the backend!!
+      alert('need to populate new button logic');
+      dispatch(getData1({ deux: currentPage - 1 }));
     }
   };
 
@@ -53,42 +72,49 @@ const FilterPag = () => {
     }
   };
 
-  console.log(secondResults);
-
   return (
-    <Flex
-      borderColor={useColorModeValue('blue.100', 'blue.700')}
-      borderWidth={1}
-      p="1"
-      m="2"
-      borderRadius={4}
-      gap="2"
-      align="center"
-    >
-      <ArrowLeftIcon
-        onClick={() => {
-          prevPage();
-        }}
-      />
-      {pageButtons.map(e => (
-        <Text
-          bgColor={currentPage === e ? 'green.400' : null}
-          key={e}
+    <>
+      {hideButtons === true ? null : (
+        <Flex
+          borderColor="blue.100"
+          _dark={{ borderColor: 'blue.800' }}
           borderWidth={1}
-          width="5"
-          borderColor="gray.400"
-          borderRadius="6"
+          p="1"
+          m="2"
+          borderRadius={4}
+          gap="2"
           align="center"
         >
-          {e}
-        </Text>
-      ))}
-      <ArrowRightIcon
-        onClick={() => {
-          nextPage();
-        }}
-      />
-    </Flex>
+          <ArrowLeftIcon
+            onClick={() => {
+              prevPage();
+            }}
+          />
+          {pageButtons.map(e => (
+            <Text
+              bgColor={currentPage === e ? 'green.100' : null}
+              _dark={{ backgroundColor: `${darkStuff(e)}` }}
+              key={e}
+              borderWidth={1}
+              width="5"
+              borderColor="gray.400"
+              borderRadius="6"
+              align="center"
+              onClick={() => {
+                setCurrentPage(e);
+              }}
+            >
+              {e}
+            </Text>
+          ))}
+          <ArrowRightIcon
+            onClick={() => {
+              nextPage();
+            }}
+          />
+        </Flex>
+      )}
+    </>
   );
 };
 

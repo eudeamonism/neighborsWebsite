@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
+  hideButtons: true,
   filterOn: false,
   loading: false,
   error: null,
@@ -12,10 +13,12 @@ export const filterSlice = createSlice({
   name: 'filter',
   initialState,
   reducers: {
+    hideB: state => {
+      state.hideButtons = state.hideButtons === true ? false : true;
+    },
     filterOn: state => {
       state.filterOn = state.filterOn === false ? true : false;
       state.loading = false;
-
     },
     setError: (state, { payload }) => {
       state.error = payload;
@@ -37,8 +40,14 @@ export const filterSlice = createSlice({
   },
 });
 
-export const { getFirstResults, getSecondResults, loadingOn, setError, filterOn } =
-  filterSlice.actions;
+export const {
+  getFirstResults,
+  getSecondResults,
+  loadingOn,
+  setError,
+  filterOn,
+  hideB,
+} = filterSlice.actions;
 
 export default filterSlice.reducer;
 

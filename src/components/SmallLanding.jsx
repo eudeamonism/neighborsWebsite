@@ -1,11 +1,5 @@
 import { motion } from 'framer-motion';
-import {
-  Box,
-  VStack,
-  Button,
-  Text,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, VStack, Button, Text, useColorModeValue } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 import { useNavigate } from 'react-router-dom';
 
@@ -48,13 +42,13 @@ const SmallLanding = () => {
           ))}
         </motion.div>
         <Button
-        colorScheme={useColorModeValue("yellow", "orange")}
+          colorScheme={useColorModeValue('yellow', 'orange')}
           mt="2rem"
           onClick={() => {
             navigate('/signup');
           }}
         >
-          Sign Up
+          Enter
         </Button>
       </VStack>
     </Box>

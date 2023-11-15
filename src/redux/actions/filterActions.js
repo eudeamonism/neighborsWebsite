@@ -6,6 +6,7 @@ import {
   loadingOn,
   setError,
   filterOn,
+  hideB,
 } from '../slices/filter';
 
 export const filterMode = () => dispatch => {
@@ -13,8 +14,12 @@ export const filterMode = () => dispatch => {
   dispatch(filterOn());
 };
 
+export const hidingButtons = () => dispatch => {
+  dispatch(hideB());
+};
+
 export const getData2 = data => dispatch => {
-  dispatch(getSecondResults(data))
+  dispatch(getSecondResults(data));
 };
 
 export const getData1 = incoming => async dispatch => {

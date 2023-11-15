@@ -15,13 +15,17 @@ import {
   Spinner,
 } from '@chakra-ui/react';
 
-import { getData1, filterMode } from '../../../redux/actions/filterActions';
+import {
+  getData1,
+  filterMode,
+  hidingButtons,
+} from '../../../redux/actions/filterActions';
 
 const FilterDash = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const filter = useSelector(state => state.filter);
-  const { firstResults, filterOn } = filter;
+  const { filterOn } = filter;
 
   const [loading, setLoading] = useState(false);
 
@@ -84,10 +88,7 @@ const FilterDash = () => {
                   type="submit"
                   isDisabled={!dirty || !isValid}
                   onClick={() => {
-                    setLoading(true);
-                    setTimeout(() => {
-                      setLoading(false);
-                    }, [5000]);
+                    dispatch(hidingButtons());
                   }}
                 >
                   {loading === true ? <Spinner /> : 'Submit'}
