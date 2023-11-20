@@ -5,7 +5,7 @@ import MobileForm from '../../Forms/MobileForm';
 import { Text, VStack } from '@chakra-ui/react';
 import UserCard from './UserCard';
 import FilterDash from './FilterDash';
-import FilterPag from './FilterPag';
+import ReactPaginateExample from './ReactPaginateExample';
 import { filterMode } from '../../../redux/actions/filterActions';
 const SmallDash = () => {
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ const SmallDash = () => {
         ) : (
           <>
             <FilterDash />
-            <FilterPag />
+            <ReactPaginateExample />
           </>
         )}
       </>

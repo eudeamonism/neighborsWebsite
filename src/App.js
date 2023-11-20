@@ -9,6 +9,7 @@ import DefaultPage from './screens/DefaultPage';
 import Exist from './screens/Exist';
 import CreateComplaint from './screens/CreateComplaint';
 import PasswordReset from './screens/PasswordReset';
+import Test from './screens/Test'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/reset" element={<PasswordReset />} />
           <Route path="/createComplaint" element={<CreateComplaint />} />
+          <Route path="/test" element={<Test />} />
           <Route path="/*" element={<Exist />} />
         </Routes>
       </Router>

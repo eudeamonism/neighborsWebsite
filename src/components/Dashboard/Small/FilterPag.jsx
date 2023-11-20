@@ -18,15 +18,14 @@ const FilterPag = () => {
     }
   };
 
+  const [updatePageButtons, setUpdatePageButtons] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
   const filter = useSelector(state => state.filter);
   const { firstResults, hideButtons } = filter;
   //button length
-  console.log(hideButtons);
-  const lengthA = firstResults.complaints?.length;
 
-  const perPage = lengthA / 4;
+  const [perPage, setPerPage] = useState(firstResults.complaints?.length / 4);
 
   //unfiltered data
   const unfiltered = firstResults.complaints;
@@ -48,21 +47,49 @@ const FilterPag = () => {
     }
   }, [dispatch, currentPage, firstResults]);
 
-  //next and prev functionality
-  let pageButtons = [];
+  useEffect(() => {
+    const jimmy = () => {
+      if (firstResults !== undefined) {
+        let pageButtons = [];
 
-  for (let i = currentPage; i < perPage + 1; i++) {
-    pageButtons.push(i);
-  }
+        for (let i = 1; i <= perPage + 1; i++) {
+          pageButtons.push(i);
+          setUpdatePageButtons([...pageButtons]);
+        }
+      }
+    };
+    try {
+      if (firstResults.iteration === 1) {
+        jimmy();
+      } else if (firstResults.iteration === undefined || null) {
+        console.log('no data loaded');
+      } else {
+        console.log('Some kind of error for firstresults, at jimmy');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [firstResults, updatePageButtons, perPage]);
+
+  console.log(
+    `firstResults: ${
+      firstResults.complaints?.length
+    }, perPage: ${perPage}, updatePageButtons: ${
+      updatePageButtons === null || undefined || ' '
+        ? 'empty'
+        : updatePageButtons
+    }`
+  );
 
   const nextPage = () => {
     if (currentPage < perPage) {
       setCurrentPage(currentPage + 1);
     } else {
-      //TODO
-      //need to send this new key value using same action Handler and see if it is received in the backend!!
-      alert('need to populate new button logic');
       dispatch(getData1({ deux: currentPage - 1 }));
+
+      let x = perPage;
+      setPerPage(x++);
+      setUpdatePageButtons([...updatePageButtons, +4]);
     }
   };
 
@@ -90,23 +117,25 @@ const FilterPag = () => {
               prevPage();
             }}
           />
-          {pageButtons.map(e => (
-            <Text
-              bgColor={currentPage === e ? 'green.100' : null}
-              _dark={{ backgroundColor: `${darkStuff(e)}` }}
-              key={e}
-              borderWidth={1}
-              width="5"
-              borderColor="gray.400"
-              borderRadius="6"
-              align="center"
-              onClick={() => {
-                setCurrentPage(e);
-              }}
-            >
-              {e}
-            </Text>
-          ))}
+          {updatePageButtons.length !== 0
+            ? updatePageButtons.map(e => (
+                <Text
+                  bgColor={currentPage === e ? 'green.100' : null}
+                  _dark={{ backgroundColor: `${darkStuff(e)}` }}
+                  key={e}
+                  borderWidth={1}
+                  width="5"
+                  borderColor="gray.400"
+                  borderRadius="6"
+                  align="center"
+                  onClick={() => {
+                    setCurrentPage(e);
+                  }}
+                >
+                  {e}
+                </Text>
+              ))
+            : null}
           <ArrowRightIcon
             onClick={() => {
               nextPage();
