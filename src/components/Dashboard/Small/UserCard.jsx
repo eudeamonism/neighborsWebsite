@@ -17,7 +17,7 @@ import {
   getAllComplaintsInDB,
 } from '../../../redux/actions/complaintActions';
 import MyComplaints from './MyComplaints';
-import AllComplaints from './AllComplaints';
+import Test from '../../../screens/Test';
 
 const UserCard = () => {
   const dispatch = useDispatch();
@@ -44,7 +44,6 @@ const UserCard = () => {
         align="center"
         p="2"
         justify="space-between"
-        
       >
         <Text fontWeight="medium">My Complaints</Text>
         {myClick === false ? (
@@ -94,7 +93,7 @@ const UserCard = () => {
           />
         )}
       </Flex>
-      {allClick === true ? <AllComplaints /> : null}
+      {allClick === true ? <Test /> : null}
     </>
   );
 };

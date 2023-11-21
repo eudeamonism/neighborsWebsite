@@ -36,8 +36,7 @@ const Test = () => {
 
   useEffect(() => {
     if (memoizedFirstResults.complaints) {
-      /* window.scrollTo(0, scrollPosition); */
-      console.log('Remember to allow function above');
+      window.scrollTo(0, scrollPosition);
     }
   }, [memoizedFirstResults]);
 
@@ -64,7 +63,7 @@ const Test = () => {
         ) : null}
         <Divider />
         <Flex align="center">
-          <Flex bg="red" mx="4">
+          <Flex bg="gray.50" _dark={{ backgroundColor: 'gray.600' }} borderRadius="full" mx="4">
             {memoizedFirstResults['pagination'] ? (
               <Flex direction="column">
                 {page === 1 ||

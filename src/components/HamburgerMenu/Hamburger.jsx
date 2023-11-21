@@ -54,7 +54,7 @@ const Hamburger = ({ filterHandler }) => {
             >
               Create Complaint
             </MenuItem>
-            <MenuItem onClick={filterHandler}>Filter</MenuItem>
+            <MenuItem onClick={filterHandler}>Policy</MenuItem>
             <MenuItem onClick={Signout}>Sign Out</MenuItem>
           </MenuList>
         </Menu>
