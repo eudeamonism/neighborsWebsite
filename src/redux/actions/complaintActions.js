@@ -209,7 +209,7 @@ export const getOneComplaintInDB = id => async dispatch => {
 
 export const myDBComplaints = (token, refresh) => async dispatch => {
   dispatch(setLoadingOn());
-
+  console.log('1');
   try {
     const config = {
       headers: {
@@ -217,13 +217,14 @@ export const myDBComplaints = (token, refresh) => async dispatch => {
         Authorization: `Bearer ${token}, Refresh ${refresh}`,
       },
     };
-
+    console.log('2');
     const { data } = await axios.get(
       `${process.env.REACT_APP_DATABASE_URL}complaint/myComplaints`,
       config
     );
-
+    console.log('3');
     dispatch(getMyComplaints(data));
+    console.log('4');
     console.log(data);
   } catch (error) {
     dispatch(

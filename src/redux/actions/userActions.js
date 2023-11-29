@@ -125,9 +125,7 @@ export const forgotTokenPassword = email => async dispatch => {
       `${process.env.REACT_APP_DATABASE_URL}users/forgotPassword/${email}`,
       config
     );
-    setTimeout(() => {
-      dispatch(forgotPasswordToken(data));
-    }, 1000);
+    dispatch(forgotPasswordToken(data));
   } catch (error) {
     dispatch(
       setError(

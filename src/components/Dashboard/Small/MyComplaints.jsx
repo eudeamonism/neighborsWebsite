@@ -9,7 +9,7 @@ const MyComplaints = ({ clickHandler }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const complaint = useSelector(state => state.complaint);
-  const { loading, myComplaints } = complaint;
+  const { loading, myComplaints, error } = complaint;
 
   function militaryTimeToRegularTime(militaryTime) {
     // Check if the input is a valid military time string.
@@ -31,6 +31,7 @@ const MyComplaints = ({ clickHandler }) => {
     return `${regularHours}:${formattedMinutes}${amPm}`;
   }
   console.log(myComplaints);
+
 
   return (
     <>

@@ -25,7 +25,7 @@ const DefaultPage = () => {
 
   const [isSmallerThan431] = useMediaQuery('(width < 431px)');
 
-  return <Box>{isSmallerThan431 ? <SmallLanding /> : <>Under Construction... Try Mobile Screen</>}</Box>;
+  return <Box>{isSmallerThan431 ? <SmallLanding /> : <BigLanding />}</Box>;
 };
 
 export default DefaultPage;

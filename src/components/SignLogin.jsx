@@ -38,7 +38,7 @@ const SignLogin = () => {
   const { loading, error, userInfo } = user;
 
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo !== null) {
       navigate('/dashboard');
       toast({
         description: 'Welcome Back!',

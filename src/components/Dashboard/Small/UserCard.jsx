@@ -1,15 +1,6 @@
 import { useState, useEffect } from 'react';
-import {
-  Flex,
-  Text,
-  useColorModeValue,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionIcon,
-  AccordionPanel,
-  Spinner,
-} from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { Flex, Text, useColorModeValue, Spinner } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import {
@@ -20,18 +11,24 @@ import MyComplaints from './MyComplaints';
 import Test from '../../../screens/Test';
 
 const UserCard = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const complaint = useSelector(state => state.complaint);
   const { loading, myComplaints } = complaint;
 
   const { userInfo } = user;
-  const token = userInfo.token;
-  const refresh = userInfo.refresh;
+  const token = userInfo?.token; // Use optional chaining to check for null
+  const refresh = userInfo?.refresh; // Use optional chaining to check for null
 
   const [myClick, setMyClick] = useState(false);
-
   const [allClick, setAllClick] = useState(false);
+
+  /*  useEffect(() => {
+    if (!userInfo) {
+      navigate("/")
+    }
+  }, [dispatch]); */
 
   const clickHandler = () => {
     setMyClick(false);
@@ -40,7 +37,8 @@ const UserCard = () => {
   return (
     <>
       <Flex
-        bg={useColorModeValue('teal.100', 'teal.600')}
+        bg="teal.100"
+        _dark={{ backgroundColor: 'teal.600' }}
         align="center"
         p="2"
         justify="space-between"
@@ -50,7 +48,7 @@ const UserCard = () => {
           <ChevronDownIcon
             boxSize="6"
             onClick={() => {
-              dispatch(myDBComplaints(token, refresh));
+              dispatch(myDBComplaints(token, refresh)); // Use token and refresh if available
               setMyClick(!myClick);
               setAllClick(false);
             }}
@@ -67,7 +65,8 @@ const UserCard = () => {
       {myClick === true ? <MyComplaints clickHandler={clickHandler} /> : null}
 
       <Flex
-        bg={useColorModeValue('blue.100', 'blue.600')}
+        bg="teal.100"
+        _dark={{ backgroundColor: 'teal.600' }}
         align="center"
         p="2"
         justify="space-between"

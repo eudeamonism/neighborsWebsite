@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "quote": "The only way to escape from reality is to create your own.",
+    "author": "Thomas Pynchon"
+  },
+  {
+    "id": 2,
+    "quote": "Imagination is more real than reality.",
+    "author": "André Breton"
+  },
+  {
+    "id": 3,
+    "quote": "Beauty will be convulsive or will not be.",
+    "author": "André Breton"
+  },
+  {
+    "id": 4,
+    "quote": "Liberty, liberty, what crimes are committed in your name!",
+    "author": "Paul Éluard"
+  },
+  {
+    "id": 5,
+    "quote": "There is no beauty without strangeness.",
+    "author": "Paul Éluard"
+  },
+  {
+    "id": 6,
+    "quote": "Love is a game that two can play and both win.",
+    "author": "Paul Éluard"
+  },
+  {
+    "id": 7,
+    "quote": "I paint what I see, and not what others want me to see.",
+    "author": "Édouard Manet"
+  },
+  {
+    "id": 8,
+    "quote": "The only truth is the truth of light.",
+    "author": "Édouard Manet"
+  },
+  {
+    "id": 9,
+    "quote": "A painting is never finished.",
+    "author": "Édouard Manet"
+  },
+  {
+    "id": 10,
+    "quote": "Life is a story, and you are the author.",
+    "author": "Paul Auster"
+  },
+  {
+    "id": 11,
+    "quote": "The future is not a destination; it is a path.",
+    "author": "Paul Auster"
+  },
+  {
+    "id": 12,
+    "quote": "The only way to find meaning in life is to create it yourself.",
+    "author": "Paul Auster"
+  },
+  {
+    "id": 13,
+    "quote": "The only person you are destined to become is the person you decide to be.",
+    "author": "Ralph Waldo Emerson"
+  },
+  {
+    "id": 14,
+    "quote": "The greatest glory in living lies not in never falling, but in rising every time we fall.",
+    "author": "Nelson Mandela"
+  },
+  {
+    "id": 15,
+    "quote": "The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.",
+    "author": "Helen Keller"
+  },
+  {
+    "id": 16,
+    "quote": "It is never too late to be what you might have been.",
+    "author": "George Eliot"
+  },
+  {
+    "id": 17,
+    "quote": "The difference between ordinary and extraordinary is that little extra.",
+    "author": "Jimmy Johnson"
+  },
+  {
+    "id": 18,
+    "quote": "The only way to do great work is to love what you do.",
+    "author": "Steve Jobs"
+  },
+  {
+    "id": 19,
+    "quote": "If you can dream it, you can do it.",
+    "author": "Walt Disney"
+  },
+  {
+    "id": 20,
+    "quote": "The only limit to our realization of tomorrow will be our doubts of today.",
+    "author": "Franklin D. Roosevelt"
+  },
+  {
+    "id": 21,
+    "quote": "The journey of a thousand miles begins with a single step.",
+    "author": "Lao Tzu"
+  },
+  {
+    "id": 22,
+    "quote": "The only way to avoid failure is to never try.",
+    "author": "J.K. Rowling"
+  },
+  {
+    "id": 23,
+    "quote": "The only true wisdom is in knowing you know nothing.",
+    "author": "Socrates"
+  },
+  {
+    "id": 24,
+    "quote": "The unexamined life is not worth living.",
+    "author": "Socrates"
+  },
+  {
+    "id": 25,
+    "quote": "To be yourself in a world that is constantly trying to make you something else is the greatest achievement.",
+    "author": "Ralph Waldo Emerson"
+  },
+  {
+    "id": 26,
+    "quote": "The greatest discovery of all time is that a person can change his future by merely changing his attitude.",
+    "author": "Oprah Winfrey"
+  },
+  {
+    "id": 27,
+    "quote": "If you want to live a happy life, tie it to a goal, not to people or things.",
+    "author": "Albert Einstein"
+  },
+  {
+    "id": 28,
+    "quote": "The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.",
+    "author": "Helen Keller"
+  },
+  {
+    "id": 29,
+    "quote": "It is during our darkest moments that we must focus to see the light.",
+    "author": "Aristotle"
+  },
+  {
+    "id": 30,
+    "quote": "The only way to do great work is to love what you do. If you haven't found it yet, keep looking. Don't settle.",
+    "author": "Steve Jobs"
+  },
+  {
+    "id": 31,
+    "quote": "If you can dream it, you can do it.",
+    "author": "Walt Disney"
+  },
+  {
+    "id": 32,
+    "quote": "The only way to avoid failure is to never try.",
+    "author": "J.K. Rowling"
+  },
+  {
+    "id": 33,
+    "quote": "The only way to do great work is to love what you do.",
+    "author": "Steve Jobs"
+  },
+  {
+    "id": 34,
+    "quote": "The only way to escape from reality is to create your own.",
+    "author": "Thomas Pynchon"
+  },
+  {
+    "id": 35,
+    "quote": "Imagination is more real than reality.",
+    "author": "André Breton"
+  },
+  {
+    "id": 36,
+    "quote": "Beauty will be convulsive or will not be.",
+    "author": "André Breton"
+  },
+  {
+    "id": 37,
+    "quote": "Reality is a construction of our ideology.",
+    "author": "Slavoj Žižek"
+  },
+  {
+    "id": 38,
+    "quote": "The problem is not that we don't know the truth, but that we don't want to know it.",
+    "author": "Slavoj Žižek"
+  },
+  {
+    "id": 39,
+    "quote": "There is no such thing as free choice.",
+    "author": "Slavoj Žižek"
+  },
+  {
+    "id": 40,
+    "quote": "Chaos is not the opposite of order; it is the order that we cannot yet understand.",
+    "author": "Jordan Peterson"
+  },
+  {
+    "id": 41,
+    "quote": "The meaning of life is to find your purpose and to fulfill it.",
+    "author": "Jordan Peterson"
+  },
+  {
+    "id": 42,
+    "quote": "The only way to overcome a challenge is to face it head-on.",
+    "author": "Jordan Peterson"
+  },
+  {
+    "id": 43,
+    "quote": "The only true happiness is in giving.",
+    "author": "Leo Tolstoy"
+  },
+  {
+    "id": 44,
+    "quote": "The greatest enemy of knowledge is not ignorance, it is the illusion of knowledge.",
+    "author": "Leo Tolstoy"
+  },
+  {
+    "id": 45,
+    "quote": "Everyone thinks of changing the world, but no one thinks of changing himself.",
+    "author": "Leo Tolstoy"
+  },
+  {
+    "id": 46,
+    "quote": "Pain is inevitable. Suffering is optional.",
+    "author": "Haruki Murakami"
+  },
+  {
+    "id": 47,
+    "quote": "The world is not what it seems; it's what we make it.",
+    "author": "Haruki Murakami"
+  },
+  {
+    "id": 48,
+    "quote": "Sometimes you have to lose yourself in order to find yourself.",
+    "author": "Haruki Murakami"
+  }
+]
