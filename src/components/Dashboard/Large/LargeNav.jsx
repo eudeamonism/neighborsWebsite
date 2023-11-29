@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Flex, Text } from '@chakra-ui/react';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
 import { gettingProfile, logoutUser } from '../../../redux/actions/userActions';
+import { getAllComplaintsInDB } from '../../../redux/actions/complaintActions';
 import { motion } from 'framer-motion';
 
 const LargeNav = ({

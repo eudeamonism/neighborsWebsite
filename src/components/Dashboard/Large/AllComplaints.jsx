@@ -11,16 +11,13 @@ import {
   MenuItemOption,
   MenuDivider,
 } from '@chakra-ui/react';
-
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 
+import { paginateFilter } from '../../../redux/actions/filterActions';
 
+import CWrapper from '../Small/CWrapper';
 
-import { paginateFilter } from '../redux/actions/filterActions';
-
-import CWrapper from '../components/Dashboard/Small/CWrapper';
-
-const Test = () => {
+const AllComplaints = () => {
   const dispatch = useDispatch();
   const filter = useSelector(state => state.filter);
 
@@ -56,11 +53,12 @@ const Test = () => {
   };
 
   console.log(firstResults);
+
   return (
     <>
       <Flex gap="2" align="center" direction="column">
         {memoizedFirstResults.complaints ? (
-          <Flex direction="column">
+          <Flex direction="column" maxW="750px">
             <CWrapper props={memoizedFirstResults.complaints} />
           </Flex>
         ) : null}
@@ -117,4 +115,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default AllComplaints;

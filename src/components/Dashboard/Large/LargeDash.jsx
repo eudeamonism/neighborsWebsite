@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Flex, Text, VStack, Box, Center } from '@chakra-ui/react';
-import { ChevronDownIcon } from '@chakra-ui/icons';
+import { Flex } from '@chakra-ui/react';
+
 import LargeNav from './LargeNav';
-import MyComplaints from '../Small/MyComplaints';
+
 import Policy from './Policy';
+import AllComplaints from './AllComplaints';
+import MyComplaints from './MyComplaints';
 
 const LargeDash = () => {
   const [createComplaint, setCreateComplaint] = useState(false);
@@ -67,8 +69,8 @@ const LargeDash = () => {
       <Flex direction="column">
         {policy === true ? <Policy /> : null}
         {createComplaint === true ? <Flex>Create Time</Flex> : null}
-        {allComplaints === true ? <Flex>All Time</Flex> : null}
-        {myComplaints === true ? <Flex>My Time</Flex> : null}
+        {allComplaints === true ? <AllComplaints /> : null}
+        {myComplaints === true ? <MyComplaints /> : null}
       </Flex>
     </>
   );

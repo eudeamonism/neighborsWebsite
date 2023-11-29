@@ -3,7 +3,7 @@ import { Flex, Text, Image, Divider } from '@chakra-ui/react';
 import { GiPoliceBadge } from 'react-icons/gi';
 import { FaSmile, FaSadTear } from 'react-icons/fa';
 
-const CWrapper = ( {props} ) => {
+const CWrapper = ({ props }) => {
   function militaryTimeToRegularTime(militaryTime) {
     if (!/^\d{2}:\d{2}$/.test(militaryTime)) {
       return militaryTime;
@@ -18,7 +18,7 @@ const CWrapper = ( {props} ) => {
 
     return `${regularHours}:${formattedMinutes}${amPm}`;
   }
-
+  //NOTE: add lg options for font size next below.
   return (
     <>
       {props.map(data => (
@@ -32,11 +32,15 @@ const CWrapper = ( {props} ) => {
           direction="column"
           key={data._id}
         >
-          <Text fontStyle="oblique" fontWeight="medium">
+          <Text
+            fontStyle="oblique"
+            fontWeight="medium"
+            fontSize={{ md: '20px', lg: '22px' }}
+          >
             {data.title}
           </Text>
           <Divider m="1" />
-          <Flex gap="2" align="center" fontSize="xs">
+          <Flex gap="2" align="center" fontSize={{ md: '14px', lg: '16px' }}>
             <Text fontWeight="medium">{data.complaintType}</Text>
             <Text>{new Date(data.occurence).toISOString().split('T')[0]}</Text>
             <Text>{militaryTimeToRegularTime(data.time)}</Text>
@@ -53,24 +57,25 @@ const CWrapper = ( {props} ) => {
               </Text>
             )}
           </Flex>
-          <Flex fontSize="xs" gap="2">
+          <Flex fontSize={{ md: '12px', lg: '14px' }} gap="2">
             <Text>{data.crossStreet1}</Text>
             <Text>&</Text>
             <Text>{data.crossStreet2}</Text>
           </Flex>
           <Divider m="1" />
+
           <Image
-            height="100px"
-            width="150px"
+            height={{ base: '100', md: '150px', lg: '200px' }}
+            width={{ base: '150px', md: '200px', lg: '300px' }}
             objectFit="cover"
             src={data.imageUrl}
             alt={data.title}
             m="1"
           />
 
-          <Text fontSize="13px">{data.description}</Text>
+          <Text fontSize={{md: '14px', lg: '16px'}}>{data.description}</Text>
 
-          <Text fontSize="xs" mt="1" fontWeight="medium">
+          <Text fontSize={{md: 'sm', lg: 'md'}} mt="1" fontWeight="medium">
             -{data.displayName}
           </Text>
         </Flex>

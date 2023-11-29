@@ -320,6 +320,7 @@ export const deleteComplaint = complaintId => async dispatch => {
     );
 
     dispatch(setLoadingOff());
+    window.location.reload();
   } catch (error) {
     dispatch(
       setError(
