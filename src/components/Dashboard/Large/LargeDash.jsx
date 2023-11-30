@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Flex } from '@chakra-ui/react';
+import { Flex, VStack } from '@chakra-ui/react';
 
 import LargeNav from './LargeNav';
 
 import Policy from './Policy';
 import AllComplaints from './AllComplaints';
 import MyComplaints from './MyComplaints';
+import MobileForm from '../../Forms/MobileForm';
 
 const LargeDash = () => {
   const [createComplaint, setCreateComplaint] = useState(false);
@@ -18,6 +19,8 @@ const LargeDash = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
+  const complaint = useSelector(state => state.complaint);
+  const { open } = complaint;
   const { userInfo } = user;
 
   useEffect(() => {
@@ -54,6 +57,9 @@ const LargeDash = () => {
     setPolicy(true);
   };
 
+ 
+  
+
   return (
     <>
       <LargeNav
@@ -68,7 +74,13 @@ const LargeDash = () => {
       />
       <Flex direction="column">
         {policy === true ? <Policy /> : null}
-        {createComplaint === true ? <Flex>Create Time</Flex> : null}
+        {createComplaint === true ? (
+          <Flex justify="center">
+            <Flex w="750px">
+              <MobileForm />
+            </Flex>
+          </Flex>
+        ) : null}
         {allComplaints === true ? <AllComplaints /> : null}
         {myComplaints === true ? <MyComplaints /> : null}
       </Flex>

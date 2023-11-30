@@ -14,6 +14,7 @@ import {
   Spinner,
   HStack,
   useColorModeValue,
+  useMediaQuery,
 } from '@chakra-ui/react';
 
 import { closeForm } from '../../redux/actions/complaintActions';
@@ -27,10 +28,10 @@ const MobileForm = () => {
   const complaint = useSelector(state => state.complaint);
   const user = useSelector(state => state.user);
 
-  const { loading, imageUrl } = complaint;
+  const { loading, imageUrl, open } = complaint;
   const { userInfo } = user;
   const { token, refresh } = userInfo;
-  console.log(imageUrl);
+  const [isLargerThan433] = useMediaQuery('(min-width: 433px)');
 
   return (
     <Flex direction="column" w="100%" p="6">
@@ -39,16 +40,20 @@ const MobileForm = () => {
           <Text fontWeight="bold" fontSize="18px">
             Complaint Form
           </Text>
-          <Text
-            fontWeight="extrabold"
-            fontSize="24px"
-            color={useColorModeValue('red.400', 'red.600')}
-            onClick={() => {
-              dispatch(closeForm());
-            }}
-          >
-            X
-          </Text>
+
+          {isLargerThan433 ? null : (
+            <Text
+              fontWeight="extrabold"
+              fontSize="24px"
+              color="red.400"
+              _dark={{ color: 'red.600' }}
+              onClick={() => {
+                dispatch(closeForm());
+              }}
+            >
+              X
+            </Text>
+          )}
         </Flex>
       </VStack>
       <Formik
